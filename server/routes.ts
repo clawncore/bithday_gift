@@ -6,8 +6,8 @@ import { replySchema, type GiftContent, type ClaimResponse } from "@shared/schem
 // Add a helper function for error handling
 function handleRouteError(res: any, error: any, operation: string) {
   console.error(`Error in ${operation}:`, error);
-  return res.status(500).json({ 
-    ok: false, 
+  return res.status(500).json({
+    ok: false,
     error: "Internal server error",
     message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
   });
