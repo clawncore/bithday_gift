@@ -7,6 +7,7 @@ The error `ERR_MODULE_NOT_FOUND: Cannot find module '/var/task/server/routes' im
 1. **Missing Files in Build Output**: The server files ([routes.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/routes.ts), [storage.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/storage.ts), [vite.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/vite.ts)) and shared files ([schema.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/shared/schema.ts)) were not being included in the Vercel deployment
 2. **Incomplete vercel.json Configuration**: The `includeFiles` array was missing the server and shared directories
 3. **Build Process Issues**: The esbuild bundling process was not correctly handling the relative imports
+4. **Import Path Issues**: Using alias imports like `@shared/schema` instead of relative paths
 
 ## Root Cause Analysis
 
@@ -42,7 +43,7 @@ Added the missing directories to the `includeFiles` array:
 
 ### 2. Modified Build Process
 
-Updated the build script in [package.json](file:///c:/xampp/htdocs/src/HappyBirthdayReel/package.json) to copy server and shared files instead of trying to bundle everything:
+Updated the build script in [package.json](file:///c:/xampp/htdocs/src/HappyBirthdayReel/package.json) to copy server and shared files instead of bundling everything:
 
 ```json
 {
@@ -60,10 +61,22 @@ This approach:
 
 ### 3. Added Required Dependency
 
-Installed `cpx` package for file copying:
+Installed `cpx` package for file copying and moved it to dependencies:
 
 ```bash
 npm install --save-dev cpx
+```
+
+### 4. Fixed Import Paths
+
+Changed import paths from alias-based (`@shared/schema`) to relative paths (`../shared/schema`) to ensure proper resolution in the Vercel environment:
+
+```typescript
+// Before
+import { replySchema, type GiftContent, type ClaimResponse } from "@shared/schema";
+
+// After
+import { replySchema, type GiftContent, type ClaimResponse } from "../shared/schema";
 ```
 
 ## How It Works
@@ -94,6 +107,9 @@ For projects with complex file structures and relative imports, consider copying
 
 ### 4. Validate Build Output
 Always check the build output directory to ensure all necessary files are present.
+
+### 5. Use Relative Paths for Imports
+In server-side code that will run in environments like Vercel, prefer relative paths over alias imports for better compatibility.
 
 ## Alternative Approaches
 
@@ -126,5 +142,6 @@ When encountering module not found errors:
 3. **Test Relative Paths**: Ensure relative imports will work in the deployment environment
 4. **Check Dependencies**: Verify all required packages are in package.json
 5. **Review Vercel Logs**: Look at deployment logs for specific error messages
+6. **Check Import Paths**: Ensure import paths are correct and compatible with the deployment environment
 
 By following these steps and implementing the fixes above, the ERR_MODULE_NOT_FOUND error should be resolved.
