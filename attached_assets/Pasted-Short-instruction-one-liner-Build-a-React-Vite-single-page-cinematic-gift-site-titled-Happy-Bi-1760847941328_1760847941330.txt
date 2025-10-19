@@ -1,0 +1,224 @@
+Short instruction (one-liner)
+
+Build a React + Vite single-page cinematic gift site titled “Happy Birthday Panda” — storybook-style scroll/flow, soft music, panda-themed microinteractions, photo/video memory gallery, two apology sections (Craig + Simbisai), and a secure one-time-access self-destruct behavior so the site becomes inaccessible after Panda visits once.
+
+Full prompt (paste this into a code generator / give to a dev)
+
+Goal: Create a private, single-page React app (Vite) that feels like an unwrapping gift: cinematic, slow, emotional. It must display personal media (photos, short videos), two apology sections (Craig / Simbisai), memory timeline, and end with a simple heartfelt ask to restart. The site must be accessible only via a one-time token link and become inaccessible (or show a “this gift has been opened” screen) after the first successful visit. Deployable to Vercel/Netlify.
+
+Tech stack & libraries
+
+React (functional components + hooks)
+
+Vite
+
+Tailwind CSS (for rapid styling) — semi-dark theme with warm accents
+
+Framer Motion for animations (page transitions, unwrap, fades)
+
+React Router (single route + fallback)
+
+react-player (for embedded short videos)
+
+localState/Context for client-only transitions; serverless function (Vercel/Netlify Function or simple Express serverless endpoint) for one-time token validation
+
+Optional: Cloud storage (S3/GCS/Firebase Storage) for media; presigned URLs or serverless proxy
+
+ESLint + Prettier
+
+Pages / sections (single scrollable flow with anchored snaps)
+
+Landing / Gift Box (Hero)
+
+Big greeting: “Happy Birthday, Panda 🐼” (nickname and small panda motif)
+
+Closed gift-box animation (paper / ribbon) that “unwraps” on scroll or first click. Soft, cinematic ambient loop (low-volume).
+
+Subtle parallax background (paper texture + panda silhouettes).
+
+CTA: “Open gift” (also auto-progress on scroll)
+
+Craig’s Section
+
+Small portrait, a short recorded voice clip or typed letter (audio optional).
+
+Honest apology text block with timeline of personal growth (short bullets).
+
+Framer Motion: typed-text reveal + slow fade-in photos.
+
+Button to expand a small “read more” modal with deeper message.
+
+Simbisai’s Section
+
+Mirror design to Craig’s but distinct color accent.
+
+Short apology video/voice or typed note.
+
+Option to show a joint apology (if you both recorded a clip).
+
+Memory Lane (Gallery)
+
+Grid / carousel of photos and short video clips.
+
+Each item opens into a full-screen lightbox with caption + date + small note (why it mattered).
+
+Gentle Ken Burns for images; autoplay muted for short videos.
+
+The Ask
+
+Minimal text: “Can we start again?” with two big buttons: “Yes” and “I need time”.
+
+If clicked “Yes” — show confetti (pandas float) + a private message / next-step suggestion (coffee, call, meet).
+
+If clicked “I need time” — show a gentle “Thank you for being honest” message and optional “send reply” textarea that sends a private message to your email or saves to a backend (optional).
+
+Closure / Self-Destruct
+
+After the first successful visit (first time token validated), server flags token as used. Any subsequent visits to that URL show: a locked card with message “This gift was opened on [DATE/TIME].” plus a soft animation (panda waving).
+
+Admin endpoint (protected) to reset tokens if absolutely necessary.
+
+UX / animation guidance
+
+Cinematic pacing: long eases, staggered children reveals, fade + slide combos.
+
+Use subtle audio cues (paper rustle on unwrap, soft chime for open). Audio must be muted by default with visible play control.
+
+Keep motion respectful; provide a “reduce motion” option in a corner (checks prefers-reduced-motion).
+
+Panda motifs: small animated panda stickers that float or peek from corners; keep them tasteful, small repeating SVGs or Lottie animations.
+
+Color palette: semi-dark background (#0f1724 or similar) + warm accent (#F6C9A8) + panda black/white as neutrals.
+
+Typography: display serif or soft-rounded for headings; accessible font sizes and contrast.
+
+Security & privacy (critical)
+
+Generate a cryptographically-random one-time token (e.g. UUIDv4 + HMAC signature).
+
+Host a serverless function (Vercel/Netlify) that:
+
+Accepts the token (GET).
+
+Validates token exists and used === false.
+
+Marks used = true atomically (store in DB: Firestore, DynamoDB, or a tiny JSON file for low-scale).
+
+Returns either the site content (or redirects to the static frontend route with the token) or a JSON success that client uses to reveal full content.
+
+After used, future calls return 410 Gone or a small “opened already” JSON.
+
+Avoid storing personal media publicly — use signed URLs or server-side proxied fetch.
+
+Use HTTPS only. Do not expose tokens in client-side logs.
+
+Implementation notes for serverless (simple flow)
+
+On gift creation (your side):
+
+POST /api/create-token => backend creates {token, used:false, createdAt, expiresAt} and returns https://site.example.com/?t=TOKEN.
+
+Upload photos/videos privately and generate signed URLs for client access. Store references in DB linked to token.
+
+On first visit:
+
+Client hits /api/claim?t=TOKEN. If valid and unused:
+
+Respond with 200 {ok:true, media: [signed URLs], name: "Panda", openedAt: ...} and set used=true.
+
+Client receives media and reveals full site (unwrap). If invalid/used, show the “gift opened” UI.
+
+Optional extra: set expiresAt (e.g. 30 days) in creation step to auto-expire unused gifts.
+
+Accessibility
+
+All images have alt text.
+
+Keyboard navigable modals, gallery, and buttons.
+
+Text contrast passes WCAG AA.
+
+Provide skip-to-content and accessible labels for interactive panda elements.
+
+Deliverables
+
+Full Vite React project with:
+
+src/components: HeroGiftBox, ApologyCard, MediaGallery, Lightbox, AskModal, Footer.
+
+src/routes: single AppRouter with fallback route.
+
+src/api: client wrapper for /api/claim and create-token.
+
+serverless/claim.js: serverless function that marks token used and returns media links.
+
+README with deployment steps to Vercel and how to create token + upload media.
+
+Example content file gift.json with placeholders for images and videos, plus sample text for Craig and Simbisai.
+
+Minimal unit tests for token flow (optional).
+
+Helpful copy snippets (drop-in text)
+
+Hero heading: Happy Birthday, Panda 🐼
+
+Subheading: A small, honest gift — please open
+
+Craig apology short: Panda — I broke trust. I'm sorry. I want to be better, not just say it.
+
+Simbisai apology short: Panda — We both messed up. We’re asking for a fresh start.
+
+Ask button: Can we start again?
+
+Opened message: This gift was opened on {DATE}. Thank you for seeing this.
+
+Package dependencies suggestion
+
+react, react-dom, react-router-dom, framer-motion, tailwindcss, react-player, axios
+dev: vite, eslint, prettier
+
+
+Optional niceties
+
+Add an “email me her reply” feature so Panda can reply privately (email send via serverless).
+
+Add a timed fade-out that shows a confetti + panda animation on acceptance.
+
+Use .env securely for storage keys.
+
+Minimal serverless pseudocode (Vercel / Netlify friendly)
+// /api/claim.js (pseudo)
+import { getTokenRecord, markTokenUsed } from "./db";
+
+export default async function handler(req, res) {
+  const token = req.query.t;
+  const rec = await getTokenRecord(token);
+  if (!rec) return res.status(404).json({ ok:false, reason:"invalid" });
+  if (rec.used) return res.status(410).json({ ok:false, reason:"already_opened", openedAt: rec.openedAt });
+
+  // atomically mark used
+  await markTokenUsed(token, { used: true, openedAt: new Date().toISOString() });
+
+  // return media signed URLs & text
+  const payload = {
+    ok: true,
+    media: rec.media, // signed URLs
+    content: rec.content,
+    openedAt: new Date().toISOString()
+  };
+  return res.status(200).json(payload);
+}
+
+Quick README snippet (deploy + create token)
+
+npm create vite@latest happy-panda --template react
+
+Add dependencies: npm i framer-motion react-player axios tailwindcss
+
+Add serverless /api endpoints and configure DB (Firestore / Dynamo / tiny JSON store).
+
+Deploy to Vercel. In Vercel dashboard, add environment variables for storage keys.
+
+Use your admin UI or curl to POST /api/create-token with media refs → get private link https://happy-panda.vercel.app/?t=TOKEN.
+
+Send the link privately to Panda. After she opens it, it’s spent.
