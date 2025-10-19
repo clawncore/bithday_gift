@@ -44,7 +44,6 @@ export interface GiftContent {
 
 export interface ClaimResponse {
   ok: boolean;
-  reason?: "invalid";
   openedAt?: string;
   content?: GiftContent;
 }

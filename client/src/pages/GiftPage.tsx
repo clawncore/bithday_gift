@@ -23,12 +23,11 @@ export default function GiftPage() {
   const urlParams = new URLSearchParams(window.location.search);
   const secretWord = urlParams.get("word");
 
-  useEffect(() => {
-    if (!secretWord) {
-      navigate("/");
-    }
+  // Removed navigation to home page when no secret word is provided
+  // This allows the gift to flow normally without barriers
 
-    // Try to unmute audio when the page loads
+  // Try to unmute audio when the page loads
+  useEffect(() => {
     const unmuteAudio = () => {
       const audioElement = document.querySelector('audio');
       if (audioElement) {
@@ -39,15 +38,14 @@ export default function GiftPage() {
     // Small delay to ensure DOM is ready
     const timer = setTimeout(unmuteAudio, 1000);
     return () => clearTimeout(timer);
-  }, [secretWord, navigate]);
+  }, []);
 
   const { data: claimData, isLoading, error } = useQuery<ClaimResponse>({
-    queryKey: ["/api/claim", secretWord],
+    queryKey: ["/api/claim"],
     queryFn: async () => {
-      const response = await apiRequest("GET", `/api/claim?word=${encodeURIComponent(secretWord || "")}`);
+      const response = await apiRequest("GET", "/api/claim");
       return response.json();
     },
-    enabled: !!secretWord,
     retry: false,
   });
 
@@ -109,25 +107,19 @@ export default function GiftPage() {
     );
   }
 
-  if (error || !claimData?.ok) {
-    // Remove the expiration check and message
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100 px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center max-w-md"
-        >
-          <p className="text-xl text-rose-600 mb-4">Gift not found</p>
-          <p className="text-pink-600">
-            This gift link may be invalid. Please check the link and try again.
-          </p>
-        </motion.div>
-      </div>
-    );
-  }
-
-  const content = claimData.content!;
+  // Always show the gift content, regardless of token status
+  const content = claimData?.content || {
+    recipientName: "Chandrika",
+    media: [],
+    craigApology: {
+      shortMessage: "Craig's heartfelt message",
+      fullMessage: "Dear Chandrika, Happy Birthday! We hope you have a wonderful day."
+    },
+    simbisaiApology: {
+      shortMessage: "Message from Simby",
+      fullMessage: "Dear Chandrika, Happy Birthday! We hope you have a wonderful day."
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100">
@@ -143,6 +135,10 @@ export default function GiftPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
+            {/* Birthday Message Card - appears after unwrapping */}
+            <section className="py-12 px-4 flex justify-center">
+              <BirthdayMessageCard />
+            </section>
             {/* Birthday Message Card - appears after unwrapping */}
             <section className="py-12 px-4 flex justify-center">
               <BirthdayMessageCard />

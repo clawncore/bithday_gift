@@ -16,30 +16,37 @@ function handleRouteError(res: any, error: any, operation: string) {
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/claim", async (req, res) => {
     try {
-      const secretWord = req.query.word as string;
-
-      // Check if the special word is provided and matches "panda" (case insensitive)
-      if (!secretWord || secretWord.toLowerCase() !== "panda") {
-        return res.status(400).json({
-          ok: false,
-          reason: "invalid",
-        } as ClaimResponse);
-      }
-
-      // Get the sample token content directly since we're not using tokens anymore
+      // Always return the gift content, regardless of secret word
+      // Get the sample token content directly
       const tokenRecord = await storage.getToken("sample-token-123");
 
       if (!tokenRecord) {
-        return res.status(404).json({
-          ok: false,
-          reason: "invalid",
+        // Return default content even if token not found
+        const defaultContent: GiftContent = {
+          recipientName: "Chandrika",
+          craigApology: {
+            shortMessage: "Craig's heartfelt message",
+            fullMessage: `Dear Chandrika,
+
+Happy Birthday! We hope you have a wonderful day.`
+          },
+          simbisaiApology: {
+            shortMessage: "Message from Simby",
+            fullMessage: `Dear Chandrika,
+
+Happy Birthday! We hope you have a wonderful day.`
+          },
+          media: []
+        };
+
+        return res.json({
+          ok: true,
+          content: defaultContent,
+          openedAt: new Date().toISOString(),
         } as ClaimResponse);
       }
 
-      // For the special word approach, we don't mark it as used
-      // So anyone with the word can access it
-      // No expiration check - tokens never expire
-
+      // Return the gift content
       return res.json({
         ok: true,
         content: tokenRecord.content,
