@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { replySchema, type GiftContent, type ClaimResponse } from "@shared/schema";
+import { replySchema, type GiftContent, type ClaimResponse } from "../shared/schema";
 
 // Add a helper function for error handling
 function handleRouteError(res: any, error: any, operation: string) {

@@ -1,4 +1,4 @@
-import { type Token, type GiftContent } from "@shared/schema";
+import { type Token, type GiftContent } from "../shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
