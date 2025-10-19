@@ -128,7 +128,7 @@ Simbisai`,
   async getToken(id: string): Promise<(Token & { content: GiftContent }) | undefined> {
     try {
       const token = this.tokens.get(id);
-      
+
       // Remove expiration check - tokens never expire
       return token;
     } catch (error) {
