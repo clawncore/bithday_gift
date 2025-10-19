@@ -27,7 +27,7 @@ export function CraigMessagePlayer({
       // Automatically play audio when dialog opens
       const playAudio = async () => {
         try {
-          audioRef.current!.volume = 1.0;
+          audioRef.current!.volume = 0.8;
           await audioRef.current!.play();
         } catch (error) {
           console.log("Auto-play prevented:", error);

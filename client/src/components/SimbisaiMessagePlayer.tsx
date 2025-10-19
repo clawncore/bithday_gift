@@ -27,8 +27,8 @@ export function SimbisaiMessagePlayer({
       // Automatically play audio when dialog opens
       const playAudio = async () => {
         try {
-          // Set volume to 100% for Simby's message
-          audioRef.current!.volume = 1.0; // 100% volume
+          // Set volume to 80% for Simby's message
+          audioRef.current!.volume = 0.8; // 80% volume
           await audioRef.current!.play();
         } catch (error) {
           console.log("Auto-play prevented:", error);

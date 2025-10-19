@@ -9,8 +9,8 @@ export function AudioControls() {
 
   useEffect(() => {
     if (audioRef.current) {
-      // Set background music volume to 50%
-      audioRef.current.volume = 0.5; // 50% volume
+      // Set background music volume to 40%
+      audioRef.current.volume = 0.4; // 40% volume
 
       // Try to play the audio automatically when the component mounts
       const attemptAutoPlay = async () => {

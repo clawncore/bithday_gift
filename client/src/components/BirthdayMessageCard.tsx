@@ -21,7 +21,7 @@ export function BirthdayMessageCard() {
         if (isUnwrapped && audioRef.current) {
             const playAudio = async () => {
                 try {
-                    audioRef.current!.volume = 1.0;
+                    audioRef.current!.volume = 0.8;
                     await audioRef.current!.play();
                 } catch (error) {
                     console.error("Error playing birthday message:", error);

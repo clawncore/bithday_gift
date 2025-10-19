@@ -139,10 +139,6 @@ export default function GiftPage() {
             <section className="py-12 px-4 flex justify-center">
               <BirthdayMessageCard />
             </section>
-            {/* Birthday Message Card - appears after unwrapping */}
-            <section className="py-12 px-4 flex justify-center">
-              <BirthdayMessageCard />
-            </section>
 
             {/* Timeline of memories */}
             {content.media && content.media.length > 0 && (

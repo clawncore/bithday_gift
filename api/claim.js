@@ -1,7 +1,7 @@
 // Simple API endpoint for claiming the gift
 export default function handler(request, response) {
     // Always return the gift content, regardless of secret word
-    
+
     // Sample gift content
     const giftContent = {
         recipientName: "Chandrika",
@@ -70,7 +70,7 @@ I hope that in time, you can find it in your heart to forgive us. I'm committed 
 I hope you have a wonderful birthday, and I wish you nothing but happiness, success, and love in the year ahead.
 
 With sincere apologies and warm birthday wishes,
-Craig`
+Craig\``
         },
         simbisaiApology: {
             shortMessage: "Message from Simby (fatso)",
@@ -87,7 +87,7 @@ This past year taught me things about friendship, loyalty, and the cost of takin
 And since it's your birthday, I hope the world gives you back all the good you've poured into it — the laughter, the love, the light. You deserve nothing less.
 
 With a mix of guilt, gratitude, and a smile I can't quite hide,
-Simbisai`
+Simbisai\``
         }
     };
 
