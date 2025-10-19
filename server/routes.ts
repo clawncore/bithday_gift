@@ -3,6 +3,16 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { replySchema, type GiftContent, type ClaimResponse } from "@shared/schema";
 
+// Add a helper function for error handling
+function handleRouteError(res: any, error: any, operation: string) {
+  console.error(`Error in ${operation}:`, error);
+  return res.status(500).json({ 
+    ok: false, 
+    error: "Internal server error",
+    message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+  });
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/claim", async (req, res) => {
     try {
@@ -35,11 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         openedAt: new Date().toISOString(),
       } as ClaimResponse);
     } catch (error) {
-      console.error("Error claiming with word:", error);
-      return res.status(500).json({
-        ok: false,
-        reason: "invalid",
-      } as ClaimResponse);
+      return handleRouteError(res, error, "claiming gift");
     }
   });
 
@@ -63,8 +69,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         url: giftUrl,
       });
     } catch (error) {
-      console.error("Error creating token:", error);
-      return res.status(500).json({ error: "Failed to create token" });
+      return handleRouteError(res, error, "creating token");
     }
   });
 
@@ -95,8 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       return res.json({ ok: true });
     } catch (error) {
-      console.error("Error saving reply:", error);
-      return res.status(500).json({ error: "Failed to save reply" });
+      return handleRouteError(res, error, "saving reply");
     }
   });
 
