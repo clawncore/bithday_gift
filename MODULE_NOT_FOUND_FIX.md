@@ -8,6 +8,8 @@ The error `ERR_MODULE_NOT_FOUND: Cannot find module '/var/task/server/routes' im
 2. **Incomplete vercel.json Configuration**: The `includeFiles` array was missing the server and shared directories
 3. **Build Process Issues**: The esbuild bundling process was not correctly handling the relative imports
 4. **Import Path Issues**: Using alias imports like `@shared/schema` instead of relative paths
+5. **Route Configuration Issues**: The routes in vercel.json were pointing to the wrong destination
+6. **Complex Configuration**: The vercel.json configuration was overly complex for the use case
 
 ## Root Cause Analysis
 
@@ -15,40 +17,40 @@ When Vercel deployed the application, it could only find the bundled [index.js](
 
 ## Solution Implemented
 
-### 1. Updated vercel.json Configuration
+### 1. Simplified vercel.json Configuration
 
-Added the missing directories to the `includeFiles` array:
+Instead of using a complex configuration with includeFiles, we simplified the vercel.json to directly point to the built files:
 
 ```json
 {
   "version": 2,
   "builds": [
     {
-      "src": "server/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "dist/**",
-          "client/dist/**",
-          "client/public/**",
-          "server/**",
-          "shared/**"
-        ]
-      }
+      "src": "dist/server/index.js",
+      "use": "@vercel/node"
     }
   ],
-  // ... rest of configuration
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/dist/server/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/server/index.js"
+    }
+  ]
 }
 ```
 
 ### 2. Modified Build Process
 
-Updated the build script in [package.json](file:///c:/xampp/htdocs/src/HappyBirthdayReel/package.json) to copy server and shared files instead of bundling everything:
+Updated the build script in [package.json](file:///c:/xampp/htdocs/src/HappyBirthdayReel/package.json) to copy server and shared files:
 
 ```json
 {
   "scripts": {
-    "build": "npx vite build && npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && npx cpx \"server/**/*\" dist/server && npx cpx \"shared/**/*\" dist/shared"
+    "build": "npx vite build && npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && npx cpx \"server/*\" dist/server && npx cpx \"shared/*\" dist/shared"
   }
 }
 ```
@@ -61,7 +63,7 @@ This approach:
 
 ### 3. Added Required Dependency
 
-Installed `cpx` package for file copying and moved it to dependencies:
+Moved `cpx` package to dependencies:
 
 ```bash
 npm install --save-dev cpx
@@ -82,9 +84,9 @@ import { replySchema, type GiftContent, type ClaimResponse } from "../shared/sch
 ## How It Works
 
 1. **Vite Build**: The client-side React application is built and placed in `dist/public/`
-2. **Esbuild Bundle**: Only [server/index.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/index.ts) is bundled into `dist/index.js`
-3. **File Copying**: The [server/](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/) and [shared/](file:///c:/xampp/htdocs/src/HappyBirthdayReel/shared/) directories are copied to `dist/server/` and `dist/shared/` respectively
-4. **Vercel Deployment**: All files in the `dist/` directory are deployed, making the relative imports work correctly
+2. **Esbuild Bundle**: Only [server/index.ts](file:///c:/xampp/htdocs/src/HappyBirthdayReel/server/index.ts) is bundled into `dist/server/index.js`
+3. **File Copying**: The server and shared files are copied to `dist/server/` and `dist/shared/` respectively
+4. **Vercel Deployment**: Vercel directly uses the built files at `dist/server/index.js`
 
 ## Verification
 
@@ -96,8 +98,8 @@ After implementing these changes:
 
 ## Prevention Strategies
 
-### 1. Always Include All Required Files
-Ensure that the `includeFiles` array in `vercel.json` includes all directories needed at runtime.
+### 1. Keep Vercel Configuration Simple
+Use the simplest configuration that works for your use case.
 
 ### 2. Test Relative Imports
 When using relative imports, verify that the file structure will be preserved in the deployment environment.
@@ -137,7 +139,7 @@ Restructure as a monorepo with separate packages for client and server.
 
 When encountering module not found errors:
 
-1. **Check vercel.json includeFiles**: Ensure all required directories are included
+1. **Simplify Configuration**: Use the simplest vercel.json configuration possible
 2. **Verify Build Output**: Check that all necessary files are in the dist directory
 3. **Test Relative Paths**: Ensure relative imports will work in the deployment environment
 4. **Check Dependencies**: Verify all required packages are in package.json
