@@ -8,7 +8,9 @@
         "includeFiles": [
           "dist/**",
           "client/dist/**",
-          "client/public/**"
+          "client/public/**",
+          "server/**",
+          "shared/**"
         ]
       }
     }
