@@ -38,6 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // For the special word approach, we don't mark it as used
       // So anyone with the word can access it
+      // No expiration check - tokens never expire
 
       return res.json({
         ok: true,

@@ -7,6 +7,7 @@ export const tokens = pgTable("tokens", {
   used: boolean("used").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   openedAt: timestamp("opened_at"),
+  // Note: expiresAt field is kept for database schema compatibility but not used
   expiresAt: timestamp("expires_at"),
 });
 
@@ -43,7 +44,7 @@ export interface GiftContent {
 
 export interface ClaimResponse {
   ok: boolean;
-  reason?: "invalid" | "already_opened";
+  reason?: "invalid";
   openedAt?: string;
   content?: GiftContent;
 }

@@ -110,10 +110,7 @@ export default function GiftPage() {
   }
 
   if (error || !claimData?.ok) {
-    if (claimData?.reason === "already_opened" && claimData.openedAt) {
-      return <LockoutScreen openedAt={claimData.openedAt} />;
-    }
-
+    // Remove the expiration check and message
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100 px-4">
         <motion.div
@@ -123,7 +120,7 @@ export default function GiftPage() {
         >
           <p className="text-xl text-rose-600 mb-4">Gift not found</p>
           <p className="text-pink-600">
-            This gift link may be invalid or expired.
+            This gift link may be invalid. Please check the link and try again.
           </p>
         </motion.div>
       </div>

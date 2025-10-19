@@ -115,7 +115,7 @@ Simbisai`,
         used: false,
         createdAt: new Date(),
         openedAt: null,
-        expiresAt: null,
+        expiresAt: null, // No expiration
         content: sampleContent,
       };
 
@@ -127,7 +127,10 @@ Simbisai`,
 
   async getToken(id: string): Promise<(Token & { content: GiftContent }) | undefined> {
     try {
-      return this.tokens.get(id);
+      const token = this.tokens.get(id);
+      
+      // Remove expiration check - tokens never expire
+      return token;
     } catch (error) {
       console.error(`Error getting token ${id}:`, error);
       return undefined;
@@ -142,7 +145,7 @@ Simbisai`,
         used: false,
         createdAt: new Date(),
         openedAt: null,
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        expiresAt: null, // No expiration - tokens never expire
         content,
       };
       this.tokens.set(id, token);
@@ -159,6 +162,7 @@ Simbisai`,
       if (token) {
         token.used = true;
         token.openedAt = openedAt;
+        // Note: We're not checking expiration here, tokens can be used anytime
         this.tokens.set(id, token);
       }
     } catch (error) {
