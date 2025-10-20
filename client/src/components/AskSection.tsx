@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Sparkles, Cake } from "lucide-react";
 import { ConfettiEffect } from "@/components/ConfettiEffect";
-import { FallingElements } from "@/components/FallingElements";
 
 interface AskSectionProps {
   onReply?: (choice: "yes" | "need_time", message?: string) => void;
@@ -15,13 +14,11 @@ export function AskSection({ onReply }: AskSectionProps) {
   const [choice, setChoice] = useState<"yes" | "need_time" | null>(null);
   const [message, setMessage] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showFallingElements, setShowFallingElements] = useState(false);
 
   const handleChoice = (selected: "yes" | "need_time") => {
     setChoice(selected);
     if (selected === "yes") {
       setShowConfetti(true);
-      setShowFallingElements(true);
     }
   };
 
@@ -34,7 +31,6 @@ export function AskSection({ onReply }: AskSectionProps) {
   return (
     <section className="py-32 md:py-48 px-4 relative overflow-hidden bg-gradient-to-b from-pink-50 to-white">
       {showConfetti && <ConfettiEffect />}
-      {showFallingElements && <FallingElements duration={8000} elementCount={40} />}
 
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <motion.div
@@ -44,118 +40,87 @@ export function AskSection({ onReply }: AskSectionProps) {
           transition={{ duration: 0.8 }}
         >
           <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-16 text-pink-700 flex items-center justify-center">
-            Happy Birthday, Chandrika! <Cake className="w-12 h-12 text-pink-500 ml-4" />
+            <Heart className="text-red-400 mr-4" strokeWidth={1.5} />
+            Are You Willing To Start Over?
+            <Heart className="text-red-400 ml-4" strokeWidth={1.5} />
           </h2>
 
-          {!choice ? (
-            <div className="space-y-8">
-              <p className="text-xl text-pink-600 mb-8 font-medium">
-                We hope you enjoyed this special birthday experience and our heartfelt messages.
-              </p>
-              <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
-                <div className="flex-1 max-w-xs mx-auto md:mx-0">
-                  <Button
-                    size="lg"
-                    onClick={() => handleChoice("yes")}
-                    data-testid="button-yes"
-                    className="w-full h-auto py-8 px-12 text-xl rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <Heart className="w-6 h-6 mr-3" />
-                    Thank You!
-                  </Button>
-                </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg md:text-xl text-pink-600 mb-16 max-w-2xl mx-auto"
+          >
+            I know I've made mistakes, and I deeply regret how things have been between us. 
+            I'm here to ask if you're willing to start over and give me a chance to show you I've changed. 
+            What do you say?
+          </motion.p>
 
-                <div className="flex-1 max-w-xs mx-auto md:mx-0">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => handleChoice("need_time")}
-                    data-testid="button-need-time"
-                    className="w-full h-auto py-8 px-12 text-xl rounded-2xl border-2 border-pink-400 text-pink-600 hover:bg-pink-50 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <Sparkles className="w-6 h-6 mr-3" />
-                    This is Beautiful!
-                  </Button>
-                </div>
-              </div>
-            </div>
+          {!choice ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+            >
+              <Button
+                size="lg"
+                onClick={() => handleChoice("yes")}
+                className="text-lg px-12 py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3"
+              >
+                <Sparkles className="w-6 h-6" />
+                Yes, I'm Willing To Start Over
+                <Sparkles className="w-6 h-6" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => handleChoice("need_time")}
+                className="text-lg px-12 py-6 rounded-full border-2 border-pink-300 text-pink-600 hover:bg-pink-50 font-medium transition-all duration-300 shadow hover:shadow-lg flex items-center gap-3"
+              >
+                <Cake className="w-6 h-6" />
+                I Need More Time
+                <Cake className="w-6 h-6" />
+              </Button>
+            </motion.div>
           ) : (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl mx-auto"
             >
-              <Card className="backdrop-blur-md bg-white/70 border-pink-200 shadow-lg">
+              <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-xl">
                 <CardContent className="p-8">
-                  {choice === "yes" ? (
-                    <div className="space-y-6">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="mb-4"
-                      >
-                        <Heart className="w-16 h-16 mx-auto text-pink-500" fill="currentColor" />
-                      </motion.div>
-                      <h3 className="font-serif text-3xl font-bold text-pink-700 mb-4">
-                        Thank you for your kind words!
-                      </h3>
-                      <p className="text-lg text-pink-600 mb-6">
-                        We're so glad you're enjoying your birthday surprise!
-                        Wishing you the happiest of birthdays and a wonderful year ahead.
-                      </p>
-                      <Textarea
-                        placeholder="Would you like to share a birthday wish or thought? (Optional)"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        data-testid="textarea-reply"
-                        className="min-h-32 resize-none border-pink-200 focus:border-pink-400 bg-white/80 backdrop-blur-sm"
-                      />
-                      {onReply && (
-                        <Button
-                          onClick={handleSend}
-                          data-testid="button-send-reply"
-                          size="lg"
-                          className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600"
-                          disabled={message.trim().length === 0}
-                        >
-                          Send Birthday Wish
-                        </Button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      <div className="flex justify-center mb-4">
-                        <Sparkles className="w-12 h-12 text-yellow-400 mx-auto animate-pulse" />
-                      </div>
-                      <h3 className="font-serif text-3xl font-bold text-pink-700 mb-4">
-                        So Happy You Love It!
-                      </h3>
-                      <p className="text-lg text-pink-600 mb-6">
-                        We're thrilled you're enjoying this special birthday experience!
-                        May your day be filled with joy, laughter, and all your favorite things.
-                      </p>
-                      <Textarea
-                        placeholder="Share your birthday wishes or thoughts... (Optional)"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        data-testid="textarea-reply"
-                        className="min-h-32 resize-none border-pink-200 focus:border-pink-400 bg-white/80 backdrop-blur-sm"
-                      />
-                      {onReply && (
-                        <Button
-                          onClick={handleSend}
-                          data-testid="button-send-reply"
-                          size="lg"
-                          variant="outline"
-                          className="w-full border-pink-400 text-pink-600 hover:bg-pink-50"
-                          disabled={message.trim().length === 0}
-                        >
-                          Send Message
-                        </Button>
-                      )}
-                    </div>
-                  )}
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold mb-6 text-pink-700">
+                    {choice === "yes" ? "Thank You For Giving Me A Chance 🙏" : "I Understand, Take Your Time"}
+                  </h3>
+                  
+                  <p className="text-lg text-pink-600 mb-8">
+                    {choice === "yes" 
+                      ? "Thank you for giving me a chance to start over. I promise to show you through my actions that I've truly changed and to value our renewed friendship." 
+                      : "I completely understand. I'll be here whenever you're ready. Please let me know if there's anything I can do to show you I've changed."}
+                  </p>
+                  
+                  <Textarea
+                    placeholder={choice === "yes" 
+                      ? "Tell me what this means to you..." 
+                      : "Let me know what you need or when you'd like to talk..."}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="min-h-[120px] text-lg p-4 mb-6 border-pink-200 focus:border-pink-400 focus:ring-pink-400"
+                  />
+                  
+                  <Button
+                    size="lg"
+                    onClick={handleSend}
+                    disabled={!message.trim()}
+                    className="text-lg px-12 py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Send My Response
+                  </Button>
                 </CardContent>
               </Card>
             </motion.div>

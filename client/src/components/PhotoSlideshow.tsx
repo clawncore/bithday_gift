@@ -1,43 +1,48 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface MediaItem {
+    src: string;
+    type: "image" | "video";
+}
+
 interface PhotoSlideshowProps {
-    photos: string[];
+    media: MediaItem[];
     interval?: number;
     className?: string;
 }
 
 export function PhotoSlideshow({
-    photos,
+    media,
     interval = 5000,
     className = ""
 }: PhotoSlideshowProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
-    const nextPhoto = useCallback(() => {
+    const nextMedia = useCallback(() => {
         setDirection(1);
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
-    }, [photos.length]);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % media.length);
+    }, [media.length]);
 
-    const prevPhoto = useCallback(() => {
+    const prevMedia = useCallback(() => {
         setDirection(-1);
         setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? photos.length - 1 : prevIndex - 1
+            prevIndex === 0 ? media.length - 1 : prevIndex - 1
         );
-    }, [photos.length]);
+    }, [media.length]);
 
     useEffect(() => {
-        if (photos.length <= 1) return;
+        if (media.length <= 1) return;
 
         const timer = setInterval(() => {
-            nextPhoto();
+            nextMedia();
         }, interval);
 
         return () => clearInterval(timer);
-    }, [photos.length, interval, nextPhoto]);
+    }, [media.length, interval, nextMedia]);
 
-    if (photos.length === 0) {
+    if (media.length === 0) {
         return (
             <div className={`flex items-center justify-center bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-12 ${className}`}>
                 <p className="text-pink-500 text-lg">No memories to display yet</p>
@@ -67,9 +72,12 @@ export function PhotoSlideshow({
         return Math.abs(offset) * velocity;
     };
 
+    const currentMedia = media[currentIndex];
+
     return (
         <div className={`relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-pink-50 to-rose-50 p-4 ${className}`}>
-            <div className="relative h-[500px] md:h-[600px]">
+            {/* Responsive container for slideshow */}
+            <div className="relative w-full" style={{ paddingBottom: '75%' /* 4:3 aspect ratio */ }}>
                 <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={currentIndex}
@@ -88,50 +96,67 @@ export function PhotoSlideshow({
                         onDragEnd={(e, { offset, velocity }) => {
                             const swipe = swipePower(offset.x, velocity.x);
                             if (swipe < -swipeConfidenceThreshold) {
-                                nextPhoto();
+                                nextMedia();
                             } else if (swipe > swipeConfidenceThreshold) {
-                                prevPhoto();
+                                prevMedia();
                             }
                         }}
                         className="absolute inset-0 flex items-center justify-center"
                     >
-                        <img
-                            src={photos[currentIndex]}
-                            alt={`Memory ${currentIndex + 1}`}
-                            className="object-contain w-full h-full rounded-2xl"
-                        />
+                        {currentMedia.type === "image" ? (
+                            <img
+                                src={currentMedia.src}
+                                alt={`Memory ${currentIndex + 1}`}
+                                className="object-contain w-full h-full rounded-2xl"
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center rounded-2xl overflow-hidden">
+                                <video
+                                    src={currentMedia.src}
+                                    controls
+                                    autoPlay
+                                    muted
+                                    playsInline
+                                    className="object-contain w-full h-full max-h-full max-w-full"
+                                    onPlay={() => console.log(`Playing video: ${currentMedia.src}`)}
+                                    onError={(e) => console.error("Video playback error:", e)}
+                                >
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        )}
                     </motion.div>
                 </AnimatePresence>
             </div>
 
             {/* Navigation arrows */}
-            {photos.length > 1 && (
+            {media.length > 1 && (
                 <>
                     <button
-                        onClick={prevPhoto}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-3 shadow-lg transition-all duration-200 z-10 hover:scale-110"
-                        aria-label="Previous photo"
+                        onClick={prevMedia}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110 md:p-3"
+                        aria-label="Previous media"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button
-                        onClick={nextPhoto}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-3 shadow-lg transition-all duration-200 z-10 hover:scale-110"
-                        aria-label="Next photo"
+                        onClick={nextMedia}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110 md:p-3"
+                        aria-label="Next media"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
                 </>
             )}
 
-            {/* Photo counter */}
-            {photos.length > 1 && (
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-pink-500/90 text-white text-base font-medium px-4 py-2 rounded-full shadow-lg">
-                    {currentIndex + 1} / {photos.length}
+            {/* Media counter */}
+            {media.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-pink-500/90 text-white text-xs md:text-sm font-medium px-2 py-1 md:px-3 md:py-1 rounded-full shadow-lg">
+                    {currentIndex + 1} / {media.length}
                 </div>
             )}
         </div>

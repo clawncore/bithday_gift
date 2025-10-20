@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sparkles, Heart } from "lucide-react";
-import { CraigMessageCard } from "@/components/CraigMessageCard";
-import { SimbisaiMessageCard } from "@/components/SimbisaiMessageCard";
 
 interface ApologyCardProps {
   name: string;
@@ -24,22 +22,7 @@ export function ApologyCard({
   accentColor = "pink",
   index,
 }: ApologyCardProps) {
-  const [textVisible, setTextVisible] = useState(false);
-  const [showCraigMessage, setShowCraigMessage] = useState(false);
-  const [showSimbisaiMessage, setShowSimbisaiMessage] = useState(false);
-
-  // Check if this is Craig's message
-  const isCraig = name.toLowerCase() === "craig";
-  // Check if this is Simbisai's message
-  const isSimbisai = name.toLowerCase() === "simbisai";
-
-  if (isCraig && showCraigMessage) {
-    return <CraigMessageCard fullMessage={fullMessage} />;
-  }
-
-  if (isSimbisai && showSimbisaiMessage) {
-    return <SimbisaiMessageCard fullMessage={fullMessage} />;
-  }
+  const [showFullMessage, setShowFullMessage] = useState(false);
 
   return (
     <>
@@ -48,9 +31,6 @@ export function ApologyCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, delay: index * 0.2 }}
-        onViewportEnter={() => {
-          setTimeout(() => setTextVisible(true), 300);
-        }}
         className="w-full"
       >
         <Card className="backdrop-blur-md bg-white/70 border-pink-200 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -81,12 +61,20 @@ export function ApologyCard({
 
                 <motion.div
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: textVisible ? 1 : 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ duration: 1.2, delay: 0.6 }}
                   className="mb-6"
                 >
                   <div className="text-base md:text-lg leading-relaxed text-pink-600">
-                    {shortMessage}
+                    {showFullMessage ? (
+                      <div className="space-y-4">
+                        {fullMessage.split('\n').map((paragraph, i) => (
+                          <p key={i}>{paragraph}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      shortMessage
+                    )}
                   </div>
                 </motion.div>
 
@@ -97,17 +85,12 @@ export function ApologyCard({
                 >
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      if (isCraig) {
-                        setShowCraigMessage(true);
-                      } else if (isSimbisai) {
-                        setShowSimbisaiMessage(true);
-                      }
-                    }}
+                    onClick={() => setShowFullMessage(!showFullMessage)}
                     data-testid={`button-read-more-${name.toLowerCase()}`}
                     className="hover-elevate active-elevate-2 border-pink-300 text-pink-600 hover:bg-pink-50"
                   >
-                    Read Full Message <Heart className="w-4 h-4 ml-2" />
+                    {showFullMessage ? "Show Less" : "Read Full Message"}
+                    <Heart className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>
               </div>

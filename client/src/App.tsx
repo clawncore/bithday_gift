@@ -6,9 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import GiftPage from "@/pages/GiftPage";
 import HomePage from "@/pages/HomePage";
 import NotFound from "@/pages/not-found";
-import { useEffect, useState } from "react";
-import { AudioControls } from "@/components/AudioControls";
-import { FallingElements } from "@/components/FallingElements";
+import { useEffect, useState, useRef } from "react";
 
 function Router() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +22,7 @@ function Router() {
 
 function App() {
   const [showFallingElements, setShowFallingElements] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -55,13 +54,63 @@ function App() {
     };
   }, []);
 
+  // Handle background audio
+  useEffect(() => {
+    if (audioRef.current) {
+      // Set background music volume to 40%
+      audioRef.current.volume = 0.4;
+
+      // Try to play the audio automatically when the component mounts
+      const attemptAutoPlay = async () => {
+        try {
+          // Attempt autoplay
+          await audioRef.current!.play();
+        } catch (error) {
+          // Auto-play was prevented by browser policies
+          console.log("Auto-play prevented by browser:", error);
+        }
+      };
+
+      attemptAutoPlay();
+
+      // Set up a more reliable autoplay mechanism
+      const enableAutoPlay = () => {
+        if (audioRef.current) {
+          audioRef.current.play()
+            .catch((error) => {
+              console.log("Failed to play on user interaction:", error);
+            });
+        }
+      };
+
+      // Add event listeners for various user interactions
+      const userEvents = ['click', 'touchstart', 'keydown', 'scroll'];
+      userEvents.forEach(event => {
+        document.addEventListener(event, enableAutoPlay, { once: true });
+      });
+
+      // Cleanup event listeners on component unmount
+      return () => {
+        userEvents.forEach(event => {
+          document.removeEventListener(event, enableAutoPlay);
+        });
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+      };
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        {showFallingElements && <FallingElements />}
+        <audio
+          ref={audioRef}
+          loop
+          src="/panda-song.mp3"
+        />
         <Router />
-        <AudioControls />
       </TooltipProvider>
     </QueryClientProvider>
   );
