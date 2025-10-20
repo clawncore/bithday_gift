@@ -2,17 +2,10 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sparkles, Heart } from "lucide-react";
-import { CraigMessagePlayer } from "@/components/CraigMessagePlayer";
-import { SimbisaiMessagePlayer } from "@/components/SimbisaiMessagePlayer";
+import { CraigMessageCard } from "@/components/CraigMessageCard";
+import { SimbisaiMessageCard } from "@/components/SimbisaiMessageCard";
 
 interface ApologyCardProps {
   name: string;
@@ -31,15 +24,22 @@ export function ApologyCard({
   accentColor = "pink",
   index,
 }: ApologyCardProps) {
-  const [showModal, setShowModal] = useState(false);
-  const [showCraigModal, setShowCraigModal] = useState(false);
-  const [showSimbisaiModal, setShowSimbisaiModal] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
+  const [showCraigMessage, setShowCraigMessage] = useState(false);
+  const [showSimbisaiMessage, setShowSimbisaiMessage] = useState(false);
 
   // Check if this is Craig's message
   const isCraig = name.toLowerCase() === "craig";
   // Check if this is Simbisai's message
   const isSimbisai = name.toLowerCase() === "simbisai";
+
+  if (isCraig && showCraigMessage) {
+    return <CraigMessageCard fullMessage={fullMessage} />;
+  }
+
+  if (isSimbisai && showSimbisaiMessage) {
+    return <SimbisaiMessageCard fullMessage={fullMessage} />;
+  }
 
   return (
     <>
@@ -85,9 +85,9 @@ export function ApologyCard({
                   transition={{ duration: 1.2, delay: 0.6 }}
                   className="mb-6"
                 >
-                  <p className="text-base md:text-lg leading-relaxed text-pink-600">
+                  <div className="text-base md:text-lg leading-relaxed text-pink-600">
                     {shortMessage}
-                  </p>
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -99,11 +99,9 @@ export function ApologyCard({
                     variant="outline"
                     onClick={() => {
                       if (isCraig) {
-                        setShowCraigModal(true);
+                        setShowCraigMessage(true);
                       } else if (isSimbisai) {
-                        setShowSimbisaiModal(true);
-                      } else {
-                        setShowModal(true);
+                        setShowSimbisaiMessage(true);
                       }
                     }}
                     data-testid={`button-read-more-${name.toLowerCase()}`}
@@ -117,44 +115,6 @@ export function ApologyCard({
           </CardContent>
         </Card>
       </motion.div>
-
-      {/* Regular modal for other messages */}
-      {!isCraig && !isSimbisai && (
-        <Dialog open={showModal} onOpenChange={setShowModal}>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white border-pink-200" data-testid={`modal-${name.toLowerCase()}`}>
-            <DialogHeader>
-              <DialogTitle className="font-serif text-3xl mb-4 text-pink-700 flex items-center">
-                {name}'s Message <Heart className="w-6 h-6 text-pink-500 ml-2" />
-              </DialogTitle>
-              <DialogDescription asChild>
-                <div className="space-y-4 text-base leading-relaxed text-pink-600">
-                  {fullMessage.split('\n').map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
-                  ))}
-                </div>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      )}
-
-      {/* Special modal for Craig's message with audio */}
-      {isCraig && (
-        <CraigMessagePlayer
-          open={showCraigModal}
-          onOpenChange={setShowCraigModal}
-          fullMessage={fullMessage}
-        />
-      )}
-
-      {/* Special modal for Simbisai's message with audio */}
-      {isSimbisai && (
-        <SimbisaiMessagePlayer
-          open={showSimbisaiModal}
-          onOpenChange={setShowSimbisaiModal}
-          fullMessage={fullMessage}
-        />
-      )}
     </>
   );
 }

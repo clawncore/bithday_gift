@@ -6,7 +6,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Volume2, Zap } from "lucide-react";
 
 interface SimbisaiMessagePlayerProps {
   open: boolean;
@@ -20,6 +21,7 @@ export function SimbisaiMessagePlayer({
   fullMessage,
 }: SimbisaiMessagePlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioError, setAudioError] = useState(false);
 
   useEffect(() => {
     // When dialog opens/closes, handle audio
@@ -27,11 +29,30 @@ export function SimbisaiMessagePlayer({
       // Automatically play audio when dialog opens
       const playAudio = async () => {
         try {
+          // Small delay to ensure DOM is ready
+          await new Promise(resolve => setTimeout(resolve, 300));
           // Set volume to 80% for Simby's message
           audioRef.current!.volume = 0.8; // 80% volume
           await audioRef.current!.play();
+          setAudioError(false);
         } catch (error) {
           console.log("Auto-play prevented:", error);
+          setAudioError(true);
+          // Try to play on next user interaction
+          const playOnUserInteraction = () => {
+            if (audioRef.current) {
+              audioRef.current.play().catch(err => console.log("Manual play also failed:", err));
+            }
+            // Remove event listeners after first attempt
+            window.removeEventListener('click', playOnUserInteraction);
+            window.removeEventListener('touchstart', playOnUserInteraction);
+            window.removeEventListener('keydown', playOnUserInteraction);
+          };
+
+          // Add event listeners for user interaction
+          window.addEventListener('click', playOnUserInteraction);
+          window.addEventListener('touchstart', playOnUserInteraction);
+          window.addEventListener('keydown', playOnUserInteraction);
         }
       };
       playAudio();
@@ -67,6 +88,24 @@ export function SimbisaiMessagePlayer({
                 {fullMessage.split('\n').map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
+                {audioError && (
+                  <div className="mt-4 text-center">
+                    <Button
+                      onClick={() => {
+                        if (audioRef.current) {
+                          audioRef.current.play().catch(e => console.error("Manual play failed:", e));
+                        }
+                      }}
+                      className="bg-pink-500 hover:bg-pink-600 text-white"
+                    >
+                      <Volume2 className="w-4 h-4 mr-2" />
+                      Play Simbisai's Message
+                    </Button>
+                    <p className="text-sm text-pink-500 mt-2">
+                      Click to play the audio message
+                    </p>
+                  </div>
+                )}
               </div>
             </DialogDescription>
           </DialogHeader>

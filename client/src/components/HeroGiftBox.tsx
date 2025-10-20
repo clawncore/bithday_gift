@@ -92,9 +92,10 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
               size="lg"
               onClick={onUnwrap}
               data-testid="button-open-gift"
-              className="text-lg px-12 py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+              disabled={unwrapped}
+              className="text-lg px-12 py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed"
             >
-              Unwrap Birthday Surprise
+              {unwrapped ? "Unwrapping..." : "Unwrap Birthday Surprise"}
             </Button>
           </motion.div>
         )}

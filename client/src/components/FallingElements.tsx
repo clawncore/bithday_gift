@@ -78,7 +78,28 @@ const HeartSVG = ({ className }: { className?: string }) => (
     </svg>
 );
 
-type ElementType = 'panda' | 'flower' | 'leaf' | 'heart';
+// Simple Apology Face SVG component
+const ApologyFaceSVG = ({ className }: { className?: string }) => (
+    <svg
+        className={className}
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        {/* Face */}
+        <circle cx="50" cy="50" r="45" fill="#FFE4B5" stroke="#D2691E" strokeWidth="2" />
+        {/* Eyes with sad expression */}
+        <ellipse cx="35" cy="40" rx="8" ry="12" fill="white" />
+        <ellipse cx="65" cy="40" rx="8" ry="12" fill="white" />
+        <circle cx="35" cy="45" r="4" fill="black" />
+        <circle cx="65" cy="45" r="4" fill="black" />
+        {/* Sad mouth */}
+        <path d="M30 70 Q50 85 70 70" stroke="black" strokeWidth="3" fill="none" />
+        {/* Tear drop */}
+        <ellipse cx="30" cy="60" rx="3" ry="8" fill="#87CEEB" />
+    </svg>
+);
+
+type ElementType = 'panda' | 'flower' | 'leaf' | 'heart' | 'apology';
 
 interface FallingElement {
     id: number;
@@ -109,7 +130,7 @@ export function FallingElements({
         }
 
         const newElements: FallingElement[] = Array.from({ length: elementCount }, (_, i) => {
-            const types: ElementType[] = ['panda', 'flower', 'leaf', 'heart'];
+            const types: ElementType[] = ['panda', 'flower', 'leaf', 'heart', 'apology'];
             const type = types[Math.floor(Math.random() * types.length)];
 
             return {
@@ -168,8 +189,10 @@ export function FallingElements({
                         <FlowerSVG className="text-pink-500 drop-shadow-lg" />
                     ) : element.type === 'leaf' ? (
                         <LeafSVG className="text-green-500 drop-shadow-lg" />
-                    ) : (
+                    ) : element.type === 'heart' ? (
                         <HeartSVG className="text-red-500 drop-shadow-lg" />
+                    ) : (
+                        <ApologyFaceSVG className="text-amber-100 drop-shadow-lg" />
                     )}
                 </motion.div>
             ))}

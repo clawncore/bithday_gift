@@ -10,6 +10,8 @@ import { LockoutScreen } from "@/components/LockoutScreen";
 import { AudioControls } from "@/components/AudioControls";
 import { ReduceMotionToggle } from "@/components/ReduceMotionToggle";
 import { BirthdayMessageCard } from "@/components/BirthdayMessageCard";
+import { VideoPlayer } from "@/components/VideoPlayer";
+import { PhotoSlideshow } from "@/components/PhotoSlideshow";
 import { ClaimResponse } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Loader2, Sparkles, Flower } from "lucide-react";
@@ -22,9 +24,6 @@ export default function GiftPage() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const secretWord = urlParams.get("word");
-
-  // Removed navigation to home page when no secret word is provided
-  // This allows the gift to flow normally without barriers
 
   // Try to unmute audio when the page loads
   useEffect(() => {
@@ -59,10 +58,20 @@ export default function GiftPage() {
   }, []);
 
   const handleUnwrap = () => {
+    if (unwrapped) return; // Prevent double execution
+
     setUnwrapped(true);
+
+    // Scroll to the content section after a delay to ensure content is rendered
     setTimeout(() => {
-      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-    }, 1000);
+      const contentSection = document.querySelector('.birthday-content-section');
+      if (contentSection) {
+        contentSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // Fallback to scrolling to bottom of hero section
+        window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+      }
+    }, 1000); // Reduced delay to 1 second for quicker response
   };
 
   const handleReply = async (choice: "yes" | "need_time", message?: string) => {
@@ -136,8 +145,36 @@ export default function GiftPage() {
             transition={{ duration: 1 }}
           >
             {/* Birthday Message Card - appears after unwrapping */}
-            <section className="py-12 px-4 flex justify-center">
+            <section className="py-12 px-4 flex justify-center birthday-content-section">
               <BirthdayMessageCard />
+            </section>
+
+            {/* Memories Photo Slideshow - appears below the birthday message */}
+            <section className="py-12 px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 text-pink-700">
+                    Your memories for the past year
+                  </h2>
+                  <p className="text-lg text-pink-600">
+                    A slideshow of our cherished moments together
+                  </p>
+                </div>
+                <PhotoSlideshow
+                  photos={[
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.50_c7282973.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.52_4374e524.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.52_6a60b8e5.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.56_77ddb625.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.56_b6bf33e8.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.57_791dd6bb.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.58_6a2848df.jpg",
+                    "/memories/WhatsApp Image 2025-10-20 at 08.59.59_6a3a43cb.jpg"
+                  ]}
+                  interval={5000}
+                  className="mx-auto"
+                />
+              </div>
             </section>
 
             {/* Timeline of memories */}

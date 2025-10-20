@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function BirthdayMessageCard() {
     const [isUnwrapped, setIsUnwrapped] = useState(false);
+    const [audioError, setAudioError] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
@@ -21,13 +22,28 @@ export function BirthdayMessageCard() {
         if (isUnwrapped && audioRef.current) {
             const playAudio = async () => {
                 try {
+                    // Reset audio to start
+                    audioRef.current!.currentTime = 0;
                     audioRef.current!.volume = 0.8;
-                    await audioRef.current!.play();
+
+                    // Attempt to play the audio
+                    const playPromise = audioRef.current!.play();
+
+                    if (playPromise !== undefined) {
+                        await playPromise;
+                        // Audio playback started successfully
+                        setAudioError(false);
+                    }
                 } catch (error) {
-                    console.error("Error playing birthday message:", error);
+                    // Audio autoplay was prevented, show manual play button
+                    console.log("Audio autoplay prevented:", error);
+                    setAudioError(true);
                 }
             };
-            playAudio();
+
+            // Small delay to ensure DOM is ready
+            const timer = setTimeout(playAudio, 300);
+            return () => clearTimeout(timer);
         }
     }, [isUnwrapped]);
 
@@ -104,7 +120,34 @@ export function BirthdayMessageCard() {
                     </motion.div>
                 </div>
 
-                <audio ref={audioRef} src="/birthday-message.mp3" />
+                <audio
+                    ref={audioRef}
+                    src="/birthday-message.mp3"
+                    preload="auto"
+                />
+
+                {audioError && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-6 text-center"
+                    >
+                        <Button
+                            onClick={() => {
+                                if (audioRef.current) {
+                                    audioRef.current.play().catch(e => console.error("Manual play failed:", e));
+                                }
+                            }}
+                            className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 text-lg"
+                        >
+                            <Volume2 className="w-5 h-5 mr-2 inline" />
+                            Play Birthday Song
+                        </Button>
+                        <p className="text-sm text-pink-500 mt-3">
+                            Click to play the birthday message
+                        </p>
+                    </motion.div>
+                )}
             </motion.div>
         );
     }

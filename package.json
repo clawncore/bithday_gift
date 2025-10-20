@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx server/index.ts",
-    "build": "npx vite build",
+    "dev:client": "cd client && vite",
+    "build": "cd client && npx vite build",
     "start": "cross-env NODE_ENV=development node dist/index.js",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "vercel-build": "npm run build",

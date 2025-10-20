@@ -87,7 +87,7 @@ export function AudioControls() {
       <audio
         ref={audioRef}
         loop
-        src="/happy-birthday-song.mp3"
+        src="/panda-song.mp3"
       />
 
       <motion.div
