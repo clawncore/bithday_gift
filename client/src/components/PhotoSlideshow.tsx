@@ -77,7 +77,7 @@ export function PhotoSlideshow({
     return (
         <div className={`relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-pink-50 to-rose-50 p-4 ${className}`}>
             {/* Responsive container for slideshow */}
-            <div className="relative w-full" style={{ paddingBottom: '75%' /* 4:3 aspect ratio */ }}>
+            <div className="relative w-full h-full min-h-[500px]">
                 <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={currentIndex}

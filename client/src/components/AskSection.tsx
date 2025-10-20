@@ -52,8 +52,8 @@ export function AskSection({ onReply }: AskSectionProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl text-pink-600 mb-16 max-w-2xl mx-auto"
           >
-            I know I've made mistakes, and I deeply regret how things have been between us. 
-            I'm here to ask if you're willing to start over and give me a chance to show you I've changed. 
+            We both wronged you in different and unimaginable ways, and we deeply regret how things have been between us. 
+            We're here to ask if you're willing to start over and give us a chance to show you we've changed. 
             What do you say?
           </motion.p>
 

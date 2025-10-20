@@ -23,39 +23,13 @@ export class MemStorage implements IStorage {
       const sampleContent: GiftContent = {
         recipientName: "Chandrika",
         craigApology: {
-          shortMessage: "Craig's heartfelt message",
-          fullMessage: `Dearest Chandrika,
-
-First and foremost, I want to sincerely apologize for the mistakes we've made and the pain we've caused you. I understand that my actions and words have hurt you deeply, and for that, I am truly sorry.
-
-I take full responsibility for my part in this situation. I realize now that I was thoughtless and inconsiderate, and I deeply regret the impact my behavior has had on you. You deserved so much better from me.
-
-As we reflect on this past year together, I want you to know that despite the mistakes, the memories we've created together have been some of the most meaningful in my life. You are an incredible person with a beautiful heart, and I'm grateful to have had the opportunity to know you.
-
-I hope that in time, you can find it in your heart to forgive us. I'm committed to learning from this experience and becoming a better person - not just for you, but for myself as well.
-
-I hope you have a wonderful birthday, and I wish you nothing but happiness, success, and love in the year ahead.
-
-With sincere apologies and warm birthday wishes,
-Craig`,
+          shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
+          fullMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
           photoUrl: undefined,
         },
         simbisaiApology: {
-          shortMessage: "Message from Simby (fatso)",
-          fullMessage: `Dear Chandrika,
-
-I wanted to reach out again — not with drama, but with honesty (and maybe a little laughter too). I know I’ve hurt you in more ways than I’d like to admit, and I’m sorry for it — truly.
-
-Looking back at everything — the chaos, the jokes, the teasing — I can still hear you calling me "Putin" or "fatso," and I can’t even be mad. Those moments somehow became a weirdly special part of our story. You had that way of roasting me while still making me laugh, even when I deserved it.
-
-But beyond the jokes, I know I broke your trust. I didn’t treat your care with the respect it deserved. And for that, I take full responsibility. You were genuine with me — patient, kind, way more forgiving than I ever earned.
-
-This past year taught me things about friendship, loyalty, and the cost of taking people for granted. I can’t undo what’s been done, but I want you to know I’ve been reflecting — growing, even — trying to become someone who doesn’t repeat the same mistakes.
-
-And since it’s your birthday, I hope the world gives you back all the good you’ve poured into it — the laughter, the love, the light. You deserve nothing less.
-
-With a mix of guilt, gratitude, and a smile I can't quite hide,
-Simbisai`,
+          shortMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
+          fullMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
           photoUrl: undefined,
         },
         media: [

@@ -119,12 +119,12 @@ export default function GiftPage() {
     recipientName: "Chandrika",
     media: [],
     craigApology: {
-      shortMessage: "Craig's heartfelt message",
-      fullMessage: "Dear Chandrika, Happy Birthday! We hope you have a wonderful day."
+      fullMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
+      shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig"
     },
     simbisaiApology: {
-      shortMessage: "Message from Simby",
-      fullMessage: "Dear Chandrika, Happy Birthday! We hope you have a wonderful day."
+      fullMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
+      shortMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby"
     }
   };
 
@@ -168,7 +168,7 @@ export default function GiftPage() {
                       { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.59_6a3a43cb.jpg", type: "image" }
                     ]}
                     interval={5000}
-                    className="w-full"
+                    className="w-full h-[80vh] max-h-[800px]"
                   />
                 </div>
               </div>

@@ -22,8 +22,6 @@ export function ApologyCard({
   accentColor = "pink",
   index,
 }: ApologyCardProps) {
-  const [showFullMessage, setShowFullMessage] = useState(false);
-
   return (
     <>
       <motion.div
@@ -66,32 +64,8 @@ export function ApologyCard({
                   className="mb-6"
                 >
                   <div className="text-base md:text-lg leading-relaxed text-pink-600">
-                    {showFullMessage ? (
-                      <div className="space-y-4">
-                        {fullMessage.split('\n').map((paragraph, i) => (
-                          <p key={i}>{paragraph}</p>
-                        ))}
-                      </div>
-                    ) : (
-                      shortMessage
-                    )}
+                    {fullMessage}
                   </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.2 }}
-                >
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowFullMessage(!showFullMessage)}
-                    data-testid={`button-read-more-${name.toLowerCase()}`}
-                    className="hover-elevate active-elevate-2 border-pink-300 text-pink-600 hover:bg-pink-50"
-                  >
-                    {showFullMessage ? "Show Less" : "Read Full Message"}
-                    <Heart className="w-4 h-4 ml-2" />
-                  </Button>
                 </motion.div>
               </div>
             </div>
