@@ -46,11 +46,11 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-8"
+          className="mb-6 md:mb-8"
         >
           {!unwrapped ? (
-            <div className="inline-block mb-8 pulse-glow rounded-full p-8 bg-pink-200/30">
-              <Gift className="w-24 h-24 text-pink-600" strokeWidth={1.5} />
+            <div className="inline-block mb-6 md:mb-8 pulse-glow rounded-full p-6 md:p-8 bg-pink-200/30">
+              <Gift className="w-16 h-16 md:w-24 md:h-24 text-pink-600" strokeWidth={1.5} />
             </div>
           ) : (
             <motion.div
@@ -59,7 +59,7 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
               transition={{ duration: 0.8, type: "spring" }}
               className="mb-4"
             >
-              <Gift className="w-32 h-32 text-pink-600" strokeWidth={1.5} />
+              <Gift className="w-24 h-24 md:w-32 md:h-32 text-pink-600" strokeWidth={1.5} />
             </motion.div>
           )}
         </motion.div>
@@ -68,7 +68,7 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-pink-700"
+          className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-pink-700"
         >
           Happy Birthday, Chandrika! 🎂
         </motion.h1>
@@ -77,7 +77,7 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="text-lg md:text-xl text-pink-600 mb-12 font-medium"
+          className="text-base md:text-lg text-pink-600 mb-8 md:mb-12 font-medium px-2"
         >
           A special birthday surprise just for you — please unwrap! 🎁
         </motion.p>
@@ -93,7 +93,7 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
               onClick={onUnwrap}
               data-testid="button-open-gift"
               disabled={unwrapped}
-              className="text-lg px-12 py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed"
+              className="text-base md:text-lg px-8 py-4 md:px-12 md:py-6 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed"
             >
               {unwrapped ? "Unwrapping..." : "Unwrap Birthday Surprise"}
             </Button>
@@ -105,9 +105,9 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2"
+            className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2"
           >
-            <ChevronDown className="w-8 h-8 text-pink-500 animate-bounce" />
+            <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-pink-500 animate-bounce" />
           </motion.div>
         )}
       </div>

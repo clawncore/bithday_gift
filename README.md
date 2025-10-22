@@ -1,46 +1,72 @@
 # Happy Birthday Reel
 
-A special birthday surprise website built with React, Vite, and Express.
+A special birthday gift website with memories, messages, and interactive elements.
 
-## Deployment to Vercel
+## Setup Instructions
 
-This project is configured for deployment to Vercel. Follow these steps:
+1. Install dependencies:
+   ```bash
+   npm install
+   cd client && npm install && cd ..
+   ```
 
-1. Push your code to a GitHub repository
-2. Connect your repository to Vercel
-3. Vercel will automatically detect the build settings from `vercel.json`
+2. Create a `.env` file in the root directory with your Supabase configuration:
+   ```env
+   # Supabase Configuration
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   DATABASE_URL=your_database_connection_string
+   ```
 
-## Local Development
+3. Create the replies and tokens tables in your Supabase SQL editor:
+   ```sql
+   -- Create replies table
+   CREATE TABLE IF NOT EXISTS replies (
+     id VARCHAR(255) PRIMARY KEY,
+     token_id VARCHAR(255) NOT NULL,
+     choice VARCHAR(20) NOT NULL CHECK (choice IN ('yes', 'need_time')),
+     message TEXT NOT NULL,
+     recipient_name VARCHAR(255) NOT NULL,
+     created_at TIMESTAMP NOT NULL DEFAULT NOW()
+   );
+   
+   -- Create indexes for faster queries
+   CREATE INDEX IF NOT EXISTS idx_replies_recipient_name ON replies(recipient_name);
+   CREATE INDEX IF NOT EXISTS idx_replies_created_at ON replies(created_at);
+   
+   -- Create tokens table
+   CREATE TABLE IF NOT EXISTS tokens (
+     id VARCHAR(255) PRIMARY KEY,
+     used BOOLEAN NOT NULL DEFAULT false,
+     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+     opened_at TIMESTAMP,
+     expires_at TIMESTAMP
+   );
+   ```
 
-```bash
-# Install dependencies
-npm install
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-# Run development server
-npm run dev
-```
+5. Start the client development server (in a separate terminal):
+   ```bash
+   npm run dev:client
+   ```
 
-## Build for Production
+## Database Setup
 
-```bash
-# Build the project
-npm run build
-```
+This project now uses Prisma ORM for database operations. For detailed setup instructions, see [PRISMA_SETUP.md](PRISMA_SETUP.md).
 
-## Environment Variables
+## Deployment
 
-Make sure to set the following environment variables in your Vercel project settings:
+For deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
-- `NODE_ENV` = production
+## Features
 
-## Project Structure
-
-- `client/` - React frontend application
-- `server/` - Express server
-- `shared/` - Shared types and utilities
-
-## Deployment Notes
-
-- The project uses `vercel.json` for deployment configuration
-- Static files are served from the `dist/public` directory
-- API routes are handled by the Express server
+- Interactive birthday card with animations
+- Chronological memory slideshow
+- Personal messages with apologies
+- Response collection system with Supabase integration
+- Responsive design for all devices

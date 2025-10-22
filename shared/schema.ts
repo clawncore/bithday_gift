@@ -11,6 +11,16 @@ export const tokens = pgTable("tokens", {
   expiresAt: timestamp("expires_at"),
 });
 
+// Add replies table
+export const replies = pgTable("replies", {
+  id: varchar("id").primaryKey(),
+  tokenId: varchar("token_id").notNull(),
+  choice: varchar("choice", { enum: ["yes", "need_time"] }).notNull(),
+  message: text("message").notNull(),
+  recipientName: varchar("recipient_name").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const insertTokenSchema = createInsertSchema(tokens).pick({
   id: true,
 });

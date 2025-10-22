@@ -75,9 +75,9 @@ export function PhotoSlideshow({
     const currentMedia = media[currentIndex];
 
     return (
-        <div className={`relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-pink-50 to-rose-50 p-4 ${className}`}>
+        <div className={`relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-pink-50 to-rose-50 p-2 md:p-4 ${className}`}>
             {/* Responsive container for slideshow */}
-            <div className="relative w-full h-full min-h-[500px]">
+            <div className="relative w-full h-full min-h-[200px] md:min-h-[500px]">
                 <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={currentIndex}
@@ -107,10 +107,10 @@ export function PhotoSlideshow({
                             <img
                                 src={currentMedia.src}
                                 alt={`Memory ${currentIndex + 1}`}
-                                className="object-contain w-full h-full rounded-2xl"
+                                className="object-contain w-full h-full rounded-xl md:rounded-2xl"
                             />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center rounded-2xl overflow-hidden">
+                            <div className="w-full h-full flex items-center justify-center rounded-xl md:rounded-2xl overflow-hidden">
                                 <video
                                     src={currentMedia.src}
                                     controls
@@ -134,19 +134,19 @@ export function PhotoSlideshow({
                 <>
                     <button
                         onClick={prevMedia}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110 md:p-3"
+                        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-1.5 md:p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110"
                         aria-label="Previous media"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button
                         onClick={nextMedia}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110 md:p-3"
+                        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 rounded-full p-1.5 md:p-2 shadow-lg transition-all duration-200 z-10 hover:scale-110"
                         aria-label="Next media"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
@@ -155,7 +155,7 @@ export function PhotoSlideshow({
 
             {/* Media counter */}
             {media.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-pink-500/90 text-white text-xs md:text-sm font-medium px-2 py-1 md:px-3 md:py-1 rounded-full shadow-lg">
+                <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 bg-pink-500/90 text-white text-xs font-medium px-2 py-1 rounded-full shadow-lg">
                     {currentIndex + 1} / {media.length}
                 </div>
             )}
