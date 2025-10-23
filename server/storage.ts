@@ -1,18 +1,37 @@
+﻿import { type Token, type GiftContent } from "../shared/schema";
 import { randomUUID } from "crypto";
-import { prisma } from "./prismaClient.js";
-import { supabase } from "./supabaseClient.js";
+import { prisma } from "./prismaClient";
+import { supabase } from "./supabaseClient";
 
 // Simplified reply interface for our use case
-export class MemStorage {
+export interface SimpleReply {
+  choice: "yes" | "need_time";
+  message: string;
+  timestamp: Date;
+}
+
+export interface IStorage {
+  getToken(id: string): Promise<(Token & { content: GiftContent }) | undefined>;
+  createToken(content: GiftContent): Promise<string>;
+  markTokenUsed(id: string, openedAt: Date): Promise<void>;
+  saveReply(token: string, choice: "yes" | "need_time", message: string): Promise<void>;
+  // Updated method to get simplified replies
+  getReplies(token: string): Promise<SimpleReply[] | undefined>;
+}
+
+export class MemStorage implements IStorage {
+  private tokens: Map<string, Token & { content: GiftContent }>;
+  private replies: Map<string, SimpleReply[]>;
+
   constructor() {
     this.tokens = new Map();
     this.replies = new Map();
     this.initializeSampleToken();
   }
 
-  initializeSampleToken() {
+  private initializeSampleToken() {
     try {
-      const sampleContent = {
+      const sampleContent: GiftContent = {
         recipientName: "Chandrika",
         craigApology: {
           shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
@@ -34,13 +53,13 @@ export class MemStorage {
         openedAt: null,
         expiresAt: null,
         content: sampleContent,
-      });
+      } as Token & { content: GiftContent });
     } catch (error) {
       console.error("Error initializing sample token:", error);
     }
   }
 
-  async getToken(id) {
+  async getToken(id: string): Promise<(Token & { content: GiftContent }) | undefined> {
     try {
       return this.tokens.get(id);
     } catch (error) {
@@ -49,17 +68,17 @@ export class MemStorage {
     }
   }
 
-  async createToken(content) {
+  async createToken(content: GiftContent): Promise<string> {
     try {
       const id = randomUUID();
-      const token = {
+      const token: Token & { content: GiftContent } = {
         id,
         used: false,
         createdAt: new Date(),
         openedAt: null,
         expiresAt: null,
         content,
-      };
+      } as Token & { content: GiftContent };
       this.tokens.set(id, token);
       return id;
     } catch (error) {
@@ -68,13 +87,13 @@ export class MemStorage {
     }
   }
 
-  async markTokenUsed(id, openedAt) {
+  async markTokenUsed(id: string, openedAt: Date): Promise<void> {
     try {
       const token = this.tokens.get(id);
       if (token) {
         token.used = true;
         token.openedAt = openedAt;
-        // Note: We're not checking expiration here, tokens can be used anytime
+        // Note: We are not checking expiration here, tokens can be used anytime
         this.tokens.set(id, token);
       }
     } catch (error) {
@@ -83,7 +102,7 @@ export class MemStorage {
     }
   }
 
-  async saveReply(token, choice, message) {
+  async saveReply(token: string, choice: "yes" | "need_time", message: string): Promise<void> {
     try {
       // Save to in-memory storage
       const replies = this.replies.get(token) || [];
@@ -93,7 +112,7 @@ export class MemStorage {
       // Also save to database using Supabase
       try {
         const { error } = await supabase
-          .from('replies')
+          .from("replies")
           .insert({
             id: randomUUID(),
             choice: choice,
@@ -107,7 +126,7 @@ export class MemStorage {
         }
       } catch (dbError) {
         console.error(`Error saving reply to database:`, dbError);
-        // We don't throw the error here because we want to continue working
+        // We dont throw the error here because we want to continue working
         // even if the database is not available
       }
     } catch (error) {
@@ -117,24 +136,24 @@ export class MemStorage {
   }
 
   // Updated method to get simplified replies from Supabase
-  async getReplies(token) {
+  async getReplies(token: string): Promise<SimpleReply[] | undefined> {
     try {
       // First try to get replies from Supabase
       try {
         const { data, error } = await supabase
-          .from('replies')
-          .select('choice, message, created_at')
-          .eq('recipient_name', 'Chandrika')
-          .order('created_at', { ascending: false });
+          .from("replies")
+          .select("choice, message, created_at")
+          .eq("recipient_name", "Chandrika")
+          .order("created_at", { ascending: false });
 
         if (error) {
-          console.error('Error fetching replies from Supabase:', error);
+          console.error("Error fetching replies from Supabase:", error);
           // Fall back to in-memory storage
           return this.replies.get(token);
         }
 
         if (data) {
-          return data.map((reply) => ({
+          return data.map((reply: any) => ({
             choice: reply.choice,
             message: reply.message,
             timestamp: new Date(reply.created_at)
@@ -144,7 +163,7 @@ export class MemStorage {
         // Fall back to in-memory storage if no data
         return this.replies.get(token);
       } catch (dbError) {
-        console.error('Database error when fetching replies:', dbError);
+        console.error("Database error when fetching replies:", dbError);
         // Fall back to in-memory storage
         return this.replies.get(token);
       }

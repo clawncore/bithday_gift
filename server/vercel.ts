@@ -1,7 +1,11 @@
-import express from 'express';
-import { registerRoutes } from "./routes.js";
-import cors from 'cors';
+﻿import express from "express";
+import dotenv from "dotenv";
+import { registerRoutes } from "./routes";
+import cors from "cors";
 import { createServer } from "http";
+
+// Load environment variables
+dotenv.config();
 
 // Create express app
 const app = express();
@@ -15,7 +19,7 @@ registerRoutes(app).catch(error => {
 });
 
 // Error handling middleware
-app.use((err, _req, res, _next) => {
+app.use((err: any, _req: any, res: any, _next: any) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     console.error(`Error: ${message}`);
@@ -25,21 +29,21 @@ app.use((err, _req, res, _next) => {
 // Serve static files in production - this should come AFTER API routes
 if (process.env.NODE_ENV === "production") {
     // Serve static files from client/dist
-    app.use(express.static('client/dist'));
+    app.use(express.static("client/dist"));
 
     // Handle SPA routing - serve index.html for all non-API routes
-    app.get('*', (req, res) => {
-        if (!req.path.startsWith('/api')) {
-            res.sendFile('index.html', { root: 'client/dist' });
+    app.get("*", (req, res) => {
+        if (!req.path.startsWith("/api")) {
+            res.sendFile("index.html", { root: "client/dist" });
         } else {
-            res.status(404).json({ error: 'API route not found' });
+            res.status(404).json({ error: "API route not found" });
         }
     });
 }
 
 // For development, we need to create and export an HTTP server
 // For Vercel, we just export the app
-let server;
+let server: any;
 if (process.env.NODE_ENV !== "production") {
     server = createServer(app);
 }

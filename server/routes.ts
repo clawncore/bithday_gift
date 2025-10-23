@@ -1,29 +1,11 @@
-import { createServer } from "http";
-import { storage } from "./storage.js";
-import twilio from 'twilio';
-
-// Initialize Twilio client if credentials are available
-let twilioClient = null;
-const whatsappNumbers = ['+9653686568', '+918790813536'];
-
-try {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-
-  if (accountSid && authToken && twilioPhoneNumber) {
-    twilioClient = twilio(accountSid, authToken);
-    console.log('Twilio client initialized successfully');
-  } else {
-    console.log('Twilio credentials not found. SMS notifications will be disabled.');
-  }
-} catch (error) {
-  console.error('Error initializing Twilio client:', error);
-  twilioClient = null;
-}
+import type { Express, Request, Response } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { type GiftContent, type ClaimResponse } from "../shared/schema";
+import { prisma } from "./prismaClient";
 
 // Add a helper function for error handling
-function handleRouteError(res, error, operation) {
+function handleRouteError(res: Response, error: any, operation: string) {
   console.error(`Error in ${operation}:`, error);
   return res.status(500).json({
     ok: false,
@@ -32,97 +14,9 @@ function handleRouteError(res, error, operation) {
   });
 }
 
-// Function to send WhatsApp message via Twilio with better error handling
-async function sendWhatsAppMessage(message) {
-  if (!twilioClient) {
-    console.log('Twilio client not initialized. Skipping message send.');
-    return;
-  }
-
-  const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-  if (!twilioPhoneNumber) {
-    console.log('Twilio phone number not configured. Skipping message send.');
-    return;
-  }
-
-  try {
-    // Send message to each WhatsApp number
-    for (const phoneNumber of whatsappNumbers) {
-      try {
-        const formattedNumber = `whatsapp:${phoneNumber}`;
-        const result = await twilioClient.messages.create({
-          body: message,
-          from: `whatsapp:${twilioPhoneNumber}`,
-          to: formattedNumber
-        });
-        console.log(`WhatsApp message sent successfully to ${phoneNumber}: ${result.sid}`);
-      } catch (error) {
-        // Log the error but don't fail the entire operation
-        console.error(`Error sending WhatsApp message to ${phoneNumber}:`, error.message);
-
-        // Check for common WhatsApp errors
-        if (error.message.includes('channel') || error.message.includes('Channel')) {
-          console.log(`WhatsApp channel error for ${phoneNumber}. This usually means:`);
-          console.log(`1. The recipient hasn't opted in by messaging your Twilio number`);
-          console.log(`2. WhatsApp isn't properly configured for your Twilio number`);
-          console.log(`3. You're using a regular phone number instead of a WhatsApp sandbox number`);
-        }
-
-        // Try SMS as fallback
-        try {
-          console.log(`Trying SMS fallback for ${phoneNumber}`);
-          const result = await twilioClient.messages.create({
-            body: message,
-            from: twilioPhoneNumber,
-            to: phoneNumber
-          });
-          console.log(`SMS sent successfully to ${phoneNumber}: ${result.sid}`);
-        } catch (smsError) {
-          console.error(`Error sending SMS to ${phoneNumber}:`, smsError.message);
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Error in sendWhatsAppMessage function:', error);
-  }
-}
-
-export async function registerRoutes(app) {
-  // Test endpoint for Twilio integration
-  app.get("/api/test-twilio", async (req, res) => {
-    try {
-      const testMessage = "This is a test message from your Happy Birthday Reel app!";
-      console.log("Sending test Twilio message...");
-      await sendWhatsAppMessage(testMessage);
-
-      return res.status(200).json({
-        ok: true,
-        message: "Test message sent successfully"
-      });
-    } catch (error) {
-      console.error("Error in test-twilio endpoint:", error);
-      return handleRouteError(res, error, "testing twilio");
-    }
-  });
-
-  // Endpoint to check Twilio status
-  app.get("/api/twilio-status", async (req, res) => {
-    try {
-      return res.status(200).json({
-        ok: true,
-        twilioConfigured: !!twilioClient,
-        phoneNumber: process.env.TWILIO_PHONE_NUMBER || null,
-        message: twilioClient
-          ? "Twilio is configured and ready to send messages"
-          : "Twilio is not configured properly"
-      });
-    } catch (error) {
-      return handleRouteError(res, error, "checking twilio status");
-    }
-  });
-
+export async function registerRoutes(app: Express): Promise<Server> {
   // New authentication endpoint using Supabase
-  app.post("/api/authenticate", async (req, res) => {
+  app.post("/api/authenticate", async (req: Request, res: Response) => {
     try {
       const { secretWord } = req.body;
 
@@ -153,7 +47,7 @@ export async function registerRoutes(app) {
     }
   });
 
-  app.get("/api/claim", async (req, res) => {
+  app.get("/api/claim", async (req: Request, res: Response) => {
     try {
       // Remove the authentication check for the word parameter
       // Allow access to the gift content without requiring the secret word
@@ -169,7 +63,7 @@ export async function registerRoutes(app) {
         return res.json({
           ok: true,
           openedAt: tokenRecord.openedAt?.toISOString(),
-        });
+        } satisfies ClaimResponse);
       }
 
       // Mark as opened
@@ -180,15 +74,15 @@ export async function registerRoutes(app) {
         ok: true,
         openedAt: openedAt.toISOString(),
         content: tokenRecord.content,
-      });
+      } satisfies ClaimResponse);
     } catch (error) {
       return handleRouteError(res, error, "claiming gift");
     }
   });
 
-  app.post("/api/create-token", async (req, res) => {
+  app.post("/api/create-token", async (req: Request, res: Response) => {
     try {
-      const content = req.body;
+      const content = req.body as GiftContent | undefined;
 
       if (!content || !content.recipientName) {
         return res.status(400).json({ error: "Invalid gift content" });
@@ -210,7 +104,7 @@ export async function registerRoutes(app) {
   });
 
   // Keep the reply endpoint for functionality
-  app.post("/api/reply", async (req, res) => {
+  app.post("/api/reply", async (req: Request, res: Response) => {
     try {
       // Instead of using the replySchema which requires a token, we'll validate manually
       // since we're using a fixed token for replies
@@ -235,10 +129,6 @@ export async function registerRoutes(app) {
 
       await storage.saveReply(token, choice, message.trim());
 
-      // Send WhatsApp message with the reply
-      const replyMessage = `New reply from Chandrika:\nChoice: ${choice}\nMessage: ${message.trim()}`;
-      await sendWhatsAppMessage(replyMessage);
-
       return res.json({ ok: true });
     } catch (error) {
       return handleRouteError(res, error, "saving reply");
@@ -246,7 +136,7 @@ export async function registerRoutes(app) {
   });
 
   // New endpoint to get replies from database using Supabase, with graceful error handling
-  app.get("/api/get-replies", async (req, res) => {
+  app.get("/api/get-replies", async (req: Request, res: Response) => {
     try {
       // First, try to get replies from database using Supabase
       try {

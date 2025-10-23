@@ -84,10 +84,10 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ["var(--font-sans)"],
-                serif: ["var(--font-serif)"],
-                mono: ["var(--font-mono)"],
-                handwritten: ["var(--font-handwritten)"],
+                sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                serif: ['DM Serif Display', 'Crimson Pro', 'serif'],
+                handwritten: ['Pacifico', 'cursive'],
+                mono: ['Menlo', 'monospace'],
             },
             keyframes: {
                 "accordion-down": {

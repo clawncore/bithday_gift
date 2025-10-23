@@ -1,9 +1,9 @@
-import dotenv from 'dotenv';
+﻿import dotenv from "dotenv";
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes.js";
-import { exec } from 'child_process';
-import os from 'os';
-import path from 'path';
+import { registerRoutes } from "./routes";
+import { exec } from "child_process";
+import os from "os";
+import path from "path";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // Serve static files BEFORE registering routes
 // This is crucial for the root route to work
-app.use(express.static('client/public'));
-app.use(express.static('client/dist'));
+app.use(express.static("client/public"));
+app.use(express.static("client/dist"));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
       }
 
       if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
+        logLine = logLine.slice(0, 79) + "";
       }
 
       log(logLine);
@@ -54,10 +54,10 @@ app.use((req, res, next) => {
 
 // Handle SPA routing - serve index.html for all non-API routes
 // This needs to be registered AFTER static files but BEFORE API routes
-app.get('*', (req, res, next) => {
+app.get("*", (req, res, next) => {
   // If requesting favicon, serve it directly
-  if (req.path === '/favicon.ico') {
-    const faviconPath = 'client/public/favicon.ico';
+  if (req.path === "/favicon.ico") {
+    const faviconPath = "client/public/favicon.ico";
     res.sendFile(path.resolve(faviconPath), (err) => {
       if (err) {
         // If favicon doesn't exist, send a minimal response
@@ -68,8 +68,8 @@ app.get('*', (req, res, next) => {
   }
 
   // Let static files be served first, then handle SPA routing
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.resolve('client/dist/index.html'));
+  if (!req.path.startsWith("/api")) {
+    res.sendFile(path.resolve("client/dist/index.html"));
   } else {
     // Pass API routes to the next handler
     next();
@@ -91,21 +91,21 @@ app.get('*', (req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen(port, '0.0.0.0', () => {
+  const port = parseInt(process.env.PORT || "5000", 10);
+  server.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
     // Open browser in development mode only
     if (app.get("env") === "development") {
       const url = `http://localhost:${port}`;
 
       try {
-        if (os.platform() === 'win32') {
+        if (os.platform() === "win32") {
           exec(`start ${url}`, (error) => {
             if (error) {
               log(`Failed to open browser: ${error.message}`);
             }
           });
-        } else if (os.platform() === 'darwin') {
+        } else if (os.platform() === "darwin") {
           exec(`open ${url}`, (error) => {
             if (error) {
               log(`Failed to open browser: ${error.message}`);
