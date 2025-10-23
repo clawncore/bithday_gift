@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
     // Serve static files from client/dist
-    app.use(express.static(path.join(process.cwd(), 'client/dist')));
+    app.use(express.static('client/dist'));
 
     // Handle SPA routing - serve index.html for all non-API routes
     app.get('*', (req, res) => {
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
             return res.status(404).json({ error: 'API route not found' });
         }
         // For all other routes, serve the SPA index.html
-        res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
+        res.sendFile('index.html', { root: 'client/dist' });
     });
 }
 
