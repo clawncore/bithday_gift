@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerRoutes } from "./routes";
+import { registerRoutes } from "./routes.js";
 import cors from 'cors';
 import { createServer } from "http";
 
@@ -15,7 +15,7 @@ registerRoutes(app).catch(error => {
 });
 
 // Error handling middleware
-app.use((err: any, _req: any, res: any, _next: any) => {
+app.use((err, _req, res, _next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     console.error(`Error: ${message}`);
@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "production") {
 
 // For development, we need to create and export an HTTP server
 // For Vercel, we just export the app
-let server: any;
+let server;
 if (process.env.NODE_ENV !== "production") {
     server = createServer(app);
 }

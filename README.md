@@ -63,6 +63,10 @@ This project now uses Prisma ORM for database operations. For detailed setup ins
 
 For deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
+### Vercel Deployment Notes
+
+This project now uses JavaScript server files for Vercel deployment to avoid module resolution issues. See [FINAL_SERVER_DEPLOYMENT_FIX.md](FINAL_SERVER_DEPLOYMENT_FIX.md) for details.
+
 ## Features
 
 - Interactive birthday card with animations

@@ -1,56 +1,55 @@
-# Deployment Checklist for Vercel
+# Deployment Checklist
 
-## Pre-deployment Checks
+## Server Files
+- [x] vercel.js - Entry point for Vercel deployment
+- [x] routes.js - API route definitions
+- [x] storage.js - Data storage implementation
+- [x] prismaClient.js - Prisma database client
+- [x] supabaseClient.js - Supabase integration client
 
-### 1. API Endpoints
-- [x] All API endpoints in the [api](file:///c:/xampp/htdocs/src/HappyBirthdayReel/api) directory are simplified and self-contained
-- [x] No complex imports that might cause serverless function crashes
-- [x] Proper error handling with try/catch blocks
-- [x] Consistent response structures and status codes
+## Configuration Files
+- [x] vercel.json - Updated to use JavaScript files
+  - Uses server/vercel.js as entry point
+  - Includes all server JavaScript files
+  - Proper route mapping for API and static files
 
-### 2. Environment Variables
-- [x] Check that all required environment variables are set in Vercel
-- [x] SUPABASE_URL
-- [x] SUPABASE_SERVICE_ROLE_KEY
-- [x] VITE_SUPABASE_URL
-- [x] VITE_SUPABASE_ANON_KEY
-- [x] TWILIO_ACCOUNT_SID
-- [x] TWILIO_AUTH_TOKEN
-- [x] TWILIO_PHONE_NUMBER
+## Package.json Updates
+- [x] build:server script updated to avoid confusion
+- [x] vercel-build script remains unchanged (builds client only)
 
-### 3. Media Files
-- [x] All media files are in the correct location ([client/public/memories](file:///c:/xampp/htdocs/src/HappyBirthdayReel/client/public/memories))
-- [x] Media file paths in the claim endpoint match actual files
-- [x] File names are correctly referenced
+## Removed Files
+- [x] build-server.ts - No longer needed
+- [x] All TypeScript server files - Replaced with JavaScript versions
 
-### 4. Client-side Configuration
-- [x] API calls use the correct base URL for production
-- [x] [getApiBaseUrl()](file:///c:/xampp/htdocs/src/HappyBirthdayReel/client/src/lib/utils.ts#L12-L18) function returns `window.location.origin` in production
-- [x] All API endpoints are correctly referenced
+## Environment Variables
+- [ ] Ensure all required environment variables are set in Vercel:
+  - SUPABASE_URL
+  - SUPABASE_SERVICE_ROLE_KEY
+  - TWILIO_ACCOUNT_SID
+  - TWILIO_AUTH_TOKEN
+  - TWILIO_PHONE_NUMBER
 
-## Deployment Steps
+## Testing Steps
+Before deploying to production:
+1. [ ] Verify local development still works with `npm run dev`
+2. [ ] Test API endpoints locally
+3. [ ] Check that authentication works with secret word "panda"
+4. [ ] Verify reply functionality
+5. [ ] Test timeline image display
+6. [ ] Check that all UI elements render correctly
 
-1. Commit all changes to the repository
-2. Push to GitHub to trigger Vercel deployment
-3. Monitor the build logs for any errors
-4. Check the Vercel function logs for runtime errors
-5. Test all API endpoints after deployment
+## Deployment Verification
+After deploying to Vercel:
+1. [ ] Homepage loads without 500 errors
+2. [ ] API endpoints respond correctly
+3. [ ] Authentication works with secret word "panda"
+4. [ ] Reply functionality saves messages
+5. [ ] Timeline displays all images properly
+6. [ ] No module not found errors in Vercel logs
 
-## Post-deployment Testing
-
-1. Visit the deployed URL
-2. Test authentication with secret word "panda"
-3. Submit a reply through the form
-4. Verify that replies are processed without errors
-5. Check that gift content is displayed correctly
-6. Verify that all media files load properly
-
-## Troubleshooting
-
-If you encounter any issues:
-
-1. Check Vercel logs for specific error messages
-2. Verify that all environment variables are correctly set
-3. Ensure that the [api](file:///c:/xampp/htdocs/src/HappyBirthdayReel/api) directory functions are not importing complex modules
-4. Check that media files are in the correct location
-5. Verify that client-side API calls are using the correct URLs
+## Rollback Plan
+If issues occur after deployment:
+1. [ ] Revert to previous working commit
+2. [ ] Restore vercel.json to previous configuration
+3. [ ] Re-add build-server.ts if needed
+4. [ ] Contact Vercel support if module resolution issues persist

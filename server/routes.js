@@ -1,12 +1,9 @@
-import type { Express } from "express";
-import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { replySchema, type GiftContent, type ClaimResponse } from "../shared/schema";
-import { prisma } from "./prismaClient";
+import { createServer } from "http";
+import { storage } from "./storage.js";
 import twilio from 'twilio';
 
 // Initialize Twilio client if credentials are available
-let twilioClient: twilio.Twilio | null = null;
+let twilioClient = null;
 const whatsappNumbers = ['+9653686568', '+918790813536'];
 
 try {
@@ -26,7 +23,7 @@ try {
 }
 
 // Add a helper function for error handling
-function handleRouteError(res: any, error: any, operation: string) {
+function handleRouteError(res, error, operation) {
   console.error(`Error in ${operation}:`, error);
   return res.status(500).json({
     ok: false,
@@ -36,7 +33,7 @@ function handleRouteError(res: any, error: any, operation: string) {
 }
 
 // Function to send WhatsApp message via Twilio with better error handling
-async function sendWhatsAppMessage(message: string) {
+async function sendWhatsAppMessage(message) {
   if (!twilioClient) {
     console.log('Twilio client not initialized. Skipping message send.');
     return;
@@ -59,7 +56,7 @@ async function sendWhatsAppMessage(message: string) {
           to: formattedNumber
         });
         console.log(`WhatsApp message sent successfully to ${phoneNumber}: ${result.sid}`);
-      } catch (error: any) {
+      } catch (error) {
         // Log the error but don't fail the entire operation
         console.error(`Error sending WhatsApp message to ${phoneNumber}:`, error.message);
 
@@ -80,7 +77,7 @@ async function sendWhatsAppMessage(message: string) {
             to: phoneNumber
           });
           console.log(`SMS sent successfully to ${phoneNumber}: ${result.sid}`);
-        } catch (smsError: any) {
+        } catch (smsError) {
           console.error(`Error sending SMS to ${phoneNumber}:`, smsError.message);
         }
       }
@@ -90,7 +87,7 @@ async function sendWhatsAppMessage(message: string) {
   }
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(app) {
   // Test endpoint for Twilio integration
   app.get("/api/test-twilio", async (req, res) => {
     try {
@@ -172,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({
           ok: true,
           openedAt: tokenRecord.openedAt?.toISOString(),
-        } satisfies ClaimResponse);
+        });
       }
 
       // Mark as opened
@@ -183,7 +180,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ok: true,
         openedAt: openedAt.toISOString(),
         content: tokenRecord.content,
-      } satisfies ClaimResponse);
+      });
     } catch (error) {
       return handleRouteError(res, error, "claiming gift");
     }
@@ -191,7 +188,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/create-token", async (req, res) => {
     try {
-      const content = req.body as GiftContent | undefined;
+      const content = req.body;
 
       if (!content || !content.recipientName) {
         return res.status(400).json({ error: "Invalid gift content" });
