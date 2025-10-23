@@ -1,13 +1,17 @@
 import dotenv from 'dotenv';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
 import { exec } from 'child_process';
 import os from 'os';
 import path from 'path';
 
 // Load environment variables from .env file
 dotenv.config();
+
+// Simple logging function
+function log(message: string, type: string = "info") {
+  console.log(`[${new Date().toISOString()}] ${type.toUpperCase()}: ${message}`);
+}
 
 const app = express();
 app.use(express.json());
@@ -42,6 +46,28 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Simple static file serving function
+function serveStatic(app: express.Application) {
+  // Serve static files from client/dist
+  app.use(express.static('client/dist'));
+  
+  // Handle SPA routing - serve index.html for all non-API routes
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile('client/dist/index.html', { root: '.' });
+    } else {
+      res.status(404).json({ error: 'API route not found' });
+    }
+  });
+}
+
+// Simple vite setup function for development
+async function setupVite(app: express.Application, server: any) {
+  // In development, we don't need to do anything special for vite
+  // The client is served separately in development
+  return Promise.resolve();
+}
 
 (async () => {
   const server = await registerRoutes(app);

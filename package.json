@@ -9,7 +9,7 @@
     "build": "cd client && npx vite build",
     "start": "cross-env NODE_ENV=development node dist/index.js",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "vercel-build": "npm run build",
+    "vercel-build": "cd client && npm install && npx vite build",
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "test:server": "node test-server.js",

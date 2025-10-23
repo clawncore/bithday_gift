@@ -2,21 +2,27 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
+      "src": "server/vercel.ts",
+      "use": "@vercel/node",
       "config": {
-        "distDir": "client/dist"
+        "includeFiles": [
+          "server/**",
+          "api/**",
+          "client/dist/**",
+          "prisma/**",
+          ".env"
+        ]
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/server/vercel.ts"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/server/vercel.ts"
     }
   ]
 }
