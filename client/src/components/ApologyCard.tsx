@@ -31,7 +31,7 @@ export function ApologyCard({
         transition={{ duration: 0.8, delay: index * 0.2 }}
         className="w-full"
       >
-        <Card className="backdrop-blur-md bg-pink-100 border-pink-300 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="backdrop-blur-md bg-pink-500 border-pink-300 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <motion.div

@@ -14,7 +14,7 @@ export default async function handler(request, response) {
         });
     } catch (error) {
         console.error("Error fetching replies:", error);
-        return response.status(500).json({ 
+        return response.status(500).json({
             ok: false,
             error: "Failed to fetch replies",
             message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"

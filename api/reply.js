@@ -37,7 +37,7 @@ export default async function handler(request, response) {
         return response.status(200).json({ ok: true });
     } catch (error) {
         console.error("Error processing reply:", error);
-        return response.status(500).json({ 
+        return response.status(500).json({
             error: "Failed to process reply",
             message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
         });

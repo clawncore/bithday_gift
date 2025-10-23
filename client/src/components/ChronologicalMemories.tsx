@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
 
 export function ChronologicalMemories() {
-    // Define all memories with their details
+    // Define all memories with their details using meaningful notes instead of dates
     const memories = [
         {
             id: 0,
@@ -16,147 +16,147 @@ export function ChronologicalMemories() {
         },
         {
             id: 1,
-            date: "October 24, 2024",
+            date: "Our Beginning",
             title: "Our Beginning",
             description: "The start of our wonderful journey together",
             imageUrl: "/chronological_memories/2024-10-24_first_memory.jpg",
             position: "right",
-            memoryNote: "Where it all began..."
+            memoryNote: "The beginning of something beautiful..."
         },
         {
             id: 2,
-            date: "November 15, 2024",
+            date: "Special Moments",
             title: "Special Day",
             description: "A day we'll always remember",
             imageUrl: "/chronological_memories/2024-11-15_second_memory.jpg",
             position: "left",
-            memoryNote: "Memories worth cherishing"
+            memoryNote: "Memories worth cherishing forever"
         },
         {
             id: 3,
-            date: "December 5, 2024",
+            date: "Winter Warmth",
             title: "Winter Moments",
             description: "Beautiful winter days together",
             imageUrl: "/chronological_memories/2024-12-05_third_memory.jpg",
             position: "right",
-            memoryNote: "Winter warmth in our hearts"
+            memoryNote: "Finding warmth in each other's company"
         },
         {
             id: 4,
-            date: "January 10, 2025",
+            date: "New Beginnings",
             title: "New Year Beginnings",
             description: "Starting the new year with wonderful memories",
             imageUrl: "/chronological_memories/2025-01-10_fourth_memory.jpg",
             position: "left",
-            memoryNote: "New year, new adventures"
+            memoryNote: "Fresh starts and new adventures"
         },
         {
             id: 5,
-            date: "January 25, 2025",
+            date: "Captured Moments",
             title: "Special Video Moment",
             description: "A captured moment we'll treasure forever",
             videoUrl: "/chronological_memories/2025-01-25_fifth_memory.mp4",
             position: "right",
-            memoryNote: "Captured in motion"
+            memoryNote: "Memories in motion, forever preserved"
         },
         {
             id: 6,
-            date: "February 15, 2025",
+            date: "Love & Friendship",
             title: "Valentine Days",
             description: "Celebrating love and friendship",
             imageUrl: "/chronological_memories/2025-02-15_sixth_memory.jpg",
             position: "left",
-            memoryNote: "Love is in the air"
+            memoryNote: "Love that goes beyond romance"
         },
         {
             id: 7,
-            date: "March 10, 2025",
+            date: "Spring Adventures",
             title: "Spring Adventures",
             description: "Exploring new places as spring arrived",
             imageUrl: "/chronological_memories/2025-03-10_seventh_memory.jpg",
             position: "right",
-            memoryNote: "Spring blooms and smiles"
+            memoryNote: "Blooming together like spring flowers"
         },
         {
             id: 8,
-            date: "April 5, 2025",
+            date: "Joyful Times",
             title: "Easter Celebrations",
             description: "Celebrating together with joy",
             imageUrl: "/chronological_memories/2025-04-05_eighth_memory.jpg",
             position: "left",
-            memoryNote: "Easter joy and laughter"
+            memoryNote: "Celebrating life's simple pleasures"
         },
         {
             id: 9,
-            date: "April 10, 2025",
+            date: "Unforgettable Trips",
             title: "Special Getaway",
             description: "A memorable trip we'll never forget",
             imageUrl: "/chronological_memories/2025-04-10_ninth_memory.jpg",
             position: "right",
-            memoryNote: "Escape to happiness"
+            memoryNote: "Escape to happiness together"
         },
         {
             id: 10,
-            date: "April 12, 2025",
+            date: "Pure Happiness",
             title: "Fun Times",
             description: "Laughter and joy filled this special day",
             imageUrl: "/chronological_memories/2025-04-12_tenth_memory.jpg",
             position: "left",
-            memoryNote: "Pure joy and laughter"
+            memoryNote: "Laughter that echoes in our hearts"
         },
         {
             id: 11,
-            date: "April 15, 2025",
+            date: "Beautiful Bonds",
             title: "Beautiful Moments",
             description: "Capturing the beauty of our friendship",
             imageUrl: "/chronological_memories/2025-04-15_eleventh_memory.jpg",
             position: "right",
-            memoryNote: "Friendship at its finest"
+            memoryNote: "Friendship at its most beautiful"
         },
         {
             id: 12,
-            date: "April 18, 2025",
+            date: "Nature's Beauty",
             title: "Spring Blooms",
             description: "Enjoying the beauty of spring together",
             imageUrl: "/chronological_memories/2025-04-18_twelfth_memory.jpg",
             position: "left",
-            memoryNote: "Nature's beauty with you"
+            memoryNote: "Nature's beauty shared with you"
         },
         {
             id: 13,
-            date: "April 20, 2025",
+            date: "Perfect Moments",
             title: "Wonderful Day",
             description: "A day filled with happiness and laughter",
             imageUrl: "/chronological_memories/2025-04-20_thirteenth_memory.jpg",
             position: "right",
-            memoryNote: "Perfect moments together"
+            memoryNote: "Perfect moments with perfect company"
         },
         {
             id: 14,
-            date: "April 22, 2025",
+            date: "Treasured Experiences",
             title: "Memorable Experience",
             description: "An experience we'll treasure forever",
             imageUrl: "/chronological_memories/2025-04-22_fourteenth_memory.jpg",
             position: "left",
-            memoryNote: "Unforgettable memories"
+            memoryNote: "Experiences that shaped our bond"
         },
         {
             id: 15,
-            date: "April 25, 2025",
+            date: "Celebration Time",
             title: "Special Occasion",
             description: "Celebrating a special moment together",
             imageUrl: "/chronological_memories/2025-04-25_fifteenth_memory.jpg",
             position: "right",
-            memoryNote: "Celebrating life with you"
+            memoryNote: "Every moment with you is special"
         },
         {
             id: 16,
-            date: "April 30, 2025",
+            date: "April's Treasures",
             title: "April's End",
             description: "Ending April with beautiful memories",
             imageUrl: "/chronological_memories/2025-04-30_sixteenth_memory.jpg",
             position: "left",
-            memoryNote: "April showers, May flowers"
+            memoryNote: "April showers brought May flowers to our friendship"
         }
     ];
 
