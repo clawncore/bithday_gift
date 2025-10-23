@@ -6,12 +6,22 @@ export function ChronologicalMemories() {
     // Define all memories with their details
     const memories = [
         {
+            id: 0,
+            date: "Our Beginning",
+            title: "Our Special Beginning",
+            description: "The very first moment of our journey together",
+            imageUrl: "/memories together/initial.jpg",
+            position: "right",
+            memoryNote: "Where it all started..."
+        },
+        {
             id: 1,
             date: "October 24, 2024",
             title: "Our Beginning",
             description: "The start of our wonderful journey together",
             imageUrl: "/chronological_memories/2024-10-24_first_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Where it all began..."
         },
         {
             id: 2,
@@ -19,7 +29,8 @@ export function ChronologicalMemories() {
             title: "Special Day",
             description: "A day we'll always remember",
             imageUrl: "/chronological_memories/2024-11-15_second_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Memories worth cherishing"
         },
         {
             id: 3,
@@ -27,7 +38,8 @@ export function ChronologicalMemories() {
             title: "Winter Moments",
             description: "Beautiful winter days together",
             imageUrl: "/chronological_memories/2024-12-05_third_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Winter warmth in our hearts"
         },
         {
             id: 4,
@@ -35,7 +47,8 @@ export function ChronologicalMemories() {
             title: "New Year Beginnings",
             description: "Starting the new year with wonderful memories",
             imageUrl: "/chronological_memories/2025-01-10_fourth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "New year, new adventures"
         },
         {
             id: 5,
@@ -43,7 +56,8 @@ export function ChronologicalMemories() {
             title: "Special Video Moment",
             description: "A captured moment we'll treasure forever",
             videoUrl: "/chronological_memories/2025-01-25_fifth_memory.mp4",
-            position: "right"
+            position: "right",
+            memoryNote: "Captured in motion"
         },
         {
             id: 6,
@@ -51,7 +65,8 @@ export function ChronologicalMemories() {
             title: "Valentine Days",
             description: "Celebrating love and friendship",
             imageUrl: "/chronological_memories/2025-02-15_sixth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Love is in the air"
         },
         {
             id: 7,
@@ -59,7 +74,8 @@ export function ChronologicalMemories() {
             title: "Spring Adventures",
             description: "Exploring new places as spring arrived",
             imageUrl: "/chronological_memories/2025-03-10_seventh_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Spring blooms and smiles"
         },
         {
             id: 8,
@@ -67,7 +83,8 @@ export function ChronologicalMemories() {
             title: "Easter Celebrations",
             description: "Celebrating together with joy",
             imageUrl: "/chronological_memories/2025-04-05_eighth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Easter joy and laughter"
         },
         {
             id: 9,
@@ -75,7 +92,8 @@ export function ChronologicalMemories() {
             title: "Special Getaway",
             description: "A memorable trip we'll never forget",
             imageUrl: "/chronological_memories/2025-04-10_ninth_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Escape to happiness"
         },
         {
             id: 10,
@@ -83,7 +101,8 @@ export function ChronologicalMemories() {
             title: "Fun Times",
             description: "Laughter and joy filled this special day",
             imageUrl: "/chronological_memories/2025-04-12_tenth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Pure joy and laughter"
         },
         {
             id: 11,
@@ -91,7 +110,8 @@ export function ChronologicalMemories() {
             title: "Beautiful Moments",
             description: "Capturing the beauty of our friendship",
             imageUrl: "/chronological_memories/2025-04-15_eleventh_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Friendship at its finest"
         },
         {
             id: 12,
@@ -99,7 +119,8 @@ export function ChronologicalMemories() {
             title: "Spring Blooms",
             description: "Enjoying the beauty of spring together",
             imageUrl: "/chronological_memories/2025-04-18_twelfth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Nature's beauty with you"
         },
         {
             id: 13,
@@ -107,7 +128,8 @@ export function ChronologicalMemories() {
             title: "Wonderful Day",
             description: "A day filled with happiness and laughter",
             imageUrl: "/chronological_memories/2025-04-20_thirteenth_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Perfect moments together"
         },
         {
             id: 14,
@@ -115,7 +137,8 @@ export function ChronologicalMemories() {
             title: "Memorable Experience",
             description: "An experience we'll treasure forever",
             imageUrl: "/chronological_memories/2025-04-22_fourteenth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "Unforgettable memories"
         },
         {
             id: 15,
@@ -123,7 +146,8 @@ export function ChronologicalMemories() {
             title: "Special Occasion",
             description: "Celebrating a special moment together",
             imageUrl: "/chronological_memories/2025-04-25_fifteenth_memory.jpg",
-            position: "right"
+            position: "right",
+            memoryNote: "Celebrating life with you"
         },
         {
             id: 16,
@@ -131,7 +155,8 @@ export function ChronologicalMemories() {
             title: "April's End",
             description: "Ending April with beautiful memories",
             imageUrl: "/chronological_memories/2025-04-30_sixteenth_memory.jpg",
-            position: "left"
+            position: "left",
+            memoryNote: "April showers, May flowers"
         }
     ];
 
@@ -177,9 +202,9 @@ export function ChronologicalMemories() {
                                         className="cursor-pointer"
                                     >
                                         <Card className="overflow-hidden bg-white border-pink-200 h-full shadow-md hover:shadow-lg transition-all duration-300">
-                                            <div className="relative aspect-video md:aspect-square overflow-hidden">
+                                            <div className="relative w-full overflow-hidden">
                                                 {memory.videoUrl ? (
-                                                    <div className="relative w-full h-full bg-pink-50 flex items-center justify-center">
+                                                    <div className="relative w-full bg-pink-50 flex items-center justify-center">
                                                         <video
                                                             ref={(el) => {
                                                                 if (el) {
@@ -224,7 +249,7 @@ export function ChronologicalMemories() {
                                                                 }
                                                             }}
                                                             src={memory.videoUrl}
-                                                            className="w-full h-full object-cover"
+                                                            className="w-full object-contain"
                                                             muted
                                                             controls={false}
                                                         />
@@ -238,7 +263,7 @@ export function ChronologicalMemories() {
                                                     <img
                                                         src={memory.imageUrl}
                                                         alt={memory.title}
-                                                        className="w-full h-full object-cover ken-burns"
+                                                        className="w-full object-contain ken-burns"
                                                         loading="lazy"
                                                     />
                                                 )}
@@ -246,7 +271,7 @@ export function ChronologicalMemories() {
                                             </div>
                                             <div className="p-3 md:p-4">
                                                 <p className="font-medium text-sm mb-1 text-pink-700">{memory.title}</p>
-                                                <p className="text-xs text-pink-500">{memory.date}</p>
+                                                <p className="text-xs text-pink-500 italic">{memory.memoryNote}</p>
                                             </div>
                                         </Card>
                                     </motion.div>
@@ -261,7 +286,7 @@ export function ChronologicalMemories() {
                                         className="bg-white/80 backdrop-blur-sm border border-pink-200 rounded-xl p-4 md:p-6 shadow-md"
                                     >
                                         <h3 className="font-serif text-lg md:text-xl font-bold text-pink-700 mb-1 md:mb-2">{memory.title}</h3>
-                                        <p className="text-pink-500 text-xs md:text-sm mb-1 md:mb-2">{memory.date}</p>
+                                        <p className="text-pink-500 text-xs md:text-sm mb-1 md:mb-2 italic">{memory.memoryNote}</p>
                                         <p className="text-pink-600 text-sm">{memory.description}</p>
                                     </motion.div>
                                 </div>

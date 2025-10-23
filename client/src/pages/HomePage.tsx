@@ -58,19 +58,64 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-      {/* Background GIF - using the external URL with reduced size and borders */}
+      {/* Background image - using the local file you provided covering the whole page */}
       <div
         className="absolute inset-0 z-0 flex items-center justify-center"
         style={{
-          backgroundImage: "url('https://www.funimada.com/assets/images/cards/big/bday-1281.gif')",
-          backgroundSize: "80%",
+          backgroundImage: "url('/ballons background.jpg')",
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          border: "20px solid #8B4513",
-          borderRadius: "20px",
-          margin: "20px",
+          backgroundAttachment: "fixed",
         }}
       />
+
+      {/* Glitter effects */}
+      <div className="absolute inset-0 z-10">
+        {/* Multiple glitter elements for animation */}
+        <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-yellow-300 rounded-full animate-ping opacity-70"></div>
+        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-pink-300 rounded-full animate-ping opacity-60 delay-1000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-50 delay-700"></div>
+        <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-blue-300 rounded-full animate-ping opacity-80 delay-300"></div>
+        <div className="absolute bottom-1/3 left-1/2 w-3 h-3 bg-green-300 rounded-full animate-ping opacity-60 delay-1500"></div>
+        <div className="absolute top-1/5 right-1/5 w-2 h-2 bg-red-300 rounded-full animate-ping opacity-70 delay-500"></div>
+        <div className="absolute bottom-1/5 left-1/5 w-3 h-3 bg-indigo-300 rounded-full animate-ping opacity-60 delay-1200"></div>
+      </div>
+
+      {/* Flower decorations */}
+      <div className="absolute inset-0 z-10">
+        <div className="absolute top-8 left-8 text-pink-400 opacity-80">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        <div className="absolute top-12 right-12 text-purple-400 opacity-80">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        <div className="absolute bottom-16 left-16 text-yellow-300 opacity-80">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        <div className="absolute bottom-20 right-20 text-blue-300 opacity-80">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-11 w-11" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        {/* Additional flowers */}
+        <div className="absolute top-1/4 right-1/4 text-green-400 opacity-70">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        <div className="absolute bottom-1/4 left-1/4 text-red-400 opacity-70">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-9 w-9" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.994l-3.5-3.5a1 1 0 00-1.414 1.414L11.586 10l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -90,12 +135,7 @@ export default function HomePage() {
           className="inline-block mb-8"
         >
           <div className="relative">
-            {/* Birthday GIF as icon */}
-            <img
-              src="https://www.funimada.com/assets/images/cards/big/bday-1281.gif"
-              alt="Happy Birthday"
-              className="w-32 h-32 mx-auto rounded-lg shadow-xl border-4 border-yellow-400"
-            />
+            {/* Birthday GIF removed as requested */}
           </div>
         </motion.div>
 
