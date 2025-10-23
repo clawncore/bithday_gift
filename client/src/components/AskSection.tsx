@@ -143,7 +143,7 @@ export function AskSection({ onReply }: AskSectionProps) {
                       : "Let me know what you need or when you'd like to talk..."}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="min-h-[120px] text-lg p-4 mb-6 border-pink-200 focus:border-pink-400 focus:ring-pink-400 bg-white/50 placeholder-pink-400"
+                    className="min-h-[120px] text-lg p-4 mb-6 border-pink-200 focus:border-pink-400 focus:ring-pink-400 bg-white/50 placeholder-pink-400 text-black"
                   />
 
                   <Button

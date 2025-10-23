@@ -2,49 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "client/dist"
-      }
-    },
-    {
-      "src": "api/authenticate.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/claim.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/reply.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/get-replies.js",
+      "src": "server/vercel.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/authenticate",
-      "dest": "/api/authenticate.js"
-    },
-    {
-      "src": "/api/claim",
-      "dest": "/api/claim.js"
-    },
-    {
-      "src": "/api/reply",
-      "dest": "/api/reply.js"
-    },
-    {
-      "src": "/api/get-replies",
-      "dest": "/api/get-replies.js"
+      "src": "/api/(.*)",
+      "dest": "/server/vercel.ts"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/server/vercel.ts"
     }
   ]
 }

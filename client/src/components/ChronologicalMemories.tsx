@@ -175,7 +175,7 @@ export function ChronologicalMemories() {
                         <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 ml-0 md:ml-3 mt-2 md:mt-0" />
                     </h2>
                     <p className="text-base md:text-lg text-pink-600 px-4">
-                        A timeline of our cherished moments from October 2024 to April 2025
+                        A timeline of our cherished moments from October 2024 to October 2025
                     </p>
                 </motion.div>
 

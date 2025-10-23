@@ -142,7 +142,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (secretWord.trim().toLowerCase() !== 'panda') {
         return res.status(401).json({
           ok: false,
-          error: 'Invalid secret word'
+          error: 'Wrong word! Hint: What is your favorite animal?'
         });
       }
 

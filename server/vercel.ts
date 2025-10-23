@@ -1,6 +1,7 @@
 import express from 'express';
 import { registerRoutes } from "./routes";
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,6 +13,7 @@ function log(message: string, type: string = "info") {
 
 // Create express app
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

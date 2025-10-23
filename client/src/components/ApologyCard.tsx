@@ -31,7 +31,7 @@ export function ApologyCard({
         transition={{ duration: 0.8, delay: index * 0.2 }}
         className="w-full"
       >
-        <Card className="backdrop-blur-md bg-white/70 border-pink-200 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="backdrop-blur-md bg-pink-100 border-pink-300 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <motion.div
@@ -39,9 +39,9 @@ export function ApologyCard({
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, type: "spring", delay: 0.3 }}
               >
-                <Avatar className="w-24 h-24 border-4 border-pink-300">
+                <Avatar className="w-24 h-24 border-4 border-pink-400">
                   <AvatarImage src={photoUrl} alt={name} />
-                  <AvatarFallback className="text-2xl font-serif bg-pink-100 text-pink-700">
+                  <AvatarFallback className="text-2xl font-serif bg-pink-200 text-black">
                     {name[0]}
                   </AvatarFallback>
                 </Avatar>
@@ -52,7 +52,7 @@ export function ApologyCard({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="font-serif text-3xl md:text-4xl font-bold mb-4 text-pink-700"
+                  className="font-serif text-3xl md:text-4xl font-bold mb-4 text-black"
                 >
                   A Message from {name}
                 </motion.h3>
@@ -63,7 +63,7 @@ export function ApologyCard({
                   transition={{ duration: 1.2, delay: 0.6 }}
                   className="mb-6"
                 >
-                  <div className="text-base md:text-lg leading-relaxed text-pink-600">
+                  <div className="text-base md:text-lg leading-relaxed text-black">
                     {fullMessage}
                   </div>
                 </motion.div>

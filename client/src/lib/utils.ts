@@ -13,7 +13,7 @@ export function getApiBaseUrl(): string {
   }
 
   // In production, use the current domain
-  return '';
+  return window.location.origin;
 }
 
 // Utility function to make API calls
