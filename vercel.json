@@ -9,14 +9,38 @@
       }
     },
     {
-      "src": "api/**/*.js",
+      "src": "api/authenticate.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/claim.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/reply.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/get-replies.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/authenticate",
+      "dest": "/api/authenticate.js"
+    },
+    {
+      "src": "/api/claim",
+      "dest": "/api/claim.js"
+    },
+    {
+      "src": "/api/reply",
+      "dest": "/api/reply.js"
+    },
+    {
+      "src": "/api/get-replies",
+      "dest": "/api/get-replies.js"
     },
     {
       "src": "/(.*)",

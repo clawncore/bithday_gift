@@ -4,22 +4,15 @@ export default async function handler(request, response) {
         return response.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Parse the body properly for Vercel serverless functions
-    let body = {};
-    try {
-        body = await request.json();
-    } catch (e) {
-        // If JSON parsing fails, try to get body from request.body
-        if (request.body) {
-            if (typeof request.body === 'string') {
-                try {
-                    body = JSON.parse(request.body);
-                } catch (e2) {
-                    body = request.body;
-                }
-            } else {
-                body = request.body;
-            }
+    // For Vercel serverless functions, the body is already parsed
+    let body = request.body || {};
+
+    // If body is a string, parse it as JSON
+    if (typeof body === 'string') {
+        try {
+            body = JSON.parse(body);
+        } catch (e) {
+            return response.status(400).json({ error: 'Invalid JSON in request body' });
         }
     }
 

@@ -11,7 +11,7 @@ export function getApiBaseUrl(): string {
   if (import.meta.env.DEV) {
     return '';
   }
-  
+
   // In production, use the current domain
   return '';
 }
@@ -20,7 +20,7 @@ export function getApiBaseUrl(): string {
 export async function apiCall(endpoint: string, options: RequestInit = {}) {
   const baseUrl = getApiBaseUrl();
   const url = `${baseUrl}${endpoint}`;
-  
+
   return fetch(url, {
     headers: {
       'Content-Type': 'application/json',
