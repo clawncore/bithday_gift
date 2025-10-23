@@ -17,6 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files BEFORE registering routes
+// This is crucial for the root route to work
+app.use(express.static('client/public'));
+app.use(express.static('client/dist'));
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -47,27 +52,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Simple static file serving function
-function serveStatic(app: express.Application) {
-  // Serve static files from client/dist
-  app.use(express.static('client/dist'));
-  
-  // Handle SPA routing - serve index.html for all non-API routes
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile('client/dist/index.html', { root: '.' });
-    } else {
-      res.status(404).json({ error: 'API route not found' });
-    }
-  });
-}
+// Handle SPA routing - serve index.html for all non-API routes
+// This needs to be registered AFTER static files but BEFORE API routes
+app.get('*', (req, res, next) => {
+  // If requesting favicon, serve it directly
+  if (req.path === '/favicon.ico') {
+    const faviconPath = 'client/public/favicon.ico';
+    res.sendFile(path.resolve(faviconPath), (err) => {
+      if (err) {
+        // If favicon doesn't exist, send a minimal response
+        res.status(204).end();
+      }
+    });
+    return;
+  }
 
-// Simple vite setup function for development
-async function setupVite(app: express.Application, server: any) {
-  // In development, we don't need to do anything special for vite
-  // The client is served separately in development
-  return Promise.resolve();
-}
+  // Let static files be served first, then handle SPA routing
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.resolve('client/dist/index.html'));
+  } else {
+    // Pass API routes to the next handler
+    next();
+  }
+});
 
 (async () => {
   const server = await registerRoutes(app);
@@ -79,15 +86,6 @@ async function setupVite(app: express.Application, server: any) {
     log(`Error: ${message}`, "server");
     res.status(status).json({ message });
   });
-
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Other ports are firewalled. Default to 5000 if not specified.

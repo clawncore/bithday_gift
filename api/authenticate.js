@@ -4,7 +4,15 @@ export default function handler(request, response) {
         return response.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { secretWord } = request.body;
+    let secretWord;
+
+    // Handle both JSON and form data
+    if (request.headers['content-type'] === 'application/json') {
+        secretWord = request.body?.secretWord;
+    } else {
+        // For form data or other formats
+        secretWord = request.body?.secretWord;
+    }
 
     // In a real implementation, you would check this against a database or other storage
     // For now, we'll check against the hardcoded value "panda"

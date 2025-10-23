@@ -97,7 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const testMessage = "This is a test message from your Happy Birthday Reel app!";
       console.log("Sending test Twilio message...");
       await sendWhatsAppMessage(testMessage);
-      
+
       return res.status(200).json({
         ok: true,
         message: "Test message sent successfully"
@@ -115,8 +115,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ok: true,
         twilioConfigured: !!twilioClient,
         phoneNumber: process.env.TWILIO_PHONE_NUMBER || null,
-        message: twilioClient 
-          ? "Twilio is configured and ready to send messages" 
+        message: twilioClient
+          ? "Twilio is configured and ready to send messages"
           : "Twilio is not configured properly"
       });
     } catch (error) {
