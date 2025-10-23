@@ -125,7 +125,7 @@ export function AskSection({ onReply }: AskSectionProps) {
               transition={{ duration: 0.8 }}
               className="max-w-2xl mx-auto"
             >
-              <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-xl">
+              <Card className="bg-gradient-to-br from-pink-100/80 via-white/80 to-rose-50/80 backdrop-blur-sm border-pink-200 shadow-xl rounded-2xl">
                 <CardContent className="p-8">
                   <h3 className="font-serif text-2xl md:text-3xl font-bold mb-6 text-pink-700">
                     {choice === "yes" ? "Thank You For Giving Me A Chance 🙏" : "I Understand, Take Your Time"}
@@ -143,7 +143,7 @@ export function AskSection({ onReply }: AskSectionProps) {
                       : "Let me know what you need or when you'd like to talk..."}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="min-h-[120px] text-lg p-4 mb-6 border-pink-200 focus:border-pink-400 focus:ring-pink-400"
+                    className="min-h-[120px] text-lg p-4 mb-6 border-pink-200 focus:border-pink-400 focus:ring-pink-400 bg-white/50 placeholder-pink-400"
                   />
 
                   <Button

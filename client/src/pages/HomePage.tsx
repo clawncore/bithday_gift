@@ -145,8 +145,11 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
         >
-          Happy Birthday, <br />
-          <span className="text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+          <span className="text-4xl md:text-6xl lg:text-7xl bg-gradient-to-r from-red-500 via-red-600 to-red-800 bg-clip-text text-transparent">
+            Happy Birthday,
+          </span>
+          <br />
+          <span className="text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-red-600 via-red-700 to-red-900 bg-clip-text text-transparent">
             Chandrika!
           </span>
         </motion.h1>
