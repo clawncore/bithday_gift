@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Gift, Lock, Eye, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { useState, useEffect } from "react";
+import { apiCall } from "@/lib/utils";
 
 export default function HomePage() {
   const [, navigate] = useLocation();
@@ -26,12 +27,9 @@ export default function HomePage() {
     setError("");
 
     try {
-      // Call the backend authentication API with a relative URL
-      const response = await fetch("/api/authenticate", {
+      // Call the backend authentication API with the utility function
+      const response = await apiCall("/api/authenticate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ secretWord }),
       });
 

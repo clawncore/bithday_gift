@@ -4,19 +4,26 @@ export default async function handler(request, response) {
         return response.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Parse the body properly for Vercel
-    let body;
+    // Parse the body properly for Vercel serverless functions
+    let body = {};
     try {
-        if (typeof request.body === 'string') {
-            body = JSON.parse(request.body);
-        } else {
-            body = request.body || {};
-        }
+        body = await request.json();
     } catch (e) {
-        body = {};
+        // If JSON parsing fails, try to get body from request.body
+        if (request.body) {
+            if (typeof request.body === 'string') {
+                try {
+                    body = JSON.parse(request.body);
+                } catch (e2) {
+                    body = request.body;
+                }
+            } else {
+                body = request.body;
+            }
+        }
     }
 
-    const secretWord = body.secretWord;
+    const { secretWord } = body;
 
     // In a real implementation, you would check this against a database or other storage
     // For now, we'll check against the hardcoded value "panda"
