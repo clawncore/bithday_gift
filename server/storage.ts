@@ -1,6 +1,7 @@
 import { type Token, type GiftContent } from "../shared/schema";
 import { randomUUID } from "crypto";
 import { prisma } from "./prismaClient";
+import { supabase } from "./supabaseClient";
 
 // Simplified reply interface for our use case
 export interface SimpleReply {
@@ -15,7 +16,7 @@ export interface IStorage {
   markTokenUsed(id: string, openedAt: Date): Promise<void>;
   saveReply(token: string, choice: "yes" | "need_time", message: string): Promise<void>;
   // Updated method to get simplified replies
-  getReplies(token: string): SimpleReply[] | undefined;
+  getReplies(token: string): Promise<SimpleReply[] | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -108,18 +109,21 @@ export class MemStorage implements IStorage {
       replies.push({ choice, message, timestamp: new Date() });
       this.replies.set(token, replies);
 
-      // Also save to database using Prisma, but handle errors gracefully
+      // Also save to database using Supabase
       try {
-        await prisma.replies.create({
-          data: {
+        const { error } = await supabase
+          .from('replies')
+          .insert({
             id: randomUUID(),
-            token_id: token,
             choice: choice,
             message: message,
             recipient_name: "Chandrika",
             created_at: new Date(),
-          },
-        });
+          });
+
+        if (error) {
+          console.error(`Error saving reply to Supabase:`, error);
+        }
       } catch (dbError) {
         console.error(`Error saving reply to database:`, dbError);
         // We don't throw the error here because we want to continue working
@@ -131,10 +135,38 @@ export class MemStorage implements IStorage {
     }
   }
 
-  // Updated method to get simplified replies from in-memory storage
-  getReplies(token: string): SimpleReply[] | undefined {
+  // Updated method to get simplified replies from Supabase
+  async getReplies(token: string): Promise<SimpleReply[] | undefined> {
     try {
-      return this.replies.get(token);
+      // First try to get replies from Supabase
+      try {
+        const { data, error } = await supabase
+          .from('replies')
+          .select('choice, message, created_at')
+          .eq('recipient_name', 'Chandrika')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching replies from Supabase:', error);
+          // Fall back to in-memory storage
+          return this.replies.get(token);
+        }
+
+        if (data) {
+          return data.map((reply: any) => ({
+            choice: reply.choice,
+            message: reply.message,
+            timestamp: new Date(reply.created_at)
+          }));
+        }
+
+        // Fall back to in-memory storage if no data
+        return this.replies.get(token);
+      } catch (dbError) {
+        console.error('Database error when fetching replies:', dbError);
+        // Fall back to in-memory storage
+        return this.replies.get(token);
+      }
     } catch (error) {
       console.error(`Error getting replies for token ${token}:`, error);
       return undefined;

@@ -46,13 +46,15 @@ export function AskSection({ onReply }: AskSectionProps) {
               Thank You for Your Response
             </h2>
             <p className="text-lg text-pink-600 mb-8">
-              We've received your message and truly appreciate you taking the time to respond. 
+              We've received your message and truly appreciate you taking the time to respond.
               Your feelings mean the world to us, and we're grateful for the opportunity to show you we've changed.
             </p>
             <p className="text-lg text-pink-600">
               With love and hope,<br />
               <span className="font-semibold">Craig & Simby</span>
             </p>
+
+            {/* Removed Twilio test button */}
           </motion.div>
         </div>
       </section>

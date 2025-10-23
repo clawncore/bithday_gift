@@ -43,10 +43,10 @@ export default function HomePage() {
       const data = await response.json();
 
       if (data.ok) {
-        // Set authenticated state and redirect to gift page
+        // Set authenticated state and redirect directly to the gift page
         setAuthenticated(true);
-        // Redirect directly to the gift page with the panda parameter
-        window.location.href = "/?word=panda";
+        // Redirect directly to the gift page without showing the unwrapping animation
+        navigate("/gift");
       } else {
         setError(data.error || "Authentication failed. Please try again.");
       }

@@ -9,12 +9,10 @@ import NotFound from "@/pages/not-found";
 import { useEffect, useState, useRef } from "react";
 
 function Router() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const hasWord = urlParams.has("word");
-
   return (
     <Switch>
-      <Route path="/" component={hasWord ? GiftPage : HomePage} />
+      <Route path="/" component={HomePage} />
+      <Route path="/gift" component={GiftPage} />
       <Route component={NotFound} />
     </Switch>
   );

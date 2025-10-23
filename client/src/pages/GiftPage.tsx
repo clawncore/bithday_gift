@@ -14,16 +14,12 @@ import { Card } from "@/components/ui/card";
 import { ClaimResponse } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Loader2, Sparkles, Flower } from "lucide-react";
-import { ChandrikaResponses } from "@/components/ChandrikaResponses";
 import { ChronologicalMemories } from "@/components/ChronologicalMemories";
 
 export default function GiftPage() {
   const [, navigate] = useLocation();
-  const [unwrapped, setUnwrapped] = useState(false);
+  const [unwrapped, setUnwrapped] = useState(true); // Set to true by default for direct access
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const secretWord = urlParams.get("word");
 
   // Try to unmute audio when the page loads
   useEffect(() => {
@@ -42,8 +38,8 @@ export default function GiftPage() {
   const { data: claimData, isLoading, error } = useQuery<ClaimResponse>({
     queryKey: ["/api/claim"],
     queryFn: async () => {
-      // Include the word parameter in the API request
-      const response = await apiRequest("GET", `/api/claim?word=${secretWord || ''}`);
+      // Remove the word parameter from the API request
+      const response = await apiRequest("GET", `/api/claim`);
       return response.json();
     },
     retry: false,

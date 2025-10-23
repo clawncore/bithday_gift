@@ -13,22 +13,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Simplified replies model for our use case
+// Model for storing replies from the apology section
 model replies {
   id            String   @id @default(uuid())
   choice        String
   message       String
   created_at    DateTime @default(now())
+  recipient_name String   @default("Chandrika")
 
   @@index([created_at], name: "idx_replies_created_at")
 }
 
+// Model for storing tokens (used for gift access)
 model tokens {
   id         String   @id
   used       Boolean  @default(false)
   created_at DateTime @default(now())
   opened_at  DateTime?
   expires_at DateTime?
+  content    Json?
 
   @@map("tokens")
+}
+
+// Model for storing and authenticating the secret word "panda"
+model secret_words {
+  id          String   @id @default(uuid())
+  word        String   @unique
+  created_at  DateTime @default(now())
+  is_active   Boolean  @default(true)
+
+  @@map("secret_words")
 }
