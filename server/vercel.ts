@@ -9,18 +9,15 @@ dotenv.config();
 
 // Create express app
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
     // Serve static files from client/dist
     app.use(express.static('client/dist'));
 
-    // Handle SPA routing - serve index.html for all non-API routes
+    // Handle SPA routing - serve index.html for all routes
     app.get('*', (req, res) => {
-        // For API routes, return a 404
+        // For API routes, let them fall through to 404
         if (req.path.startsWith('/api')) {
             return res.status(404).json({ error: 'API route not found' });
         }
@@ -29,12 +26,4 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-// For development, we need to create and export an HTTP server
-// For Vercel, we just export the app
-let server: any;
-if (process.env.NODE_ENV !== "production") {
-    server = createServer(app);
-}
-
 export default app;
-export { server };
