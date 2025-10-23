@@ -1,13 +1,22 @@
 // Simple API endpoint for replying to the gift
-export default function handler(request, response) {
-    // For demo purposes, we'll return a simple response
-    // In a real implementation, you would connect to your database or storage
-
+export default async function handler(request, response) {
     if (request.method !== 'POST') {
         return response.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { choice, message } = request.body;
+    // Parse the body properly for Vercel
+    let body;
+    try {
+        if (typeof request.body === 'string') {
+            body = JSON.parse(request.body);
+        } else {
+            body = request.body || {};
+        }
+    } catch (e) {
+        body = {};
+    }
+
+    const { choice, message } = body;
 
     if (!message || message.trim().length === 0) {
         return response.status(400).json({ error: 'Message cannot be empty' });

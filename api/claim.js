@@ -1,5 +1,9 @@
 // Simple API endpoint for claiming the gift
-export default function handler(request, response) {
+export default async function handler(request, response) {
+    if (request.method !== 'GET') {
+        return response.status(405).json({ error: 'Method not allowed' });
+    }
+
     // Always return the gift content, regardless of secret word
 
     // Sample gift content

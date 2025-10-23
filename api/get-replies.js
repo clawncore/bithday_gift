@@ -1,6 +1,3 @@
-// API endpoint to get replies from Supabase
-import { supabase } from '../server/supabaseClient';
-
 // API endpoint to get replies - Vercel compatible version
 export default async function handler(request, response) {
     if (request.method !== 'GET') {

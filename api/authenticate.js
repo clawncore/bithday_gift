@@ -1,18 +1,22 @@
 // API endpoint for authenticating the secret word
-export default function handler(request, response) {
+export default async function handler(request, response) {
     if (request.method !== 'POST') {
         return response.status(405).json({ error: 'Method not allowed' });
     }
 
-    let secretWord;
-
-    // Handle both JSON and form data
-    if (request.headers['content-type'] === 'application/json') {
-        secretWord = request.body?.secretWord;
-    } else {
-        // For form data or other formats
-        secretWord = request.body?.secretWord;
+    // Parse the body properly for Vercel
+    let body;
+    try {
+        if (typeof request.body === 'string') {
+            body = JSON.parse(request.body);
+        } else {
+            body = request.body || {};
+        }
+    } catch (e) {
+        body = {};
     }
+
+    const secretWord = body.secretWord;
 
     // In a real implementation, you would check this against a database or other storage
     // For now, we'll check against the hardcoded value "panda"
