@@ -2,6 +2,7 @@ import express from 'express';
 import { registerRoutes } from "./routes";
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { createServer } from "http";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -48,7 +49,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Register routes
+// Register API routes first
 registerRoutes(app).catch(error => {
     log(`Error registering routes: ${error.message}`, "error");
 });
@@ -62,7 +63,7 @@ app.use((err: any, _req: any, res: any, _next: any) => {
     res.status(status).json({ message });
 });
 
-// Serve static files in production
+// Serve static files in production - this should come AFTER API routes
 if (process.env.NODE_ENV === "production") {
     // Serve static files from client/dist
     app.use(express.static('client/dist'));
@@ -70,11 +71,19 @@ if (process.env.NODE_ENV === "production") {
     // Handle SPA routing - serve index.html for all non-API routes
     app.get('*', (req, res) => {
         if (!req.path.startsWith('/api')) {
-            res.sendFile('client/dist/index.html', { root: '.' });
+            res.sendFile('index.html', { root: 'client/dist' });
         } else {
             res.status(404).json({ error: 'API route not found' });
         }
     });
 }
 
+// For development, we need to create and export an HTTP server
+// For Vercel, we just export the app
+let server: any;
+if (process.env.NODE_ENV !== "production") {
+    server = createServer(app);
+}
+
 export default app;
+export { server };

@@ -1,4 +1,6 @@
-// Simple API endpoint for replying to the gift
+import { storage } from '../server/storage';
+
+// API endpoint for replying to the gift - Vercel compatible version
 export default async function handler(request, response) {
     if (request.method !== 'POST') {
         return response.status(405).json({ error: 'Method not allowed' });
@@ -18,12 +20,30 @@ export default async function handler(request, response) {
 
     const { choice, message } = body;
 
-    if (!message || message.trim().length === 0) {
-        return response.status(400).json({ error: 'Message cannot be empty' });
+    // Validate choice
+    if (!choice || (choice !== "yes" && choice !== "need_time")) {
+        return response.status(400).json({ error: "Invalid choice value" });
     }
 
-    // In a real implementation, you would save this to storage
-    console.log('Reply received:', { choice, message });
+    // Validate message
+    if (!message || typeof message !== "string" || message.trim().length === 0) {
+        return response.status(400).json({ error: "Message cannot be empty" });
+    }
 
-    return response.status(200).json({ ok: true });
+    try {
+        // Use the sample token for storing replies
+        const token = "sample-token-123";
+        
+        // Save reply to storage
+        await storage.saveReply(token, choice, message.trim());
+
+        // Send success response
+        return response.status(200).json({ ok: true });
+    } catch (error) {
+        console.error("Error saving reply:", error);
+        return response.status(500).json({ 
+            error: "Failed to save reply",
+            message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+        });
+    }
 }

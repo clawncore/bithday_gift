@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 async function testAuth() {
     try {
         console.log('Testing authentication with correct word...');
-        
+
         const response = await fetch('http://localhost:5010/api/authenticate', {
             method: 'POST',
             headers: {
@@ -14,10 +14,10 @@ async function testAuth() {
                 secretWord: 'panda'
             })
         });
-        
+
         const data = await response.json();
         console.log('Auth response:', data);
-        
+
         if (data.ok) {
             console.log('Authentication successful!');
         } else {

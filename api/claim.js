@@ -1,3 +1,45 @@
+import { storage } from '../server/storage';
+
+// API endpoint for claiming the gift - Vercel compatible version
+export default async function handler(request, response) {
+    if (request.method !== 'GET') {
+        return response.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+        const tokenId = "sample-token-123";
+        const tokenRecord = await storage.getToken(tokenId);
+
+        if (!tokenRecord) {
+            return response.status(404).json({ error: "Gift not found" });
+        }
+
+        if (tokenRecord.used) {
+            return response.status(200).json({
+                ok: true,
+                openedAt: tokenRecord.openedAt?.toISOString(),
+            });
+        }
+
+        // Mark as opened
+        const openedAt = new Date();
+        await storage.markTokenUsed(tokenId, openedAt);
+
+        return response.status(200).json({
+            ok: true,
+            openedAt: openedAt.toISOString(),
+            content: tokenRecord.content,
+        });
+    } catch (error) {
+        console.error("Error claiming gift:", error);
+        return response.status(500).json({
+            ok: false,
+            error: "Internal server error",
+            message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+        });
+    }
+}
+
 // Simple API endpoint for claiming the gift
 export default async function handler(request, response) {
     if (request.method !== 'GET') {
