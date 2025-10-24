@@ -62,7 +62,7 @@ export default function HomePage() {
       <div
         className="absolute inset-0 z-0 flex items-center justify-center"
         style={{
-          backgroundImage: "url('/ballons background.jpg')",
+          backgroundImage: "url('/balloons-background.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

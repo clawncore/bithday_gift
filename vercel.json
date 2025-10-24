@@ -24,14 +24,14 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/$1",
+      "dest": "/$1",
       "methods": [
         "GET"
       ]
     },
     {
       "src": "/",
-      "dest": "/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
