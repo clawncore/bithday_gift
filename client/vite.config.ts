@@ -17,4 +17,8 @@ export default defineConfig({
             deny: ["**/.*"],
         },
     },
+    build: {
+        outDir: path.resolve(__dirname, "..", "dist"),
+        emptyOutDir: true,
+    },
 });
