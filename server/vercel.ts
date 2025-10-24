@@ -28,13 +28,13 @@ app.use((err: any, _req: any, res: any, _next: any) => {
 
 // Serve static files in production - this should come AFTER API routes
 if (process.env.NODE_ENV === "production") {
-    // Serve static files from client/dist
-    app.use(express.static("client/dist"));
+    // Serve static files from dist (root directory)
+    app.use(express.static("dist"));
 
     // Handle SPA routing - serve index.html for all non-API routes
     app.get("*", (req, res) => {
         if (!req.path.startsWith("/api")) {
-            res.sendFile("index.html", { root: "client/dist" });
+            res.sendFile("index.html", { root: "dist" });
         } else {
             res.status(404).json({ error: "API route not found" });
         }
