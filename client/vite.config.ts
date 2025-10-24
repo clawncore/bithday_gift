@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
+    base: "/", // Use absolute paths for proper server serving
     plugins: [react()],
     resolve: {
         alias: {
@@ -18,7 +19,28 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: path.resolve(__dirname, "..", "dist"),
+        outDir: path.resolve(__dirname, "dist"),
         emptyOutDir: true,
+        rollupOptions: {
+            output: {
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name) {
+                        let extType = assetInfo.name.split('.').at(1);
+                        if (extType && /png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+                            extType = 'img';
+                        }
+                        return `assets/${assetInfo.name}`;
+                    }
+                    return `assets/[name]-[hash][extname]`;
+                },
+                chunkFileNames: 'assets/[name]-[hash].js',
+                entryFileNames: 'assets/[name]-[hash].js',
+            },
+        },
+        assetsDir: 'assets',
+        assetsInlineLimit: 0, // Disable inlining assets to ensure they're properly served
+    },
+    css: {
+        devSourcemap: true,
     },
 });

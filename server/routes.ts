@@ -1,7 +1,7 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { type GiftContent, type ClaimResponse } from "../shared/schema";
+import { type GiftContent, type ClaimResponse } from "../shared/schema.js";
 import { prisma } from "./prismaClient";
 
 // Add a helper function for error handling

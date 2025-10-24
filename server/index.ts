@@ -4,6 +4,11 @@ import { registerRoutes } from "./routes";
 import { exec } from "child_process";
 import os from "os";
 import path from "path";
+import { fileURLToPath } from "url";
+
+// Create __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,8 +24,19 @@ app.use(express.urlencoded({ extended: false }));
 
 // Serve static files BEFORE registering routes
 // This is crucial for the root route to work
-app.use(express.static("client/public"));
-app.use(express.static("client/dist"));
+app.use('/assets', express.static(path.resolve(__dirname, "../client/dist/assets")));
+app.use(express.static(path.resolve(__dirname, "../client/public")));
+app.use(express.static(path.resolve(__dirname, "../client/dist")));
+
+// Add specific route for favicon to avoid conflicts
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/public/favicon.ico"), (err) => {
+    if (err) {
+      // If favicon doesn't exist, send a minimal response
+      res.status(204).end();
+    }
+  });
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -55,21 +71,9 @@ app.use((req, res, next) => {
 // Handle SPA routing - serve index.html for all non-API routes
 // This needs to be registered AFTER static files but BEFORE API routes
 app.get("*", (req, res, next) => {
-  // If requesting favicon, serve it directly
-  if (req.path === "/favicon.ico") {
-    const faviconPath = "client/public/favicon.ico";
-    res.sendFile(path.resolve(faviconPath), (err) => {
-      if (err) {
-        // If favicon doesn't exist, send a minimal response
-        res.status(204).end();
-      }
-    });
-    return;
-  }
-
   // Let static files be served first, then handle SPA routing
-  if (!req.path.startsWith("/api")) {
-    res.sendFile(path.resolve("client/dist/index.html"));
+  if (!req.path.startsWith("/api") && !req.path.startsWith("/assets")) {
+    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
   } else {
     // Pass API routes to the next handler
     next();
