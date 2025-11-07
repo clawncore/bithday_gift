@@ -55,8 +55,8 @@ function App() {
   // Handle background audio
   useEffect(() => {
     if (audioRef.current) {
-      // Set background music volume to 40%
-      audioRef.current.volume = 0.4;
+      // Set background music volume to 50%
+      audioRef.current.volume = 0.5;
 
       // Try to play the audio automatically when the component mounts
       const attemptAutoPlay = async () => {
@@ -106,7 +106,7 @@ function App() {
         <audio
           ref={audioRef}
           loop
-          src="/panda-song.mp3"
+          src="/Happy Birthday Soft Instrumental - Happy Birthday background Music.mp3"
         />
         <Router />
       </TooltipProvider>

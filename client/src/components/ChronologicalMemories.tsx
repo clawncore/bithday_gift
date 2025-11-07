@@ -204,11 +204,11 @@ export function ChronologicalMemories() {
                                         <Card className="overflow-hidden bg-white border-pink-200 h-full shadow-md hover:shadow-lg transition-all duration-300">
                                             <div className="relative w-full overflow-hidden">
                                                 <img
-                                                        src={memory.imageUrl}
-                                                        alt={memory.title}
-                                                        className="w-full object-contain ken-burns"
-                                                        loading="lazy"
-                                                    />
+                                                    src={memory.imageUrl}
+                                                    alt={memory.title}
+                                                    className="w-full object-contain ken-burns"
+                                                    loading="lazy"
+                                                />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                                             </div>
                                             <div className="p-3 md:p-4">
