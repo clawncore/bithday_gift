@@ -108,7 +108,7 @@ function App() {
           loop
           preload="auto"
           autoPlay
-          src="/Happy Birthday Soft Instrumental - Happy Birthday background Music.mp3"
+          src="/background-music.mp3"
         />
         <Router />
       </TooltipProvider>

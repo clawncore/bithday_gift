@@ -45,7 +45,7 @@ export default function HomePage() {
       <div
         className="absolute inset-0 z-0 flex items-center justify-center"
         style={{
-          backgroundImage: "url('/happy birthday background photo.avif')",
+          backgroundImage: "url('/background-image.avif')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

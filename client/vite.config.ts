@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
     base: "/", // Use absolute paths for proper server serving
+    publicDir: path.resolve(__dirname, "public"), // Explicitly set public directory
     plugins: [react()],
     resolve: {
         alias: {
@@ -39,6 +40,7 @@ export default defineConfig({
         },
         assetsDir: 'assets',
         assetsInlineLimit: 0, // Disable inlining assets to ensure they're properly served
+        copyPublicDir: true, // Ensure files from public directory are copied to dist
     },
     css: {
         devSourcemap: true,
