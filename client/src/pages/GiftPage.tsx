@@ -11,7 +11,27 @@ import { BirthdayMessageCard } from "@/components/BirthdayMessageCard";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { PhotoSlideshow } from "@/components/PhotoSlideshow";
 import { Card } from "@/components/ui/card";
-import { ClaimResponse } from "@shared/schema";
+// Define the ClaimResponse type locally to avoid import issues
+interface ClaimResponse {
+  ok: boolean;
+  openedAt?: string;
+  content?: {
+    recipientName: string;
+    craigApology: {
+      shortMessage: string;
+      fullMessage: string;
+      photoUrl?: string;
+    };
+    simbisaiApology: {
+      shortMessage: string;
+      fullMessage: string;
+      photoUrl?: string;
+    };
+    media: any[];
+  };
+  error?: string;
+  message?: string;
+}
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Loader2, Sparkles, Flower } from "lucide-react";
 import { ChronologicalMemories } from "@/components/ChronologicalMemories";
@@ -35,7 +55,7 @@ export default function GiftPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const { data: claimData, isLoading, error } = useQuery<ClaimResponse>({
+  const { data: claimData, isLoading, error } = useQuery<ClaimResponse | undefined>({
     queryKey: ["/api/claim"],
     queryFn: async () => {
       // Remove the word parameter from the API request
@@ -116,7 +136,10 @@ export default function GiftPage() {
   // Always show the gift content, regardless of token status
   const content = claimData?.content || {
     recipientName: "Jane Doe",
-    media: [],
+    media: [
+      { src: "/memories/initial.jpg", type: "image" },
+      { src: "/memories/together/initial.jpg", type: "image" }
+    ],
     craigApology: {
       fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
       shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe"
@@ -157,14 +180,14 @@ export default function GiftPage() {
                 <div className="w-full">
                   <PhotoSlideshow
                     media={[
-                      { src: "https://placehold.co/800x600?text=Memory+1", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+2", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+3", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+4", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+5", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+6", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+7", type: "image" },
-                      { src: "https://placehold.co/800x600?text=Memory+8", type: "image" }
+                      { src: "/memories/slideshow/001.jpg", type: "image" },
+                      { src: "/memories/slideshow/002.jpg", type: "image" },
+                      { src: "/memories/slideshow/003.jpg", type: "image" },
+                      { src: "/memories/slideshow/004.jpg", type: "image" },
+                      { src: "/memories/slideshow/005.jpg", type: "image" },
+                      { src: "/memories/slideshow/006.jpg", type: "image" },
+                      { src: "/memories/slideshow/007.jpg", type: "image" },
+                      { src: "/memories/slideshow/008.jpg", type: "image" }
                     ]}
                     interval={5000}
                     className="w-full h-[50vh] md:h-[80vh] max-h-[800px]"

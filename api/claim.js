@@ -11,12 +11,18 @@ export default async function handler(request, response) {
             recipientName: "Jane Doe",
             craigApology: {
                 shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
-                fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe"
+                fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+                photoUrl: "/memories/craig.jpg"
             },
             simbisaiApology: {
                 shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
-                fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe"
+                fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+                photoUrl: "/memories/simbisai.jpg"
             },
+            media: [
+                { src: "/memories/initial.jpg", type: "image" },
+                { src: "/memories/together/initial.jpg", type: "image" }
+            ]
         };
 
         return response.status(200).json({

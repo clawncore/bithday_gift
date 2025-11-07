@@ -10,7 +10,7 @@ export function ChronologicalMemories() {
             date: "Our Beginning",
             title: "Our Special Beginning",
             description: "The very first moment of our journey together",
-            imageUrl: "https://placehold.co/600x400?text=Our+Beginning",
+            imageUrl: "/memories/001.jpg",
             position: "right",
             memoryNote: "Where it all started..."
         },
@@ -19,7 +19,7 @@ export function ChronologicalMemories() {
             date: "Our Beginning",
             title: "Our Beginning",
             description: "The start of our wonderful journey together",
-            imageUrl: "https://placehold.co/600x400?text=Special+Beginning",
+            imageUrl: "/memories/002.jpg",
             position: "right",
             memoryNote: "The beginning of something beautiful..."
         },
@@ -28,7 +28,7 @@ export function ChronologicalMemories() {
             date: "Special Moments",
             title: "Special Day",
             description: "A day we'll always remember",
-            imageUrl: "https://placehold.co/600x400?text=Special+Day",
+            imageUrl: "/memories/003.jpg",
             position: "left",
             memoryNote: "Memories worth cherishing forever"
         },
@@ -37,7 +37,7 @@ export function ChronologicalMemories() {
             date: "Winter Warmth",
             title: "Winter Moments",
             description: "Beautiful winter days together",
-            imageUrl: "https://placehold.co/600x400?text=Winter+Moments",
+            imageUrl: "/memories/004.jpg",
             position: "right",
             memoryNote: "Finding warmth in each other's company"
         },
@@ -46,7 +46,7 @@ export function ChronologicalMemories() {
             date: "New Beginnings",
             title: "New Year Beginnings",
             description: "Starting the new year with wonderful memories",
-            imageUrl: "https://placehold.co/600x400?text=New+Year",
+            imageUrl: "/memories/005.jpg",
             position: "left",
             memoryNote: "Fresh starts and new adventures"
         },
@@ -55,7 +55,7 @@ export function ChronologicalMemories() {
             date: "Captured Moments",
             title: "Special Video Moment",
             description: "A captured moment we'll treasure forever",
-            videoUrl: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+            videoUrl: "/memories/video1.mp4",
             position: "right",
             memoryNote: "Memories in motion, forever preserved"
         },
@@ -64,7 +64,7 @@ export function ChronologicalMemories() {
             date: "Love & Friendship",
             title: "Valentine Days",
             description: "Celebrating love and friendship",
-            imageUrl: "https://placehold.co/600x400?text=Valentine+Days",
+            imageUrl: "/memories/006.jpg",
             position: "left",
             memoryNote: "Love that goes beyond romance"
         },
@@ -73,7 +73,7 @@ export function ChronologicalMemories() {
             date: "Spring Adventures",
             title: "Spring Adventures",
             description: "Exploring new places as spring arrived",
-            imageUrl: "https://placehold.co/600x400?text=Spring+Adventures",
+            imageUrl: "/memories/007.jpg",
             position: "right",
             memoryNote: "Blooming together like spring flowers"
         },
@@ -82,7 +82,7 @@ export function ChronologicalMemories() {
             date: "Joyful Times",
             title: "Easter Celebrations",
             description: "Celebrating together with joy",
-            imageUrl: "https://placehold.co/600x400?text=Easter+Celebrations",
+            imageUrl: "/memories/008.jpg",
             position: "left",
             memoryNote: "Celebrating life's simple pleasures"
         },
@@ -91,7 +91,7 @@ export function ChronologicalMemories() {
             date: "Unforgettable Trips",
             title: "Special Getaway",
             description: "A memorable trip we'll never forget",
-            imageUrl: "https://placehold.co/600x400?text=Special+Getaway",
+            imageUrl: "/memories/009.jpg",
             position: "right",
             memoryNote: "Escape to happiness together"
         },
@@ -100,7 +100,7 @@ export function ChronologicalMemories() {
             date: "Pure Happiness",
             title: "Fun Times",
             description: "Laughter and joy filled this special day",
-            imageUrl: "https://placehold.co/600x400?text=Fun+Times",
+            imageUrl: "/memories/010.jpg",
             position: "left",
             memoryNote: "Laughter that echoes in our hearts"
         },
@@ -109,7 +109,7 @@ export function ChronologicalMemories() {
             date: "Beautiful Bonds",
             title: "Beautiful Moments",
             description: "Capturing the beauty of our friendship",
-            imageUrl: "https://placehold.co/600x400?text=Beautiful+Moments",
+            imageUrl: "/memories/011.jpg",
             position: "right",
             memoryNote: "Friendship at its most beautiful"
         },
@@ -118,7 +118,7 @@ export function ChronologicalMemories() {
             date: "Nature's Beauty",
             title: "Spring Blooms",
             description: "Enjoying the beauty of spring together",
-            imageUrl: "https://placehold.co/600x400?text=Spring+Blooms",
+            imageUrl: "/memories/012.jpg",
             position: "left",
             memoryNote: "Nature's beauty shared with you"
         },
@@ -127,7 +127,7 @@ export function ChronologicalMemories() {
             date: "Perfect Moments",
             title: "Wonderful Day",
             description: "A day filled with happiness and laughter",
-            imageUrl: "https://placehold.co/600x400?text=Wonderful+Day",
+            imageUrl: "/memories/013.jpg",
             position: "right",
             memoryNote: "Perfect moments with perfect company"
         },
@@ -136,7 +136,7 @@ export function ChronologicalMemories() {
             date: "Treasured Experiences",
             title: "Memorable Experience",
             description: "An experience we'll treasure forever",
-            imageUrl: "https://placehold.co/600x400?text=Memorable+Experience",
+            imageUrl: "/memories/014.jpg",
             position: "left",
             memoryNote: "Experiences that shaped our bond"
         },
@@ -145,7 +145,7 @@ export function ChronologicalMemories() {
             date: "Celebration Time",
             title: "Special Occasion",
             description: "Celebrating a special moment together",
-            imageUrl: "https://placehold.co/600x400?text=Special+Occasion",
+            imageUrl: "/memories/015.jpg",
             position: "right",
             memoryNote: "Every moment with you is special"
         },
@@ -154,7 +154,7 @@ export function ChronologicalMemories() {
             date: "April's Treasures",
             title: "April's End",
             description: "Ending April with beautiful memories",
-            imageUrl: "https://placehold.co/600x400?text=April's+End",
+            imageUrl: "/memories/016.jpg",
             position: "left",
             memoryNote: "April showers brought May flowers to our friendship"
         }

@@ -62,7 +62,7 @@ export default function HomePage() {
       <div
         className="absolute inset-0 z-0 flex items-center justify-center"
         style={{
-          backgroundImage: "url('https://placehold.co/1920x1080?text=Happy+Birthday')",
+          backgroundImage: "url('/panda-background.gif')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
