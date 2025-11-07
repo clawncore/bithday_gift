@@ -1,8 +1,31 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { type GiftContent, type ClaimResponse } from "../shared/schema.js";
 import { prisma } from "./prismaClient";
+
+// Define types directly instead of importing from shared schema
+interface GiftContent {
+  recipientName: string;
+  craigApology: {
+    shortMessage: string;
+    fullMessage: string;
+    photoUrl?: string;
+  };
+  simbisaiApology: {
+    shortMessage: string;
+    fullMessage: string;
+    photoUrl?: string;
+  };
+  media: any[];
+}
+
+interface ClaimResponse {
+  ok: boolean;
+  openedAt?: string;
+  content?: GiftContent;
+  error?: string;
+  message?: string;
+}
 
 // Add a helper function for error handling
 function handleRouteError(res: Response, error: any, operation: string) {
@@ -130,8 +153,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.saveReply(token, choice, message.trim());
 
       return res.json({ ok: true });
-    } catch (error) {
-      return handleRouteError(res, error, "saving reply");
+    } catch (error: any) {
+      console.error("Error saving reply:", error);
+      // Return a more detailed error message in development
+      if (process.env.NODE_ENV === "development") {
+        return res.status(500).json({
+          error: "Failed to save reply",
+          details: error.message
+        });
+      } else {
+        return res.status(500).json({ error: "Failed to save reply" });
+      }
     }
   });
 

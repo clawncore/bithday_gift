@@ -51,7 +51,7 @@ export function AskSection({ onReply }: AskSectionProps) {
             </p>
             <p className="text-lg text-pink-600">
               With love and hope,<br />
-              <span className="font-semibold">Craig & Simby</span>
+              <span className="font-semibold">John Doe & Jane Doe</span>
             </p>
 
             {/* Removed Twilio test button */}

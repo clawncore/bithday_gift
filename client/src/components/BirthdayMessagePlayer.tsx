@@ -24,7 +24,7 @@ export function BirthdayMessagePlayer() {
                     setIsPlaying(false);
                 } else {
                     // Play the birthday message
-                    // Set volume to 100% to match Simby's message volume
+                    // Set volume to 100% to match Jane Doe's message volume
                     audioRef.current.volume = 1.0; // 100% volume
                     await audioRef.current.play();
                     setIsPlaying(true);

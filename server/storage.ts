@@ -1,7 +1,30 @@
-﻿import { type Token, type GiftContent } from "../shared/schema";
-import { randomUUID } from "crypto";
+﻿﻿import { randomUUID } from "crypto";
 import { prisma } from "./prismaClient";
 import { supabase } from "./supabaseClient";
+
+// Define the interfaces directly instead of importing from JS file
+interface Token {
+  id: string;
+  used: boolean;
+  createdAt: Date;
+  openedAt: Date | null;
+  expiresAt: Date | null;
+}
+
+interface GiftContent {
+  recipientName: string;
+  craigApology: {
+    shortMessage: string;
+    fullMessage: string;
+    photoUrl?: string;
+  };
+  simbisaiApology: {
+    shortMessage: string;
+    fullMessage: string;
+    photoUrl?: string;
+  };
+  media: any[];
+}
 
 // Simplified reply interface for our use case
 export interface SimpleReply {
@@ -32,15 +55,15 @@ export class MemStorage implements IStorage {
   private initializeSampleToken() {
     try {
       const sampleContent: GiftContent = {
-        recipientName: "Chandrika",
+        recipientName: "Jane Doe",
         craigApology: {
-          shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
-          fullMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
+          shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+          fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
           photoUrl: undefined,
         },
         simbisaiApology: {
-          shortMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
-          fullMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
+          shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+          fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
           photoUrl: undefined,
         },
         media: [],
@@ -111,23 +134,30 @@ export class MemStorage implements IStorage {
 
       // Also save to database using Supabase
       try {
+        // Log environment variables for debugging (remove in production)
+        console.log("SUPABASE_URL:", process.env.SUPABASE_URL ? "SET" : "NOT SET");
+        console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "SET" : "NOT SET");
+
         const { error } = await supabase
           .from("replies")
           .insert({
             id: randomUUID(),
             choice: choice,
             message: message,
-            recipient_name: "Chandrika",
+            recipient_name: "Jane Doe",
             created_at: new Date(),
           });
 
         if (error) {
           console.error(`Error saving reply to Supabase:`, error);
+          throw new Error(`Database error: ${error.message}`);
+        } else {
+          console.log("Reply successfully saved to Supabase");
         }
-      } catch (dbError) {
+      } catch (dbError: any) {
         console.error(`Error saving reply to database:`, dbError);
-        // We dont throw the error here because we want to continue working
-        // even if the database is not available
+        // Re-throw the error so it can be handled by the API route
+        throw new Error(`Failed to save reply to database: ${dbError.message}`);
       }
     } catch (error) {
       console.error(`Error saving reply for token ${token}:`, error);
@@ -143,7 +173,7 @@ export class MemStorage implements IStorage {
         const { data, error } = await supabase
           .from("replies")
           .select("choice, message, created_at")
-          .eq("recipient_name", "Chandrika")
+          .eq("recipient_name", "Jane Doe")
           .order("created_at", { ascending: false });
 
         if (error) {

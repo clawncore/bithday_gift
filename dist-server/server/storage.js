@@ -12,15 +12,15 @@ class MemStorage {
     initializeSampleToken() {
         try {
             const sampleContent = {
-                recipientName: "Chandrika",
+                recipientName: "Jane Doe",
                 craigApology: {
-                    shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
-                    fullMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
+                    shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+                    fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
                     photoUrl: undefined,
                 },
                 simbisaiApology: {
-                    shortMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
-                    fullMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
+                    shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+                    fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
                     photoUrl: undefined,
                 },
                 media: [],
@@ -92,12 +92,12 @@ class MemStorage {
                 const { error } = await supabaseClient_1.supabase
                     .from("replies")
                     .insert({
-                    id: (0, crypto_1.randomUUID)(),
-                    choice: choice,
-                    message: message,
-                    recipient_name: "Chandrika",
-                    created_at: new Date(),
-                });
+                        id: (0, crypto_1.randomUUID)(),
+                        choice: choice,
+                        message: message,
+                        recipient_name: "Jane Doe",
+                        created_at: new Date(),
+                    });
                 if (error) {
                     console.error(`Error saving reply to Supabase:`, error);
                 }
@@ -121,7 +121,7 @@ class MemStorage {
                 const { data, error } = await supabaseClient_1.supabase
                     .from("replies")
                     .select("choice, message, created_at")
-                    .eq("recipient_name", "Chandrika")
+                    .eq("recipient_name", "Jane Doe")
                     .order("created_at", { ascending: false });
                 if (error) {
                     console.error("Error fetching replies from Supabase:", error);

@@ -115,15 +115,15 @@ export default function GiftPage() {
 
   // Always show the gift content, regardless of token status
   const content = claimData?.content || {
-    recipientName: "Chandrika",
+    recipientName: "Jane Doe",
     media: [],
     craigApology: {
-      fullMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig",
-      shortMessage: "Dearest Chandrika, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, Craig"
+      fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+      shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe"
     },
     simbisaiApology: {
-      fullMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby",
-      shortMessage: "Happy Birthday Chandrika! Hope you have an amazing day! Cheers, Simby"
+      fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+      shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe"
     }
   };
 
@@ -157,14 +157,14 @@ export default function GiftPage() {
                 <div className="w-full">
                   <PhotoSlideshow
                     media={[
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.50_c7282973.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.52_4374e524.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.52_6a60b8e5.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.56_77ddb625.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.56_b6bf33e8.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.57_791dd6bb.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.58_6a2848df.jpg", type: "image" },
-                      { src: "/memories/WhatsApp Image 2025-10-20 at 08.59.59_6a3a43cb.jpg", type: "image" }
+                      { src: "https://placehold.co/800x600?text=Memory+1", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+2", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+3", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+4", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+5", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+6", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+7", type: "image" },
+                      { src: "https://placehold.co/800x600?text=Memory+8", type: "image" }
                     ]}
                     interval={5000}
                     className="w-full h-[50vh] md:h-[80vh] max-h-[800px]"
@@ -189,7 +189,7 @@ export default function GiftPage() {
                 </div>
 
                 <ApologyCard
-                  name="Craig"
+                  name="John Doe"
                   shortMessage={content.craigApology.shortMessage}
                   fullMessage={content.craigApology.fullMessage}
                   photoUrl={content.craigApology.photoUrl}
@@ -197,7 +197,7 @@ export default function GiftPage() {
                 />
 
                 <ApologyCard
-                  name="Simbisai"
+                  name="Jane Doe"
                   shortMessage={content.simbisaiApology.shortMessage}
                   fullMessage={content.simbisaiApology.fullMessage}
                   photoUrl={content.simbisaiApology.photoUrl}

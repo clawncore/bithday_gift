@@ -22,15 +22,39 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Serve static files BEFORE registering routes
-// This is crucial for the root route to work
-app.use('/assets', express.static(path.resolve(__dirname, "../client/dist/assets")));
-app.use(express.static(path.resolve(__dirname, "../client/public")));
-app.use(express.static(path.resolve(__dirname, "../client/dist")));
+// Check if we're in development mode
+const isDevelopment = process.env.NODE_ENV === "development";
+
+if (isDevelopment) {
+  // In development mode, we need to proxy to Vite dev server
+  // Vite serves files from memory, not from dist directory
+  try {
+    const { createServer } = await import("vite");
+    const vite = await createServer({
+      server: { middlewareMode: true },
+      appType: 'custom'
+    });
+    app.use(vite.middlewares);
+  } catch (error) {
+    console.error("Failed to start Vite dev server:", error);
+    // Fallback to serving static files
+    app.use('/assets', express.static(path.resolve(__dirname, "../client/dist/assets")));
+    app.use(express.static(path.resolve(__dirname, "../client/public")));
+    app.use(express.static(path.resolve(__dirname, "../client/dist")));
+  }
+} else {
+  // In production mode, serve static files from dist directory
+  app.use('/assets', express.static(path.resolve(__dirname, "../client/dist/assets")));
+  app.use(express.static(path.resolve(__dirname, "../client/public")));
+  app.use(express.static(path.resolve(__dirname, "../client/dist")));
+}
 
 // Add specific route for favicon to avoid conflicts
 app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/public/favicon.ico"), (err) => {
+  const faviconPath = isDevelopment 
+    ? path.resolve(__dirname, "../client/public/favicon.ico")
+    : path.resolve(__dirname, "../client/public/favicon.ico");
+  res.sendFile(faviconPath, (err) => {
     if (err) {
       // If favicon doesn't exist, send a minimal response
       res.status(204).end();
@@ -71,9 +95,33 @@ app.use((req, res, next) => {
 // Handle SPA routing - serve index.html for all non-API routes
 // This needs to be registered AFTER static files but BEFORE API routes
 app.get("*", (req, res, next) => {
+  // If requesting favicon, handle it specifically
+  if (req.path === "/favicon.ico") {
+    const faviconPath = isDevelopment 
+      ? path.resolve(__dirname, "../client/public/favicon.ico")
+      : path.resolve(__dirname, "../client/public/favicon.ico");
+    res.sendFile(faviconPath, (err) => {
+      if (err) {
+        // If favicon doesn't exist, send a minimal response
+        res.status(204).end();
+      }
+    });
+    return;
+  }
+
   // Let static files be served first, then handle SPA routing
-  if (!req.path.startsWith("/api") && !req.path.startsWith("/assets")) {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+  if (!req.path.startsWith("/api")) {
+    const indexPath = isDevelopment
+      ? path.resolve(__dirname, "../client/index.html")
+      : path.resolve(__dirname, "../client/dist/index.html");
+    
+    // In development mode, we might need to let Vite handle this
+    if (isDevelopment) {
+      // Let the next middleware handle it (Vite)
+      next();
+    } else {
+      res.sendFile(indexPath);
+    }
   } else {
     // Pass API routes to the next handler
     next();

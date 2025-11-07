@@ -5,7 +5,7 @@ const mediaItems = [
     {
         id: "7",
         type: "image",
-        url: "/memories/your-image.jpg",
+        url: "https://placehold.co/800x600?text=Your+Image+Here",
         caption: "Your caption here",
         date: "Month Year",
         note: "Your memory or note here"
@@ -13,7 +13,7 @@ const mediaItems = [
     {
         id: "8",
         type: "video",
-        url: "/memories/your-video.mp4",
+        url: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
         caption: "Your caption here",
         date: "Month Year",
         note: "Your memory or note here"
@@ -39,5 +39,4 @@ generateAPICode(mediaItems);
 console.log("\n\nInstructions:");
 console.log("1. Copy the items to the media array in server/storage.ts");
 console.log("2. Copy the items to the media array in api/claim.js");
-console.log("3. Place your media files in client/public/memories/");
-console.log("4. Run npm run build to rebuild the application");
+console.log("3. Run npm run build to rebuild the application");

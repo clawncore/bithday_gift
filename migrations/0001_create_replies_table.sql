@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS replies (
   token_id VARCHAR(255) NOT NULL,
   choice VARCHAR(20) NOT NULL CHECK (choice IN ('yes', 'need_time')),
   message TEXT NOT NULL,
-  recipient_name VARCHAR(255) NOT NULL,
+  recipient_name VARCHAR(255) NOT NULL DEFAULT 'Jane Doe',
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

@@ -62,7 +62,7 @@ export default function HomePage() {
       <div
         className="absolute inset-0 z-0 flex items-center justify-center"
         style={{
-          backgroundImage: "url('/balloons-background.jpg')",
+          backgroundImage: "url('https://placehold.co/1920x1080?text=Happy+Birthday')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -150,7 +150,7 @@ export default function HomePage() {
           </span>
           <br />
           <span className="text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-red-600 via-red-700 to-red-900 bg-clip-text text-transparent">
-            Chandrika!
+            Jane Doe!
           </span>
         </motion.h1>
 
