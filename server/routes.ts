@@ -51,12 +51,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // For now, we'll still check against the hardcoded value "panda"
-      // In a future update, we can query the secret_words table in Supabase
-      if (secretWord.trim().toLowerCase() !== 'panda') {
+      // Check against the hardcoded value "demo"
+      if (secretWord.trim().toLowerCase() !== 'demo') {
         return res.status(401).json({
           ok: false,
-          error: 'Wrong word! Hint: What is your favorite animal?'
+          error: 'Wrong word! Hint: What is the demo password?'
         });
       }
 
@@ -115,7 +114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const baseUrl = req.get("host");
       const protocol = req.get("x-forwarded-proto") || req.protocol;
-      const giftUrl = `${protocol}://${baseUrl}/?word=panda`;
+      const giftUrl = `${protocol}://${baseUrl}/?word=demo`;
 
       return res.json({
         token: tokenId,

@@ -215,14 +215,10 @@ export default function HomePage() {
                       <ul className="text-pink-100 text-left space-y-2">
                         <li className="flex items-start">
                           <span className="inline-block w-5 h-5 bg-pink-500 rounded-full text-center text-xs mr-2 mt-1 flex-shrink-0">1</span>
-                          <span>Look at the back of the birthday card</span>
+                          <span>The secret word is <strong>demo</strong></span>
                         </li>
                         <li className="flex items-start">
                           <span className="inline-block w-5 h-5 bg-pink-500 rounded-full text-center text-xs mr-2 mt-1 flex-shrink-0">2</span>
-                          <span>Find the secret word written there</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="inline-block w-5 h-5 bg-pink-500 rounded-full text-center text-xs mr-2 mt-1 flex-shrink-0">3</span>
                           <span>Enter it in the field below to unlock your surprise</span>
                         </li>
                       </ul>
@@ -240,7 +236,7 @@ export default function HomePage() {
                           type="text"
                           value={secretWord}
                           onChange={(e) => setSecretWord(e.target.value)}
-                          placeholder="Enter the secret word"
+                          placeholder="Enter 'demo' to unlock"
                           className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-pink-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                           disabled={isLoading}
                         />
