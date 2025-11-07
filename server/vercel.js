@@ -24,14 +24,14 @@ app.use((err, _req, res, _next) => {
 // We only need to handle API routes and SPA routing for non-API requests
 
 // Handle SPA routing - serve index.html for all non-API routes
-app.get("*", (req, res) => {
-    if (!req.path.startsWith("/api")) {
-        // On Vercel, the index.html is in the root of the deployment
-        res.sendFile("index.html", { root: "./client/dist" });
-    } else {
-        res.status(404).json({ error: "API route not found" });
-    }
+// On Vercel, static files are served directly, so we only need to handle the root route
+app.get("/", (req, res) => {
+    // On Vercel, the index.html is in the client/dist directory relative to the build
+    res.sendFile("index.html", { root: "./client/dist" });
 });
+
+// For all other routes, let Vercel handle static file serving
+// This is handled by the vercel.json routes configuration
 
 // For development, we need to create and export an HTTP server
 // For Vercel, we just export the app

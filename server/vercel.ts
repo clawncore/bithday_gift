@@ -26,20 +26,15 @@ app.use((err: any, _req: any, res: any, _next: any) => {
     res.status(status).json({ message });
 });
 
-// Serve static files in production - this should come AFTER API routes
-if (process.env.NODE_ENV === "production") {
-    // Serve static files from dist (root directory)
-    app.use(express.static("dist"));
+// Handle SPA routing - serve index.html for root route only
+// On Vercel, static files are served directly, so we only need to handle the root route
+app.get("/", (req, res) => {
+    // On Vercel, the index.html is in the dist directory
+    res.sendFile("index.html", { root: "dist" });
+});
 
-    // Handle SPA routing - serve index.html for all non-API routes
-    app.get("*", (req, res) => {
-        if (!req.path.startsWith("/api")) {
-            res.sendFile("index.html", { root: "dist" });
-        } else {
-            res.status(404).json({ error: "API route not found" });
-        }
-    });
-}
+// For all other routes, let Vercel handle static file serving
+// This is handled by the vercel.json routes configuration
 
 // For development, we need to create and export an HTTP server
 // For Vercel, we just export the app
