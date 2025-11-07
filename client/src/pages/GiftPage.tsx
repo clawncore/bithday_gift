@@ -232,7 +232,7 @@ export default function GiftPage() {
             <AskSection onReply={handleReply} />
 
             <footer className="py-12 text-center text-pink-600 border-t border-pink-200 bg-white/30 backdrop-blur-sm">
-              <p className="text-lg font-medium">Made with love for {content.recipientName} 💖</p>
+              <p className="text-lg font-medium">Made with love 💖</p>
               <p className="text-sm mt-2">Happy Birthday! May all your dreams come true! 🎈</p>
             </footer>
           </motion.div>

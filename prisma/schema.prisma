@@ -19,7 +19,7 @@ model replies {
   choice        String
   message       String
   created_at    DateTime @default(now())
-  recipient_name String   @default("Chandrika")
+  recipient_name String
 
   @@index([created_at], name: "idx_replies_created_at")
 }

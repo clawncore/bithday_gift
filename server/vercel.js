@@ -27,7 +27,7 @@ app.use((err, _req, res, _next) => {
 app.get("*", (req, res) => {
     if (!req.path.startsWith("/api")) {
         // On Vercel, the index.html is in the root of the deployment
-        res.sendFile("index.html", { root: "." });
+        res.sendFile("index.html", { root: "./client/dist" });
     } else {
         res.status(404).json({ error: "API route not found" });
     }
