@@ -70,7 +70,7 @@ export function HeroGiftBox({ onUnwrap, unwrapped }: HeroGiftBoxProps) {
           transition={{ duration: 1, delay: 0.3 }}
           className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-pink-700"
         >
-          Happy Birthday, Jane Doe! 🎂
+          Happy Birthday! 🎂
         </motion.h1>
 
         <motion.p

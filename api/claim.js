@@ -8,15 +8,15 @@ export default async function handler(request, response) {
     try {
         // Sample gift content with actual media files
         const giftContent = {
-            recipientName: "Jane Doe",
+            recipientName: "Friend",
             craigApology: {
-                shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
-                fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+                shortMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love",
+                fullMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love",
                 photoUrl: "/memories/craig.jpg"
             },
             simbisaiApology: {
-                shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
-                fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+                shortMessage: "Happy Birthday! Hope you have an amazing day! Cheers",
+                fullMessage: "Happy Birthday! Hope you have an amazing day! Cheers",
                 photoUrl: "/memories/simbisai.jpg"
             },
             media: [

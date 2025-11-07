@@ -141,12 +141,12 @@ export default function GiftPage() {
       { src: "/memories/together/initial.jpg", type: "image" }
     ],
     craigApology: {
-      fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
-      shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe"
+      fullMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love",
+      shortMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love"
     },
     simbisaiApology: {
-      fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
-      shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe"
+      fullMessage: "Happy Birthday! Hope you have an amazing day! Cheers",
+      shortMessage: "Happy Birthday! Hope you have an amazing day! Cheers"
     }
   };
 
@@ -212,7 +212,7 @@ export default function GiftPage() {
                 </div>
 
                 <ApologyCard
-                  name="John Doe"
+                  name="Friend"
                   shortMessage={content.craigApology.shortMessage}
                   fullMessage={content.craigApology.fullMessage}
                   photoUrl={content.craigApology.photoUrl}
@@ -220,7 +220,7 @@ export default function GiftPage() {
                 />
 
                 <ApologyCard
-                  name="Jane Doe"
+                  name="Friend"
                   shortMessage={content.simbisaiApology.shortMessage}
                   fullMessage={content.simbisaiApology.fullMessage}
                   photoUrl={content.simbisaiApology.photoUrl}

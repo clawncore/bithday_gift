@@ -55,15 +55,15 @@ export class MemStorage implements IStorage {
   private initializeSampleToken() {
     try {
       const sampleContent: GiftContent = {
-        recipientName: "Jane Doe",
+        recipientName: "Friend",
         craigApology: {
-          shortMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
-          fullMessage: "Dearest Jane Doe, Happy Birthday! May this new year bring you endless joy and happiness. With all my love, John Doe",
+          shortMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love",
+          fullMessage: "Dearest friend, Happy Birthday! May this new year bring you endless joy and happiness. With all my love",
           photoUrl: undefined,
         },
         simbisaiApology: {
-          shortMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
-          fullMessage: "Happy Birthday Jane Doe! Hope you have an amazing day! Cheers, Jane Doe",
+          shortMessage: "Happy Birthday! Hope you have an amazing day! Cheers",
+          fullMessage: "Happy Birthday! Hope you have an amazing day! Cheers",
           photoUrl: undefined,
         },
         media: [],
@@ -144,7 +144,7 @@ export class MemStorage implements IStorage {
             id: randomUUID(),
             choice: choice,
             message: message,
-            recipient_name: "Jane Doe",
+            recipient_name: "Friend",
             created_at: new Date(),
           });
 
@@ -173,7 +173,7 @@ export class MemStorage implements IStorage {
         const { data, error } = await supabase
           .from("replies")
           .select("choice, message, created_at")
-          .eq("recipient_name", "Jane Doe")
+          .eq("recipient_name", "Friend")
           .order("created_at", { ascending: false });
 
         if (error) {
