@@ -106,6 +106,7 @@ function App() {
         <audio
           ref={audioRef}
           loop
+          preload="auto"
           src="/Happy Birthday Soft Instrumental - Happy Birthday background Music.mp3"
         />
         <Router />
