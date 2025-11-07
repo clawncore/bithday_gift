@@ -46,12 +46,12 @@ export function AskSection({ onReply }: AskSectionProps) {
               Thank You for Your Response
             </h2>
             <p className="text-lg text-pink-600 mb-8">
-              We've received your message and truly appreciate you taking the time to respond.
-              Your feelings mean the world to us, and we're grateful for the opportunity to show you we've changed.
+              We've received your message and are deeply moved that you took the time to respond from your heart.
+              Your feelings and perspective mean everything to us, and we're incredibly grateful for the chance to prove to you that we've truly changed and are committed to being better friends.
             </p>
             <p className="text-lg text-pink-600">
-              With love and hope,<br />
-              <span className="font-semibold">John Doe & Jane Doe</span>
+              With all our love and deepest hope,<br />
+              <span className="font-semibold">Your devoted friends</span>
             </p>
 
             {/* Removed Twilio test button */}
@@ -85,8 +85,9 @@ export function AskSection({ onReply }: AskSectionProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl text-pink-600 mb-16 max-w-2xl mx-auto"
           >
-            We both wronged you in different and unimaginable ways, and we deeply regret how things have been between us.
-            We're here to ask if you're willing to start over and give us a chance to show you we've changed.
+            We know we've both hurt you deeply in ways that were inexcusable, and the pain we caused has weighed heavily on our hearts every single day.
+            We've spent countless nights reflecting on our mistakes and how much we've missed having you in our lives.
+            We're not here with excuses, but with a sincere hope that you might find it in your heart to give us another chance to show you the friends we truly want to be.
             What do you say?
           </motion.p>
 
@@ -133,8 +134,8 @@ export function AskSection({ onReply }: AskSectionProps) {
 
                   <p className="text-lg text-pink-600 mb-8">
                     {choice === "yes"
-                      ? "Thank you for giving me a chance to start over. I promise to show you through my actions that I've truly changed and to value our renewed friendship."
-                      : "I completely understand. I'll be here whenever you're ready. Please let me know if there's anything I can do to show you I've changed."}
+                      ? "Thank you from the bottom of my heart for giving us a chance to start over. I know words aren't enough, but I promise to show you through every action how much our friendship means to me and how committed I am to being the friend you deserve."
+                      : "I completely understand and respect whatever you need. I know I have a lot to make up for, and I'll be here patiently waiting for you. Please know that I'm committed to doing whatever it takes to show you that I've truly changed and that our friendship means everything to me."}
                   </p>
 
                   <Textarea

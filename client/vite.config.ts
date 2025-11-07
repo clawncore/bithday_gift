@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
     base: "/", // Use absolute paths for proper server serving
-    publicDir: path.resolve(__dirname, "public"), // Explicitly set public directory
+    publicDir: "public", // Simplified public directory reference
     plugins: [react()],
     resolve: {
         alias: {
@@ -20,12 +20,16 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: path.resolve(__dirname, "dist"),
+        outDir: "dist",
         emptyOutDir: true,
         rollupOptions: {
             output: {
                 assetFileNames: (assetInfo) => {
                     if (assetInfo.name) {
+                        // For files in public directory, keep original name
+                        if (assetInfo.name.includes('background')) {
+                            return assetInfo.name;
+                        }
                         let extType = assetInfo.name.split('.').at(1);
                         if (extType && /png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
                             extType = 'img';
@@ -40,7 +44,6 @@ export default defineConfig({
         },
         assetsDir: 'assets',
         assetsInlineLimit: 0, // Disable inlining assets to ensure they're properly served
-        copyPublicDir: true, // Ensure files from public directory are copied to dist
     },
     css: {
         devSourcemap: true,

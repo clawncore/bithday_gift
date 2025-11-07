@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx server/index.ts",
-    "build": "cd client && vite build",
+    "build": "cd client && vite build && node copy-assets.js",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "check": "tsc",
-    "vercel-build": "cd client && vite build"
+    "vercel-build": "cd client && vite build && node copy-assets.js"
   },
   "dependencies": {
     "@fontsource/dm-serif-display": "^5.2.8",
