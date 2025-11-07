@@ -180,14 +180,14 @@ export default function GiftPage() {
                 <div className="w-full">
                   <PhotoSlideshow
                     media={[
-                      { src: "/memories/slideshow/001.jpg", type: "image" },
-                      { src: "/memories/slideshow/002.jpg", type: "image" },
-                      { src: "/memories/slideshow/003.jpg", type: "image" },
-                      { src: "/memories/slideshow/004.jpg", type: "image" },
-                      { src: "/memories/slideshow/005.jpg", type: "image" },
-                      { src: "/memories/slideshow/006.jpg", type: "image" },
-                      { src: "/memories/slideshow/007.jpg", type: "image" },
-                      { src: "/memories/slideshow/008.jpg", type: "image" }
+                      { src: "https://giftedpenguin.co.uk/wp-content/uploads/2024/03/Maintaining-Independence-Balancing-Couple-Time-and-Alone-Time.jpg", type: "image" },
+                      { src: "https://images.squarespace-cdn.com/content/v1/646505dd870afa7ffbcf5f89/2f564bb2-2370-4210-8968-f2ccc84b1037/25+Exciting+Activities+to+Bond+and+Create+Memories+with+Your+Boyfriend.jpg", type: "image" },
+                      { src: "https://st.depositphotos.com/62628780/58680/i/1600/depositphotos_586807668-stock-photo-young-couple-celebrating-birthday-home.jpg", type: "image" },
+                      { src: "https://st3.depositphotos.com/3332767/17983/i/1600/depositphotos_179835204-stock-photo-couple-with-a-birthday-cake.jpg", type: "image" },
+                      { src: "https://www.shutterstock.com/image-photo/couple-love-enjoy-moment-happiness-260nw-120828235.jpg", type: "image" },
+                      { src: "https://thumbs.dreamstime.com/b/couple-love-woman-riding-back-man-park-romantic-enjoying-moment-happiness-time-happy-smiling-women-men-166359420.jpg", type: "image" },
+                      { src: "https://as1.ftcdn.net/jpg/05/95/63/62/1000_F_595636241_gwDiu2TJxQJuaMiSaQvmU6zakdgPYfWN.jpg", type: "image" },
+                      { src: "https://c8.alamy.com/comp/KX36XC/group-adults-friends-birthday-celebration-enjoy-party-in-hotel-KX36XC.jpg", type: "image" }
                     ]}
                     interval={5000}
                     className="w-full h-[50vh] md:h-[80vh] max-h-[800px]"

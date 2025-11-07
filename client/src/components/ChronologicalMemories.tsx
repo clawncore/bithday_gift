@@ -10,7 +10,7 @@ export function ChronologicalMemories() {
             date: "Our Beginning",
             title: "Our Special Beginning",
             description: "The very first moment of our journey together",
-            imageUrl: "/memories/001.jpg",
+            imageUrl: "https://giftedpenguin.co.uk/wp-content/uploads/2024/03/Maintaining-Independence-Balancing-Couple-Time-and-Alone-Time.jpg",
             position: "right",
             memoryNote: "Where it all started..."
         },
@@ -19,7 +19,7 @@ export function ChronologicalMemories() {
             date: "Our Beginning",
             title: "Our Beginning",
             description: "The start of our wonderful journey together",
-            imageUrl: "/memories/002.jpg",
+            imageUrl: "https://images.squarespace-cdn.com/content/v1/646505dd870afa7ffbcf5f89/2f564bb2-2370-4210-8968-f2ccc84b1037/25+Exciting+Activities+to+Bond+and+Create+Memories+with+Your+Boyfriend.jpg",
             position: "right",
             memoryNote: "The beginning of something beautiful..."
         },
@@ -28,7 +28,7 @@ export function ChronologicalMemories() {
             date: "Special Moments",
             title: "Special Day",
             description: "A day we'll always remember",
-            imageUrl: "/memories/003.jpg",
+            imageUrl: "https://st.depositphotos.com/62628780/58680/i/1600/depositphotos_586807668-stock-photo-young-couple-celebrating-birthday-home.jpg",
             position: "left",
             memoryNote: "Memories worth cherishing forever"
         },
@@ -37,7 +37,7 @@ export function ChronologicalMemories() {
             date: "Winter Warmth",
             title: "Winter Moments",
             description: "Beautiful winter days together",
-            imageUrl: "/memories/004.jpg",
+            imageUrl: "https://st3.depositphotos.com/3332767/17983/i/1600/depositphotos_179835204-stock-photo-couple-with-a-birthday-cake.jpg",
             position: "right",
             memoryNote: "Finding warmth in each other's company"
         },
@@ -46,7 +46,7 @@ export function ChronologicalMemories() {
             date: "New Beginnings",
             title: "New Year Beginnings",
             description: "Starting the new year with wonderful memories",
-            imageUrl: "/memories/005.jpg",
+            imageUrl: "https://www.shutterstock.com/image-photo/couple-love-enjoy-moment-happiness-260nw-120828235.jpg",
             position: "left",
             memoryNote: "Fresh starts and new adventures"
         },
@@ -55,7 +55,7 @@ export function ChronologicalMemories() {
             date: "Captured Moments",
             title: "Special Video Moment",
             description: "A captured moment we'll treasure forever",
-            videoUrl: "/memories/video1.mp4",
+            imageUrl: "https://as1.ftcdn.net/jpg/05/95/63/62/1000_F_595636241_gwDiu2TJxQJuaMiSaQvmU6zakdgPYfWN.jpg",
             position: "right",
             memoryNote: "Memories in motion, forever preserved"
         },
@@ -64,7 +64,7 @@ export function ChronologicalMemories() {
             date: "Love & Friendship",
             title: "Valentine Days",
             description: "Celebrating love and friendship",
-            imageUrl: "/memories/006.jpg",
+            imageUrl: "https://thumbs.dreamstime.com/b/couple-love-woman-riding-back-man-park-romantic-enjoying-moment-happiness-time-happy-smiling-women-men-166359420.jpg",
             position: "left",
             memoryNote: "Love that goes beyond romance"
         },
@@ -73,7 +73,7 @@ export function ChronologicalMemories() {
             date: "Spring Adventures",
             title: "Spring Adventures",
             description: "Exploring new places as spring arrived",
-            imageUrl: "/memories/007.jpg",
+            imageUrl: "https://as1.ftcdn.net/jpg/05/95/63/62/1000_F_595636241_gwDiu2TJxQJuaMiSaQvmU6zakdgPYfWN.jpg",
             position: "right",
             memoryNote: "Blooming together like spring flowers"
         },
@@ -82,7 +82,7 @@ export function ChronologicalMemories() {
             date: "Joyful Times",
             title: "Easter Celebrations",
             description: "Celebrating together with joy",
-            imageUrl: "/memories/008.jpg",
+            imageUrl: "https://c8.alamy.com/comp/KX36XC/group-adults-friends-birthday-celebration-enjoy-party-in-hotel-KX36XC.jpg",
             position: "left",
             memoryNote: "Celebrating life's simple pleasures"
         },
@@ -91,7 +91,7 @@ export function ChronologicalMemories() {
             date: "Unforgettable Trips",
             title: "Special Getaway",
             description: "A memorable trip we'll never forget",
-            imageUrl: "/memories/009.jpg",
+            imageUrl: "https://media-cdn.tripadvisor.com/media/photo-m/1280/2a/b5/c5/da/caption.jpg",
             position: "right",
             memoryNote: "Escape to happiness together"
         },
@@ -100,7 +100,7 @@ export function ChronologicalMemories() {
             date: "Pure Happiness",
             title: "Fun Times",
             description: "Laughter and joy filled this special day",
-            imageUrl: "/memories/010.jpg",
+            imageUrl: "https://www.swissotel.com/assets/0/92/2119/6442452244/6935/6937/6442451661/c2dbd635-79a7-4509-b256-7f45b030697a.jpg",
             position: "left",
             memoryNote: "Laughter that echoes in our hearts"
         },
@@ -109,7 +109,7 @@ export function ChronologicalMemories() {
             date: "Beautiful Bonds",
             title: "Beautiful Moments",
             description: "Capturing the beauty of our friendship",
-            imageUrl: "/memories/011.jpg",
+            imageUrl: "https://giftedpenguin.co.uk/wp-content/uploads/2024/03/Maintaining-Independence-Balancing-Couple-Time-and-Alone-Time.jpg",
             position: "right",
             memoryNote: "Friendship at its most beautiful"
         },
@@ -118,7 +118,7 @@ export function ChronologicalMemories() {
             date: "Nature's Beauty",
             title: "Spring Blooms",
             description: "Enjoying the beauty of spring together",
-            imageUrl: "/memories/012.jpg",
+            imageUrl: "https://images.squarespace-cdn.com/content/v1/646505dd870afa7ffbcf5f89/2f564bb2-2370-4210-8968-f2ccc84b1037/25+Exciting+Activities+to+Bond+and+Create+Memories+with+Your+Boyfriend.jpg",
             position: "left",
             memoryNote: "Nature's beauty shared with you"
         },
@@ -127,7 +127,7 @@ export function ChronologicalMemories() {
             date: "Perfect Moments",
             title: "Wonderful Day",
             description: "A day filled with happiness and laughter",
-            imageUrl: "/memories/013.jpg",
+            imageUrl: "https://st.depositphotos.com/62628780/58680/i/1600/depositphotos_586807668-stock-photo-young-couple-celebrating-birthday-home.jpg",
             position: "right",
             memoryNote: "Perfect moments with perfect company"
         },
@@ -136,7 +136,7 @@ export function ChronologicalMemories() {
             date: "Treasured Experiences",
             title: "Memorable Experience",
             description: "An experience we'll treasure forever",
-            imageUrl: "/memories/014.jpg",
+            imageUrl: "https://st3.depositphotos.com/3332767/17983/i/1600/depositphotos_179835204-stock-photo-couple-with-a-birthday-cake.jpg",
             position: "left",
             memoryNote: "Experiences that shaped our bond"
         },
@@ -145,7 +145,7 @@ export function ChronologicalMemories() {
             date: "Celebration Time",
             title: "Special Occasion",
             description: "Celebrating a special moment together",
-            imageUrl: "/memories/015.jpg",
+            imageUrl: "https://www.shutterstock.com/image-photo/couple-love-enjoy-moment-happiness-260nw-120828235.jpg",
             position: "right",
             memoryNote: "Every moment with you is special"
         },
@@ -154,7 +154,7 @@ export function ChronologicalMemories() {
             date: "April's Treasures",
             title: "April's End",
             description: "Ending April with beautiful memories",
-            imageUrl: "/memories/016.jpg",
+            imageUrl: "https://thumbs.dreamstime.com/b/couple-love-woman-riding-back-man-park-romantic-enjoying-moment-happiness-time-happy-smiling-women-men-166359420.jpg",
             position: "left",
             memoryNote: "April showers brought May flowers to our friendship"
         }
@@ -203,70 +203,12 @@ export function ChronologicalMemories() {
                                     >
                                         <Card className="overflow-hidden bg-white border-pink-200 h-full shadow-md hover:shadow-lg transition-all duration-300">
                                             <div className="relative w-full overflow-hidden">
-                                                {memory.videoUrl ? (
-                                                    <div className="relative w-full bg-pink-50 flex items-center justify-center">
-                                                        <video
-                                                            ref={(el) => {
-                                                                if (el) {
-                                                                    // Clean up any existing observer
-                                                                    if (el.dataset.hasObserver) {
-                                                                        return;
-                                                                    }
-
-                                                                    // Try to play the video when it's loaded
-                                                                    el.muted = true;
-                                                                    el.autoplay = true;
-                                                                    el.loop = true;
-                                                                    el.playsInline = true;
-                                                                    el.load();
-
-                                                                    // Play when in view
-                                                                    const playVideo = () => {
-                                                                        if (el.paused) {
-                                                                            el.play().catch(e => console.log("Autoplay prevented:", e));
-                                                                        }
-                                                                    };
-
-                                                                    // Check if element is in viewport
-                                                                    const observer = new IntersectionObserver((entries) => {
-                                                                        entries.forEach(entry => {
-                                                                            if (entry.isIntersecting) {
-                                                                                playVideo();
-                                                                            }
-                                                                        });
-                                                                    }, { threshold: 0.5 });
-
-                                                                    observer.observe(el);
-                                                                    el.dataset.hasObserver = "true";
-
-                                                                    // Clean up observer when element is removed
-                                                                    const cleanup = () => {
-                                                                        observer.disconnect();
-                                                                        el.removeEventListener('loadeddata', cleanup);
-                                                                    };
-
-                                                                    el.addEventListener('loadeddata', cleanup);
-                                                                }
-                                                            }}
-                                                            src={memory.videoUrl}
-                                                            className="w-full object-contain"
-                                                            muted
-                                                            controls={false}
-                                                        />
-                                                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                                                            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-pink-500/80 flex items-center justify-center">
-                                                                <div className="w-0 h-0 border-l-6 md:border-l-8 border-l-white border-y-4 md:border-y-6 border-y-transparent ml-0.5 md:ml-1" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <img
+                                                <img
                                                         src={memory.imageUrl}
                                                         alt={memory.title}
                                                         className="w-full object-contain ken-burns"
                                                         loading="lazy"
                                                     />
-                                                )}
                                                 <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                                             </div>
                                             <div className="p-3 md:p-4">
