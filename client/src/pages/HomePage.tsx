@@ -26,34 +26,17 @@ export default function HomePage() {
     setIsLoading(true);
     setError("");
 
-    try {
-      // Call the backend authentication API with the utility function
-      const response = await apiCall("/api/authenticate", {
-        method: "POST",
-        body: JSON.stringify({ secretWord }),
-      });
-
-      // Check if response is OK before trying to parse JSON
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.ok) {
-        // Set authenticated state and redirect directly to the gift page
-        setAuthenticated(true);
-        // Redirect directly to the gift page without showing the unwrapping animation
-        navigate("/gift");
-      } else {
-        setError(data.error || "Authentication failed. Please try again.");
-      }
-    } catch (err) {
-      console.error("Authentication error:", err);
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    // Mock authentication - if demo is entered, grant access
+    if (secretWord.trim().toLowerCase() === 'demo') {
+      // Set authenticated state and redirect directly to the gift page
+      setAuthenticated(true);
+      // Redirect directly to the gift page without showing the unwrapping animation
+      navigate("/gift");
+    } else {
+      setError("Wrong word! Hint: What is the demo password?");
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -211,15 +194,15 @@ export default function HomePage() {
                   <div className="flex items-start mb-4">
                     <Eye className="w-6 h-6 text-yellow-300 mt-1 mr-3 flex-shrink-0" />
                     <div>
-                      <h3 className="font-bold text-white mb-2">Instructions:</h3>
+                      <h3 className="font-bold text-white mb-2">Demo Version:</h3>
                       <ul className="text-pink-100 text-left space-y-2">
                         <li className="flex items-start">
                           <span className="inline-block w-5 h-5 bg-pink-500 rounded-full text-center text-xs mr-2 mt-1 flex-shrink-0">1</span>
-                          <span>The secret word is <strong>demo</strong></span>
+                          <span>This is a demo version - no authentication required</span>
                         </li>
                         <li className="flex items-start">
                           <span className="inline-block w-5 h-5 bg-pink-500 rounded-full text-center text-xs mr-2 mt-1 flex-shrink-0">2</span>
-                          <span>Enter it in the field below to unlock your surprise</span>
+                          <span>Simply enter <strong>demo</strong> in the field below to access the gift</span>
                         </li>
                       </ul>
                     </div>
