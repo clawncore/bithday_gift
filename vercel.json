@@ -23,6 +23,14 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/background-image.avif",
+      "dest": "/background-image.avif"
+    },
+    {
+      "src": "/background-music.mp3",
+      "dest": "/background-music.mp3"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },

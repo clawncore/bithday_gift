@@ -44,6 +44,7 @@ export default defineConfig({
         },
         assetsDir: 'assets',
         assetsInlineLimit: 0, // Disable inlining assets to ensure they're properly served
+        copyPublicDir: true, // Ensure public directory assets are copied
     },
     css: {
         devSourcemap: true,

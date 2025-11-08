@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { createServer } from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Load environment variables
 dotenv.config();
@@ -12,6 +14,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static assets
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
 // Error handling middleware
 app.use((err, _req, res, _next) => {
     const status = err.status || err.statusCode || 500;
@@ -20,18 +29,14 @@ app.use((err, _req, res, _next) => {
     res.status(status).json({ message });
 });
 
-// On Vercel, static files are served directly by Vercel, not by this Express app
-// We only need to handle API routes and SPA routing for non-API requests
-
 // Handle SPA routing - serve index.html for all non-API routes
 app.get("*", (req, res) => {
-    // On Vercel, the index.html is in the client/dist directory relative to the build
-    // But only serve index.html for non-API routes
-    if (!req.path.startsWith("/api")) {
-        res.sendFile("index.html", { root: "./client/dist" });
-    } else {
-        // For API routes, let Vercel handle them through the api directory
+    // For API routes, let Vercel handle them through the api directory
+    if (req.path.startsWith("/api")) {
         res.status(404).json({ error: "API route not found" });
+    } else {
+        // Serve index.html for all other routes (SPA routing)
+        res.sendFile(path.join(__dirname, "../client/dist/index.html"));
     }
 });
 

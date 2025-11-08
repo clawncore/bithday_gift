@@ -1,8 +1,13 @@
-import { copyFileSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 
 const publicDir = resolve('./public');
 const distDir = resolve('./dist');
+
+// Ensure dist directory exists
+if (!existsSync(distDir)) {
+  mkdirSync(distDir, { recursive: true });
+}
 
 // Copy background image
 try {

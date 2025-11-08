@@ -142,7 +142,7 @@ export default function GiftPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100">
       <HeroGiftBox onUnwrap={handleUnwrap} unwrapped={unwrapped} />
-      
+
       {/* Audio Controls - play music after login */}
       <AudioControls playOnLogin={true} />
 
