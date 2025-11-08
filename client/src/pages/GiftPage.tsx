@@ -35,25 +35,14 @@ interface ClaimResponse {
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Loader2, Sparkles, Flower } from "lucide-react";
 import { ChronologicalMemories } from "@/components/ChronologicalMemories";
+import { AudioControls } from "@/components/AudioControls";
 
 export default function GiftPage() {
   const [, navigate] = useLocation();
   const [unwrapped, setUnwrapped] = useState(true); // Set to true by default for direct access
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
 
-  // Try to unmute audio when the page loads
-  useEffect(() => {
-    const unmuteAudio = () => {
-      const audioElement = document.querySelector('audio');
-      if (audioElement) {
-        audioElement.muted = false;
-      }
-    };
-
-    // Small delay to ensure DOM is ready
-    const timer = setTimeout(unmuteAudio, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // Audio is now handled by the AudioControls component
 
   const { data: claimData, isLoading, error } = useQuery<ClaimResponse | undefined>({
     queryKey: ["/api/claim"],
@@ -153,6 +142,9 @@ export default function GiftPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100">
       <HeroGiftBox onUnwrap={handleUnwrap} unwrapped={unwrapped} />
+      
+      {/* Audio Controls - play music after login */}
+      <AudioControls playOnLogin={true} />
 
       <AnimatePresence>
         {(unwrapped || scrolledPastHero) && (

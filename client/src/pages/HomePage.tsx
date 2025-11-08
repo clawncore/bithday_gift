@@ -3,6 +3,7 @@ import { Sparkles, Gift, Lock, Eye, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import { apiCall } from "@/lib/utils";
+import { AudioControls } from "@/components/AudioControls";
 
 export default function HomePage() {
   const [, navigate] = useLocation();
@@ -52,6 +53,9 @@ export default function HomePage() {
           backgroundAttachment: "fixed",
         }}
       />
+
+      {/* Audio Controls - only play after login */}
+      <AudioControls />
 
       {/* Glitter effects */}
       <div className="absolute inset-0 z-10">

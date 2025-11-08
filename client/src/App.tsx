@@ -20,7 +20,6 @@ function Router() {
 
 function App() {
   const [showFallingElements, setShowFallingElements] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -52,64 +51,10 @@ function App() {
     };
   }, []);
 
-  // Handle background audio
-  useEffect(() => {
-    if (audioRef.current) {
-      // Set background music volume to 50%
-      audioRef.current.volume = 0.5;
-
-      // Try to play the audio automatically when the component mounts
-      const attemptAutoPlay = async () => {
-        try {
-          // Attempt autoplay
-          await audioRef.current!.play();
-        } catch (error) {
-          // Auto-play was prevented by browser policies
-          console.log("Auto-play prevented by browser:", error);
-        }
-      };
-
-      attemptAutoPlay();
-
-      // Set up a more reliable autoplay mechanism
-      const enableAutoPlay = () => {
-        if (audioRef.current) {
-          audioRef.current.play()
-            .catch((error) => {
-              console.log("Failed to play on user interaction:", error);
-            });
-        }
-      };
-
-      // Add event listeners for various user interactions
-      const userEvents = ['click', 'touchstart', 'keydown', 'scroll'];
-      userEvents.forEach(event => {
-        document.addEventListener(event, enableAutoPlay, { once: true });
-      });
-
-      // Cleanup event listeners on component unmount
-      return () => {
-        userEvents.forEach(event => {
-          document.removeEventListener(event, enableAutoPlay);
-        });
-        if (audioRef.current) {
-          audioRef.current.pause();
-        }
-      };
-    }
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <audio
-          ref={audioRef}
-          loop
-          preload="auto"
-          autoPlay
-          src="/background-music.mp3"
-        />
         <Router />
       </TooltipProvider>
     </QueryClientProvider>

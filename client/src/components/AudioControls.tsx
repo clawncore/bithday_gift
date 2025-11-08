@@ -3,50 +3,26 @@ import { Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function AudioControls() {
-  const [isMuted, setIsMuted] = useState(false);
+export function AudioControls({ playOnLogin = false }: { playOnLogin?: boolean }) {
+  const [isMuted, setIsMuted] = useState(true); // Start muted by default
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     if (audioRef.current) {
-      // Set background music volume to 40%
-      audioRef.current.volume = 0.4; // 40% volume
+      // Set background music volume to 50% as per requirements
+      audioRef.current.volume = 0.5;
 
-      // Try to play the audio automatically when the component mounts
-      const attemptAutoPlay = async () => {
-        try {
-          // Attempt autoplay
-          await audioRef.current!.play();
-          setIsMuted(false);
-        } catch (error) {
-          // Auto-play was prevented by browser policies
-          console.log("Auto-play prevented by browser:", error);
-          // Even if autoplay fails, we won't show a button
-          // The user can use the mute toggle to control audio
-          setIsMuted(true);
-        }
-      };
-
-      attemptAutoPlay();
-
-      // Set up a more reliable autoplay mechanism
-      const enableAutoPlay = () => {
-        if (audioRef.current && isMuted) {
-          audioRef.current.play()
-            .then(() => {
-              setIsMuted(false);
-            })
-            .catch((error) => {
-              console.log("Failed to play on user interaction:", error);
-            });
-        }
-      };
-
-      // Add event listeners for various user interactions
-      const userEvents = ['click', 'touchstart', 'keydown', 'scroll'];
-      userEvents.forEach(event => {
-        document.addEventListener(event, enableAutoPlay, { once: true });
-      });
+      // If playOnLogin is true, start playing the audio
+      if (playOnLogin) {
+        audioRef.current.play()
+          .then(() => {
+            setIsMuted(false);
+          })
+          .catch((error) => {
+            console.log("Failed to play audio after login:", error);
+            setIsMuted(true);
+          });
+      }
 
       // Pause audio when user leaves the page
       const handleBeforeUnload = () => {
@@ -59,22 +35,24 @@ export function AudioControls() {
 
       // Cleanup event listeners on component unmount
       return () => {
-        userEvents.forEach(event => {
-          document.removeEventListener(event, enableAutoPlay);
-        });
         window.removeEventListener("beforeunload", handleBeforeUnload);
         if (audioRef.current) {
           audioRef.current.pause();
         }
       };
     }
-  }, [isMuted]);
+  }, [playOnLogin]);
 
   const toggleMute = () => {
     if (audioRef.current) {
       if (isMuted) {
-        audioRef.current.play().catch(() => { });
-        setIsMuted(false);
+        audioRef.current.play()
+          .then(() => {
+            setIsMuted(false);
+          })
+          .catch((error) => {
+            console.log("Failed to play audio:", error);
+          });
       } else {
         audioRef.current.pause();
         setIsMuted(true);
@@ -87,7 +65,7 @@ export function AudioControls() {
       <audio
         ref={audioRef}
         loop
-        src="/panda-song.mp3"
+        src="/background-music.mp3"
       />
 
       <motion.div
